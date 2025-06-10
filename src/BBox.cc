@@ -119,6 +119,7 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  #ifdef CLOTHOIDS_USE_IOSTREAM
   void
   BBox::print( ostream_type & stream ) const {
     fmt::print( stream,
@@ -126,6 +127,7 @@ namespace G2lib {
       x_min(), y_min(), x_max(), y_max()
     );
   }
+  #endif
 }
 
 ///

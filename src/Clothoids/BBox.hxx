@@ -202,13 +202,15 @@ namespace G2lib {
     real_type
     max_distance( real_type x, real_type y ) const;
 
+#ifdef CLOTHOIDS_USE_IOSTREAM
     //!
     //! Pretty print a bbox
     //!
     void print( ostream_type & stream ) const;
-
+#endif
   };
 
+#ifdef CLOTHOIDS_USE_IOSTREAM
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!
   //!  Print on strem the `BBox` object
@@ -223,7 +225,7 @@ namespace G2lib {
     bb.print(stream);
     return stream;
   }
-
+#endif
 }
 
 ///

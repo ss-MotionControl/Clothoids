@@ -31,7 +31,7 @@
 #define CLOTHOIDS_dot_HH
 
 // comment to disable threads support
-#define CLOTHOIDS_USE_THREADS 1
+#define CLOTHOIDS_USE_THREADS 0
 
 #ifdef NO_SYSTEM_UTILS
   #include "Utils.hh"
@@ -45,9 +45,11 @@
 
 #include <string>
 #include <string_view>
+#ifdef CLOTHOIDS_USE_IOSTREAM
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#endif
 #include <cmath>
 
 #include <vector>
