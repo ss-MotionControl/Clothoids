@@ -1,12 +1,6 @@
-[submodule "submodules/quarticRootsFlocke"]
-	path = submodules/quarticRootsFlocke
-	url = https://github.com/ebertolazzi/quarticRootsFlocke.git
-[submodule "cmake_utils"]
-	path = cmake_utils
-	url = https://github.com/ebertolazzi/cmake_utils.git
 [submodule "submodules/GenericContainer"]
 	path = submodules/GenericContainer
-	url = https://github.com/ebertolazzi/GenericContainer.git
+	url = https://github.com/ss-MotionControl/GenericContainer.git
 [submodule "submodules/UtilsLite"]
 	path = submodules/UtilsLite
-	url = https://github.com/ebertolazzi/UtilsLite.git
+	url = https://github.com/ss-MotionControl/UtilsLite.git
