@@ -40,8 +40,9 @@
         #include <Utils.hh>
         #include <Utils_AABB_tree.hh>
     #endif
-
-    #include "GenericContainer/GenericContainer.hh"
+    #ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+        #include "GenericContainer/GenericContainer.hh"ù
+    #endif
 
     #include <string>
     #include <string_view>
@@ -87,8 +88,9 @@ using integer = int; //!< integer type number
 using AABB_TREE = Utils::AABBtree<real_type>; //!< `AABB` tree type
 using AABB_SET = Utils::AABBtree<real_type>::AABB_SET; //!< Set type used in `AABB` tree object
 using AABB_MAP = Utils::AABBtree<real_type>::AABB_MAP; //!< Map type used in `AABB` tree object
+    #ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
 using GenericContainer = GC_namespace::GenericContainer; //!< Generic container object
-
+    #endif
 //!
 //! Enumeration type for curve type
 //!

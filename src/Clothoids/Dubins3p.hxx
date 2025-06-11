@@ -107,9 +107,9 @@ class Dubins3p : public BaseCurve {
     Dubins3p() = delete;
 
     explicit Dubins3p( string_view name ) : BaseCurve( name ) {};
-
+#ifdef CLOTHOIDS_USE_IOSTREAM
     void setup( GenericContainer const& gc ) override;
-
+#endif
     //!
     //! Build a copy of an existing Dubins problem.
     //!

@@ -98,9 +98,9 @@ class BiarcList : public BaseCurve {
         m_biarc_list.clear();
         m_aabb_triangles.clear();
     }
-
+#ifdef CLOTHOIDS_USE_IOSTREAM
     void setup( GenericContainer const& gc ) override;
-
+#endif
     //!
     //! Build a copy of another biarc spline.
     //!

@@ -175,14 +175,14 @@ class BaseCurve {
     BaseCurve( string_view name ) : m_name( name ) {}
 
     virtual ~BaseCurve() = default;
-
+#ifdef CLOTHOIDS_USE_IOSTREAM
     virtual void setup( GenericContainer const& gc ) = 0;
 
     void build( GenericContainer const& gc )
     {
         this->setup( gc );
     }
-
+#endif
     //!
     //! The name of the curve type
     //!

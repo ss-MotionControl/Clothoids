@@ -93,9 +93,9 @@ class ClothoidCurve : public BaseCurve {
     //! Build a copy of an existing clothoid curve
     //!
     ClothoidCurve( ClothoidCurve const& s );
-
+#ifdef CLOTHOIDS_USE_IOSTREAM
     void setup( GenericContainer const& gc ) override;
-
+#endif
     //!
     //! Construct a clothoid with the standard parameters.
     //!

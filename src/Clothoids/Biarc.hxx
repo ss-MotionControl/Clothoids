@@ -61,9 +61,9 @@ class Biarc : public BaseCurve {
     explicit Biarc( string_view const name ) : BaseCurve( name ) {};
 
     ~Biarc() override = default;
-
+#ifdef CLOTHOIDS_USE_IOSTREAM
     void setup( GenericContainer const& gc ) override;
-
+#endif
     //!
     //! Make a copy of an existing biarc
     //!

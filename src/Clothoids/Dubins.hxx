@@ -85,9 +85,9 @@ class Dubins : public BaseCurve {
     Dubins() = delete;
 
     explicit Dubins( string_view name ) : BaseCurve( name ) {};
-
+#ifdef CLOTHOIDS_USE_IOSTREAM
     void setup( GenericContainer const& gc ) override;
-
+#endif
     //!
     //! Build a copy of an existing Dubins problem.
     //!
