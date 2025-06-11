@@ -19,11 +19,11 @@
 
 #include "Clothoids.hh"
 #ifndef CLOTHOIDS_MINIMAL_BUILD
-#include "Clothoids_fmt.hh"
-#endif
+    #include "Clothoids_fmt.hh"
 
-#include <cfloat>
-#include <limits>
+    #include <cfloat>
+    #include <limits>
+#endif
 
 #ifdef __GNUC__
     #pragma GCC diagnostic push

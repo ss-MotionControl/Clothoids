@@ -28,52 +28,54 @@
 #pragma once
 
 #ifndef CLOTHOIDS_dot_HH
-#define CLOTHOIDS_dot_HH
+    #define CLOTHOIDS_dot_HH
 
-// comment to disable threads support
-#define CLOTHOIDS_USE_THREADS 0
+    // comment to disable threads support
+    #define CLOTHOIDS_USE_THREADS 0
 
-#ifdef CLOTHOIDS_MINIMAL_BUILD
-#undef CLOTHOIDS_USE_THREADS
-#endif
+    #ifdef CLOTHOIDS_MINIMAL_BUILD
+        #undef CLOTHOIDS_USE_THREADS
+    #endif
 
-#ifdef NO_SYSTEM_UTILS
-#include "Utils.hh"
-#include "Utils_AABB_tree.hh"
-#else
-#include <Utils.hh>
-#include <Utils_AABB_tree.hh>
-#endif
-#ifndef CLOTHOIDS_MINIMAL_BUILD
-#include "GenericContainer/GenericContainer.hh"ù
-#endif
+    #ifdef NO_SYSTEM_UTILS
+        #include "Utils.hh"
+        #include "Utils_AABB_tree.hh"
+    #else
+        #include <Utils.hh>
+        #include <Utils_AABB_tree.hh>
+    #endif
+    #ifndef CLOTHOIDS_MINIMAL_BUILD
+        #include "GenericContainer/GenericContainer.hh"ù
+    #endif
 
-#include <string>
-#include <string_view>
-#ifndef CLOTHOIDS_MINIMAL_BUILD
-#include <fstream>
-#include <iostream>
-#include <iomanip>
-#endif
-#include <cmath>
+    #include <string>
+    #include <string_view>
+    #ifndef CLOTHOIDS_MINIMAL_BUILD
+        #include <fstream>
+        #include <iostream>
+        #include <iomanip>
+    #endif
+    #include <cmath>
 
-#include <vector>
-#include <map>
-#include <utility>
-#include <algorithm>
-#include <iterator>
+    #include <vector>
+    #include <map>
+    #ifndef CLOTHOIDS_MINIMAL_BUILD
+        #include <utility>
+        #include <algorithm>
+    #endif
+    #include <iterator>
 
-#include <memory> // shared_ptr
+    #include <memory> // shared_ptr
 
-#ifdef G2LIB_DEBUG
-#define G2LIB_DEBUG_MESSAGE( ... ) std::cout << fmt::format( __VA_ARGS__ ) << std::flush
-#else
-#define G2LIB_DEBUG_MESSAGE( ... )
-#endif
+    #ifdef G2LIB_DEBUG
+        #define G2LIB_DEBUG_MESSAGE( ... ) std::cout << fmt::format( __VA_ARGS__ ) << std::flush
+    #else
+        #define G2LIB_DEBUG_MESSAGE( ... )
+    #endif
 
-#ifndef GLIB2_TOL_ANGLE
-#define GLIB2_TOL_ANGLE 1e-8
-#endif
+    #ifndef GLIB2_TOL_ANGLE
+        #define GLIB2_TOL_ANGLE 1e-8
+    #endif
 
 namespace G2lib {
 
@@ -83,18 +85,18 @@ using std::string;
 using std::string_view;
 using std::vector;
 
-#ifndef CLOTHOIDS_MINIMAL_BUILD
+    #ifndef CLOTHOIDS_MINIMAL_BUILD
 using istream_type = std::basic_istream<char>; //!< input streaming
 using ostream_type = std::basic_ostream<char>; //!< output streaming
-#endif
+    #endif
 using real_type = double; //!< real type number
 using integer = int; //!< integer type number
 using AABB_TREE = Utils::AABBtree<real_type>; //!< `AABB` tree type
 using AABB_SET = Utils::AABBtree<real_type>::AABB_SET; //!< Set type used in `AABB` tree object
 using AABB_MAP = Utils::AABBtree<real_type>::AABB_MAP; //!< Map type used in `AABB` tree object
-#ifndef CLOTHOIDS_MINIMAL_BUILD
+    #ifndef CLOTHOIDS_MINIMAL_BUILD
 using GenericContainer = GC_namespace::GenericContainer; //!< Generic container object
-#endif
+    #endif
 //!
 //! Enumeration type for curve type
 //!

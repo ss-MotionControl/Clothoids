@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifndef CLOTHOIDS_MINIMAL_BUILD
-#include "Clothoids_fmt.hh"
+    #include "Clothoids_fmt.hh"
 #endif
 
 // Workaround for Visual Studio
@@ -31,7 +31,9 @@
     #undef max
 #endif
 
-#include <algorithm>
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+    #include <algorithm>
+#endif
 
 namespace G2lib {
 

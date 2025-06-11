@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifndef CLOTHOIDS_MINIMAL_BUILD
-#include "Clothoids_fmt.hh"
+    #include "Clothoids_fmt.hh"
 #endif
 
 #include "PolynomialRoots.hh"
@@ -48,9 +48,11 @@
     #undef max
 #endif
 
-#include <cmath>
-#include <cfloat>
-#include <algorithm>
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+    #include <cmath>
+    #include <cfloat>
+    #include <algorithm>
+#endif
 
 namespace G2lib {
 
@@ -1346,8 +1348,8 @@ bool ClothoidData::build_forward( real_type const x0, real_type const y0, real_t
     return false;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifndef CLOTHOIDS_MINIMAL_BUILD
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #ifndef CLOTHOIDS_MINIMAL_BUILD
 void ClothoidData::info( ostream_type& s ) const
 {
     fmt::print( s,
@@ -1358,7 +1360,7 @@ void ClothoidData::info( ostream_type& s ) const
         "dk     = {}\n",
         m_x0, m_y0, m_theta0, m_kappa0, m_dk );
 }
-#endif
+    #endif
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #endif
