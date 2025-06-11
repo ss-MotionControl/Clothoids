@@ -23,55 +23,54 @@
 
 namespace G2lib {
 
-  /*\
-   |   ____  _
-   |  | __ )(_) __ _ _ __ ___
-   |  |  _ \| |/ _` | '__/ __|
-   |  | |_) | | (_| | | | (__
-   |  |____/|_|\__,_|_|  \___|
-  \*/
+/*\
+ |   ____  _
+ |  | __ )(_) __ _ _ __ ___
+ |  |  _ \| |/ _` | '__/ __|
+ |  | |_) | | (_| | | | (__
+ |  |____/|_|\__,_|_|  \___|
+\*/
 
-  //!
-  //! Compute biarc fitting by Hemite data
-  //!
-  //! @html_image{biarc.png,width=60%}
-  //!
-  class Biarc : public BaseCurve {
-    CircleArc m_C0{"Biarc_C0"};
-    CircleArc m_C1{"Biarc_C1"};
+//!
+//! Compute biarc fitting by Hemite data
+//!
+//! @html_image{biarc.png,width=60%}
+//!
+class Biarc : public BaseCurve {
+    CircleArc m_C0{ "Biarc_C0" };
+    CircleArc m_C1{ "Biarc_C1" };
 
-    static
-    void
-    gfun( real_type const alpha, real_type g[3] ) {
-      real_type const so  { sin(alpha) };
-      real_type const co  { cos(alpha) };
-      real_type const oco { alpha*co   };
-      g[0] = so + oco;
-      g[1] = 2*co - alpha*so;
-      g[2] = -3*so - oco;
+    static void gfun( real_type const alpha, real_type g[3] )
+    {
+        real_type const so{ sin( alpha ) };
+        real_type const co{ cos( alpha ) };
+        real_type const oco{ alpha * co };
+        g[0] = so + oco;
+        g[1] = 2 * co - alpha * so;
+        g[2] = -3 * so - oco;
     }
 
   public:
-
-    #include "BaseCurve_using.hxx"
+#include "BaseCurve_using.hxx"
 
     //!
     //! Construct and empty biarc
     //!
     Biarc() = delete;
 
-    explicit
-    Biarc( string_view const name ) : BaseCurve( name ) {};
+    explicit Biarc( string_view const name ) : BaseCurve( name ) {};
 
     ~Biarc() override = default;
 
-    void setup( GenericContainer const & gc ) override;
+    void setup( GenericContainer const& gc ) override;
 
     //!
     //! Make a copy of an existing biarc
     //!
-    Biarc( Biarc const & ba ) : BaseCurve( ba.name() )
-    { this->copy(ba); }
+    Biarc( Biarc const& ba ) : BaseCurve( ba.name() )
+    {
+        this->copy( ba );
+    }
 
     //!
     //! Construct a biarc passing from the points
@@ -86,54 +85,59 @@ namespace G2lib {
     //! \param[in] theta1  \f$ \theta_1 \f$
     //! \param[in] name    name of the biarc
     //!
-    explicit
-    Biarc(
-      real_type   x0,
-      real_type   y0,
-      real_type   theta0,
-      real_type   x1,
-      real_type   y1,
-      real_type   theta1,
-      string_view name
-    );
+    explicit Biarc( real_type x0, real_type y0, real_type theta0, real_type x1, real_type y1,
+        real_type theta1, string_view name );
 
-    explicit
-    Biarc( LineSegment const & LS ) : BaseCurve( LS.name() )
-    { this->build( LS ); }
-
-    explicit
-    Biarc( CircleArc const & C ) : BaseCurve( C.name() )
-    { this->build( C ); }
-
-    explicit
-    Biarc( BaseCurve const * pC );
-
-    //!
-    //! Make a copy of an existing biarc.
-    //!
-    void
-    copy( Biarc const & c ) {
-      m_C0.copy(c.m_C0);
-      m_C1.copy(c.m_C1);
+    explicit Biarc( LineSegment const& LS ) : BaseCurve( LS.name() )
+    {
+        this->build( LS );
     }
 
-    [[nodiscard]] CurveType type() const override { return CurveType::BIARC; }
+    explicit Biarc( CircleArc const& C ) : BaseCurve( C.name() )
+    {
+        this->build( C );
+    }
+
+    explicit Biarc( BaseCurve const* pC );
 
     //!
     //! Make a copy of an existing biarc.
     //!
-    Biarc & operator = ( Biarc const & ba )
-    { this->copy(ba); return *this; }
+    void copy( Biarc const& c )
+    {
+        m_C0.copy( c.m_C0 );
+        m_C1.copy( c.m_C1 );
+    }
+
+    [[nodiscard]] CurveType type() const override
+    {
+        return CurveType::BIARC;
+    }
+
+    //!
+    //! Make a copy of an existing biarc.
+    //!
+    Biarc& operator=( Biarc const& ba )
+    {
+        this->copy( ba );
+        return *this;
+    }
 
     //!
     //! Return the first circle arc of the biarc.
     //!
-    [[nodiscard]] CircleArc const & C0() const { return m_C0; }
+    [[nodiscard]] CircleArc const& C0() const
+    {
+        return m_C0;
+    }
 
     //!
     //! Return the first circle arc of the biarc.
     //!
-    [[nodiscard]] CircleArc const & C1() const { return m_C1; }
+    [[nodiscard]] CircleArc const& C1() const
+    {
+        return m_C1;
+    }
 
     //!
     //! Construct a biarc passing from the points
@@ -148,15 +152,8 @@ namespace G2lib {
     //! \param[in] theta1  \f$ \theta_1 \f$
     //! \return false if biarc cannot be computed
     //!
-    bool
-    build(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type x1,
-      real_type y1,
-      real_type theta1
-    );
+    bool build( real_type x0, real_type y0, real_type theta0, real_type x1, real_type y1,
+        real_type theta1 );
 
     //!
     //! Construct a biarc by 3 point at "minimum energy"
@@ -165,98 +162,132 @@ namespace G2lib {
     //! - Xunnian Yang and Guozhao Wang
     //! - Computer-Aided Design, vol 33, 2001
     //!
-    bool
-    build_3P(
-      real_type x0,
-      real_type y0,
-      real_type x1,
-      real_type y1,
-      real_type x2,
-      real_type y2
-    );
+    bool build_3P(
+        real_type x0, real_type y0, real_type x1, real_type y1, real_type x2, real_type y2 );
 
     //!
     //! Build a biarc from a line segment
     //!
-    void build( LineSegment const & LS );
+    void build( LineSegment const& LS );
 
     //!
     //! Build a biarc from a circle arc.
     //!
-    void build( CircleArc const & C );
+    void build( CircleArc const& C );
 
-    void build( Biarc const & B ) { *this = B; }
+    void build( Biarc const& B )
+    {
+        *this = B;
+    }
 
-    static void build( ClothoidCurve const & );
-    static void build( PolyLine      const & );
-    static void build( BiarcList     const & );
-    static void build( ClothoidList  const & );
-    static void build( Dubins        const & );
-    static void build( Dubins3p      const & );
+    static void build( ClothoidCurve const& );
+    static void build( PolyLine const& );
+    static void build( BiarcList const& );
+    static void build( ClothoidList const& );
+    static void build( Dubins const& );
+    static void build( Dubins3p const& );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    void
-    bbox(
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
-    ) const override;
+    void bbox( real_type& xmin, real_type& ymin, real_type& xmax, real_type& ymax ) const override;
 
-    void
-    bbox_ISO(
-      real_type   offs,
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
-    ) const override;
+    void bbox_ISO( real_type offs, real_type& xmin, real_type& ymin, real_type& xmax,
+        real_type& ymax ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     [[nodiscard]]
-    real_type
-    length() const override
-    { return m_C0.length()+m_C1.length(); }
+    real_type length() const override
+    {
+        return m_C0.length() + m_C1.length();
+    }
 
     [[nodiscard]]
-    real_type
-    length_ISO( real_type offs ) const override
-    { return m_C0.length_ISO(offs)+m_C1.length_ISO(offs); }
+    real_type length_ISO( real_type offs ) const override
+    {
+        return m_C0.length_ISO( offs ) + m_C1.length_ISO( offs );
+    }
 
-    [[nodiscard]] real_type theta_begin()  const override { return m_C0.theta_begin(); }
-    [[nodiscard]] real_type theta_end()    const override { return m_C1.theta_end(); }
-    [[nodiscard]] real_type kappa_begin()  const override { return m_C0.kappa_begin(); }
-    [[nodiscard]] real_type kappa_end()    const override { return m_C1.kappa_end(); }
-    [[nodiscard]] real_type x_begin()      const override { return m_C0.x_begin(); }
-    [[nodiscard]] real_type x_end()        const override { return m_C1.x_end(); }
-    [[nodiscard]] real_type y_begin()      const override { return m_C0.y_begin(); }
-    [[nodiscard]] real_type y_end()        const override { return m_C1.y_end(); }
-    [[nodiscard]] real_type tx_begin()     const override { return m_C0.tx_begin(); }
-    [[nodiscard]] real_type tx_end()       const override { return m_C1.tx_end(); }
-    [[nodiscard]] real_type ty_begin()     const override { return m_C0.ty_begin(); }
-    [[nodiscard]] real_type ty_end()       const override { return m_C1.ty_end(); }
-    [[nodiscard]] real_type nx_begin_ISO() const override { return m_C0.nx_begin_ISO(); }
-    [[nodiscard]] real_type nx_end_ISO()   const override { return m_C1.nx_end_ISO(); }
-    [[nodiscard]] real_type ny_begin_ISO() const override { return m_C0.ny_begin_ISO(); }
-    [[nodiscard]] real_type ny_end_ISO()   const override { return m_C1.ny_end_ISO(); }
+    [[nodiscard]] real_type theta_begin() const override
+    {
+        return m_C0.theta_begin();
+    }
+    [[nodiscard]] real_type theta_end() const override
+    {
+        return m_C1.theta_end();
+    }
+    [[nodiscard]] real_type kappa_begin() const override
+    {
+        return m_C0.kappa_begin();
+    }
+    [[nodiscard]] real_type kappa_end() const override
+    {
+        return m_C1.kappa_end();
+    }
+    [[nodiscard]] real_type x_begin() const override
+    {
+        return m_C0.x_begin();
+    }
+    [[nodiscard]] real_type x_end() const override
+    {
+        return m_C1.x_end();
+    }
+    [[nodiscard]] real_type y_begin() const override
+    {
+        return m_C0.y_begin();
+    }
+    [[nodiscard]] real_type y_end() const override
+    {
+        return m_C1.y_end();
+    }
+    [[nodiscard]] real_type tx_begin() const override
+    {
+        return m_C0.tx_begin();
+    }
+    [[nodiscard]] real_type tx_end() const override
+    {
+        return m_C1.tx_end();
+    }
+    [[nodiscard]] real_type ty_begin() const override
+    {
+        return m_C0.ty_begin();
+    }
+    [[nodiscard]] real_type ty_end() const override
+    {
+        return m_C1.ty_end();
+    }
+    [[nodiscard]] real_type nx_begin_ISO() const override
+    {
+        return m_C0.nx_begin_ISO();
+    }
+    [[nodiscard]] real_type nx_end_ISO() const override
+    {
+        return m_C1.nx_end_ISO();
+    }
+    [[nodiscard]] real_type ny_begin_ISO() const override
+    {
+        return m_C0.ny_begin_ISO();
+    }
+    [[nodiscard]] real_type ny_end_ISO() const override
+    {
+        return m_C1.ny_end_ISO();
+    }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    [[nodiscard]] real_type theta    ( real_type ) const override;
-    [[nodiscard]] real_type theta_D  ( real_type ) const override;
-    [[nodiscard]] real_type theta_DD ( real_type ) const override { return 0; }
-    [[nodiscard]] real_type theta_DDD( real_type ) const override { return 0; }
+    [[nodiscard]] real_type theta( real_type ) const override;
+    [[nodiscard]] real_type theta_D( real_type ) const override;
+    [[nodiscard]] real_type theta_DD( real_type ) const override
+    {
+        return 0;
+    }
+    [[nodiscard]] real_type theta_DDD( real_type ) const override
+    {
+        return 0;
+    }
 
-    void
-    evaluate(
-      real_type   s,
-      real_type & th,
-      real_type & k,
-      real_type & x,
-      real_type & y
-    ) const override;
+    void evaluate(
+        real_type s, real_type& th, real_type& k, real_type& x, real_type& y ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -286,65 +317,23 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    void
-    eval(
-      real_type   s,
-      real_type & x,
-      real_type & y
-    ) const override;
+    void eval( real_type s, real_type& x, real_type& y ) const override;
 
-    void
-    eval_D(
-      real_type   s,
-      real_type & x_D,
-      real_type & y_D
-    ) const override;
+    void eval_D( real_type s, real_type& x_D, real_type& y_D ) const override;
 
-    void
-    eval_DD(
-      real_type   s,
-      real_type & x_DD,
-      real_type & y_DD
-    ) const override;
+    void eval_DD( real_type s, real_type& x_DD, real_type& y_DD ) const override;
 
-    void
-    eval_DDD(
-      real_type   s,
-      real_type & x_DDD,
-      real_type & y_DDD
-    ) const override;
+    void eval_DDD( real_type s, real_type& x_DDD, real_type& y_DDD ) const override;
 
-    void
-    eval_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & x,
-      real_type & y
-    ) const override;
+    void eval_ISO( real_type s, real_type offs, real_type& x, real_type& y ) const override;
 
-    void
-    eval_ISO_D(
-      real_type   s,
-      real_type   offs,
-      real_type & x_D,
-      real_type & y_D
-    ) const override;
+    void eval_ISO_D( real_type s, real_type offs, real_type& x_D, real_type& y_D ) const override;
 
-    void
-    eval_ISO_DD(
-      real_type   s,
-      real_type   offs,
-      real_type & x_DD,
-      real_type & y_DD
-    ) const override;
+    void eval_ISO_DD(
+        real_type s, real_type offs, real_type& x_DD, real_type& y_DD ) const override;
 
-    void
-    eval_ISO_DDD(
-      real_type   s,
-      real_type   offs,
-      real_type & x_DDD,
-      real_type & y_DDD
-    ) const override;
+    void eval_ISO_DDD(
+        real_type s, real_type offs, real_type& x_DDD, real_type& y_DDD ) const override;
 
     /*\
      |  _____                   _   _   _
@@ -354,44 +343,24 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    [[nodiscard]] real_type tx    ( real_type s ) const override;
-    [[nodiscard]] real_type tx_D  ( real_type s ) const override;
-    [[nodiscard]] real_type tx_DD ( real_type s ) const override;
+    [[nodiscard]] real_type tx( real_type s ) const override;
+    [[nodiscard]] real_type tx_D( real_type s ) const override;
+    [[nodiscard]] real_type tx_DD( real_type s ) const override;
     [[nodiscard]] real_type tx_DDD( real_type s ) const override;
-    [[nodiscard]] real_type ty    ( real_type s ) const override;
-    [[nodiscard]] real_type ty_D  ( real_type s ) const override;
-    [[nodiscard]] real_type ty_DD ( real_type s ) const override;
+    [[nodiscard]] real_type ty( real_type s ) const override;
+    [[nodiscard]] real_type ty_D( real_type s ) const override;
+    [[nodiscard]] real_type ty_DD( real_type s ) const override;
     [[nodiscard]] real_type ty_DDD( real_type s ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    void
-    tg(
-      real_type   s,
-      real_type & tx,
-      real_type & ty
-    ) const override;
+    void tg( real_type s, real_type& tx, real_type& ty ) const override;
 
-    void
-    tg_D(
-      real_type   s,
-      real_type & tx_D,
-      real_type & ty_D
-    ) const override;
+    void tg_D( real_type s, real_type& tx_D, real_type& ty_D ) const override;
 
-    void
-    tg_DD(
-      real_type   s,
-      real_type & tx_DD,
-      real_type & ty_DD
-    ) const override;
+    void tg_DD( real_type s, real_type& tx_DD, real_type& ty_DD ) const override;
 
-    void
-    tg_DDD(
-      real_type   s,
-      real_type & tx_DDD,
-      real_type & ty_DDD
-    ) const override;
+    void tg_DDD( real_type s, real_type& tx_DDD, real_type& ty_DDD ) const override;
 
     /*\
      |  _                        __
@@ -401,25 +370,25 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    void
-    translate( real_type tx, real_type ty ) override
-    { m_C0.translate(tx,ty); m_C1.translate(tx,ty); }
+    void translate( real_type tx, real_type ty ) override
+    {
+        m_C0.translate( tx, ty );
+        m_C1.translate( tx, ty );
+    }
 
-    void
-    rotate( real_type angle, real_type cx, real_type cy ) override
-    { m_C0.rotate(angle,cx,cy); m_C1.rotate(angle,cx,cy); }
+    void rotate( real_type angle, real_type cx, real_type cy ) override
+    {
+        m_C0.rotate( angle, cx, cy );
+        m_C1.rotate( angle, cx, cy );
+    }
 
-    void
-    reverse() override;
+    void reverse() override;
 
-    void
-    change_origin( real_type newx0, real_type newy0 ) override;
+    void change_origin( real_type newx0, real_type newy0 ) override;
 
-    void
-    trim( real_type s_begin, real_type s_end ) override;
+    void trim( real_type s_begin, real_type s_end ) override;
 
-    void
-    scale( real_type s ) override;
+    void scale( real_type s ) override;
 
     /*\
      |        _                     _   ____       _       _
@@ -429,28 +398,11 @@ namespace G2lib {
      |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
     \*/
 
-    integer
-    closest_point_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const override;
+    integer closest_point_ISO( real_type qx, real_type qy, real_type& x, real_type& y, real_type& s,
+        real_type& t, real_type& dst ) const override;
 
-    integer
-    closest_point_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const override;
+    integer closest_point_ISO( real_type qx, real_type qy, real_type offs, real_type& x,
+        real_type& y, real_type& s, real_type& t, real_type& dst ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -458,76 +410,95 @@ namespace G2lib {
     //!
     //! Return the \f$x\f$-coordinate of the juction point of the biarc.
     //!
-    [[nodiscard]] real_type x_middle() const { return m_C1.x_begin(); }
+    [[nodiscard]] real_type x_middle() const
+    {
+        return m_C1.x_begin();
+    }
 
     //!
     //! Return the \f$y\f$-coordinate of the juction point of the biarc.
     //!
-    [[nodiscard]] real_type y_middle() const { return m_C1.y_begin(); }
+    [[nodiscard]] real_type y_middle() const
+    {
+        return m_C1.y_begin();
+    }
 
     //!
     //! Return the angle of the juction point of the biarc.
     //!
-    [[nodiscard]] real_type theta_middle() const { return m_C1.theta_begin(); }
+    [[nodiscard]] real_type theta_middle() const
+    {
+        return m_C1.theta_begin();
+    }
 
     //!
     //! Return the curvature of the first arc of the biarc.
     //!
-    [[nodiscard]] real_type kappa0() const { return m_C0.curvature(); }
+    [[nodiscard]] real_type kappa0() const
+    {
+        return m_C0.curvature();
+    }
 
     //!
     //! Intial angle of the biarc.
     //!
-    [[nodiscard]] real_type length0() const { return m_C0.length(); }
+    [[nodiscard]] real_type length0() const
+    {
+        return m_C0.length();
+    }
 
     //!
     //! Return the curvature of the first arc of the biarc.
     //!
-    [[nodiscard]] real_type kappa1() const { return m_C1.curvature(); }
+    [[nodiscard]] real_type kappa1() const
+    {
+        return m_C1.curvature();
+    }
 
     //!
     //! Final angle of the biarc.
     //!
-    [[nodiscard]] real_type length1() const { return m_C1.length(); }
+    [[nodiscard]] real_type length1() const
+    {
+        return m_C1.length();
+    }
 
     //!
     //! Change of the angle of the biarc (\f$ \theta_1-\theta_0 \f$).
     //!
-    [[nodiscard]] real_type delta_theta() const { return m_C0.delta_theta() + m_C1.delta_theta(); }
-
-    void
-    bb_triangles(
-      vector<Triangle2D> & tvec,
-      real_type            max_angle, // = Utils::m_pi/18,
-      real_type            max_size,  // = 1e100,
-      integer              icurve     // = 0
-    ) const override {
-      m_C0.bb_triangles( tvec, max_angle, max_size, icurve );
-      m_C1.bb_triangles( tvec, max_angle, max_size, icurve );
+    [[nodiscard]] real_type delta_theta() const
+    {
+        return m_C0.delta_theta() + m_C1.delta_theta();
     }
 
-    void
-    bb_triangles_ISO(
-      real_type            offs,
-      vector<Triangle2D> & tvec,
-      real_type            max_angle, // = Utils::m_pi/18,
-      real_type            max_size,  // = 1e100,
-      integer              icurve     // = 0
-    ) const override {
-      m_C0.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
-      m_C1.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
+    void bb_triangles( vector<Triangle2D>& tvec,
+        real_type max_angle, // = Utils::m_pi/18,
+        real_type max_size, // = 1e100,
+        integer icurve // = 0
+    ) const override
+    {
+        m_C0.bb_triangles( tvec, max_angle, max_size, icurve );
+        m_C1.bb_triangles( tvec, max_angle, max_size, icurve );
     }
 
-    void
-    bb_triangles_SAE(
-      real_type            offs,
-      vector<Triangle2D> & tvec,
-      real_type            max_angle, // = Utils::m_pi/18,
-      real_type            max_size,  // = 1e100,
-      integer              icurve     // = 0
-    ) const override {
-      m_C0.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
-      m_C1.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
+    void bb_triangles_ISO( real_type offs, vector<Triangle2D>& tvec,
+        real_type max_angle, // = Utils::m_pi/18,
+        real_type max_size, // = 1e100,
+        integer icurve // = 0
+    ) const override
+    {
+        m_C0.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
+        m_C1.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
+    }
+
+    void bb_triangles_SAE( real_type offs, vector<Triangle2D>& tvec,
+        real_type max_angle, // = Utils::m_pi/18,
+        real_type max_size, // = 1e100,
+        integer icurve // = 0
+    ) const override
+    {
+        m_C0.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
+        m_C1.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\
@@ -541,10 +512,10 @@ namespace G2lib {
     //!
     //! Detect a collision with another biarc.
     //!
-    bool
-    collision( Biarc const & B ) const {
-      return m_C0.collision( B.m_C0 ) || m_C0.collision( B.m_C1 ) ||
-             m_C1.collision( B.m_C0 ) || m_C1.collision( B.m_C1 );
+    bool collision( Biarc const& B ) const
+    {
+        return m_C0.collision( B.m_C0 ) || m_C0.collision( B.m_C1 ) || m_C1.collision( B.m_C0 ) ||
+            m_C1.collision( B.m_C1 );
     }
 
     //!
@@ -554,27 +525,17 @@ namespace G2lib {
     //! \param[in] B      second biarc
     //! \param[in] offs_B offset of second biarc
     //!
-    bool
-    collision_ISO(
-      real_type     offs,
-      Biarc const & B,
-      real_type     offs_B
-    ) const {
-      return m_C0.collision_ISO( offs, B.m_C0, offs_B ) ||
-             m_C0.collision_ISO( offs, B.m_C1, offs_B ) ||
-             m_C1.collision_ISO( offs, B.m_C0, offs_B ) ||
-             m_C1.collision_ISO( offs, B.m_C1, offs_B );
+    bool collision_ISO( real_type offs, Biarc const& B, real_type offs_B ) const
+    {
+        return m_C0.collision_ISO( offs, B.m_C0, offs_B ) ||
+            m_C0.collision_ISO( offs, B.m_C1, offs_B ) ||
+            m_C1.collision_ISO( offs, B.m_C0, offs_B ) ||
+            m_C1.collision_ISO( offs, B.m_C1, offs_B );
     }
 
-    bool
-    collision( BaseCurve const * pC ) const override;
+    bool collision( BaseCurve const* pC ) const override;
 
-    bool
-    collision_ISO(
-      real_type         offs,
-      BaseCurve const * pC,
-      real_type         offs_C
-    ) const override;
+    bool collision_ISO( real_type offs, BaseCurve const* pC, real_type offs_C ) const override;
 
     /*\
      |   _       _                          _
@@ -590,11 +551,7 @@ namespace G2lib {
     //! \param[in]  B     second biarc
     //! \param[out] ilist list of the intersection (as parameter on the curves)
     //!
-    void
-    intersect(
-      Biarc const   & B,
-      IntersectList & ilist
-    ) const;
+    void intersect( Biarc const& B, IntersectList& ilist ) const;
 
     //!
     //! Intersect a biarc with another biarc with offset (ISO).
@@ -604,64 +561,43 @@ namespace G2lib {
     //! \param[in]  offs_B offset of second biarc
     //! \param[out] ilist  list of the intersection (as parameter on the curves)
     //!
-    void
-    intersect_ISO(
-      real_type       offs,
-      Biarc const   & B,
-      real_type       offs_B,
-      IntersectList & ilist
-    ) const;
+    void intersect_ISO(
+        real_type offs, Biarc const& B, real_type offs_B, IntersectList& ilist ) const;
 
-    void
-    intersect(
-      BaseCurve const * pC,
-      IntersectList   & ilist
-    ) const override;
+    void intersect( BaseCurve const* pC, IntersectList& ilist ) const override;
 
-    void
-    intersect_ISO(
-      real_type         offs,
-      BaseCurve const * pC,
-      real_type         offs_LS,
-      IntersectList   & ilist
-    ) const override;
+    void intersect_ISO( real_type offs, BaseCurve const* pC, real_type offs_LS,
+        IntersectList& ilist ) const override;
 
     string info() const;
 
-    void
-    info( ostream_type & stream ) const override
-    { stream << this->info(); }
+#ifdef CLOTHOIDS_USE_IOSTREAM
+    void info( ostream_type& stream ) const override
+    {
+        stream << this->info();
+    }
 
-    friend
-    ostream_type &
-    operator << ( ostream_type & stream, Biarc const & bi );
-
-#ifdef CLOTHOIDS_BACK_COMPATIBILITY
-#include "Biarc_compatibility.hxx"
+    friend ostream_type& operator<<( ostream_type& stream, Biarc const& bi );
 #endif
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+    #include "Biarc_compatibility.hxx"
+#endif
+};
 
-  };
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//!
+//! Given a list of points \f$ (x_i,y_i) \f$
+//! build a guess of angles for a spline of biarc.
+//!
+//! \param[in]  n     number of points
+//! \param[in]  x     \f$x\f$-coordinates
+//! \param[in]  y     \f$y\f$-coordinates
+//! \param[out] theta guessed angles
+//!
+bool build_guess_theta( integer n, real_type const x[], real_type const y[], real_type theta[] );
 
-  //!
-  //! Given a list of points \f$ (x_i,y_i) \f$
-  //! build a guess of angles for a spline of biarc.
-  //!
-  //! \param[in]  n     number of points
-  //! \param[in]  x     \f$x\f$-coordinates
-  //! \param[in]  y     \f$y\f$-coordinates
-  //! \param[out] theta guessed angles
-  //!
-  bool
-  build_guess_theta(
-    integer         n,
-    real_type const x[],
-    real_type const y[],
-    real_type       theta[]
-  );
-
-}
+} // namespace G2lib
 
 ///
 /// eof: Biarc.hxx
