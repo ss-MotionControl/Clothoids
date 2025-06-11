@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -46,7 +46,7 @@ using std::tan;
 using std::vector;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void CircleArc::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "CircleArc[{}]::setup( gc ):", this->name() ) };
@@ -852,7 +852,7 @@ real_type CircleArc::len_tolerance( real_type const tol ) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 string CircleArc::info() const
 {
     return fmt::format( "CircleArc\n{}\n", *this );

@@ -251,7 +251,7 @@ class Triangle2D {
 
     string info() const;
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const
     {
         stream << this->info();

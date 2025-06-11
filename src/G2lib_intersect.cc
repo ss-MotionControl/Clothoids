@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -125,16 +125,16 @@ CurveType curve_promote( CurveType A, CurveType B )
 
 bool collision( BaseCurve const* pC1, BaseCurve const* pC2 )
 {
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE( "G2Lib::collision {} vs {} ADDRS: {}, {}\n", pC1->type_name(),
         pC2->type_name(), fmt::ptr( pC1 ), fmt::ptr( pC2 ) );
 #else
-    G2LIB_DEBUG_MESSAGE( "G2Lib::collision {} vs {} ADDRS: {}, {} (TODO)\n", pC1->type_name(),
-        pC2->type_name(), 0x0, 0x0 );
+    G2LIB_DEBUG_MESSAGE( "G2Lib::collision {} vs {}\n", pC1->type_name(), pC2->type_name() );
 #endif
     bool ok = false;
-
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
+#endif
         CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
         switch ( CT ) {
         case CurveType::LINE:
@@ -207,7 +207,7 @@ bool collision( BaseCurve const* pC1, BaseCurve const* pC2 )
             //   UTILS_ERROR0( "G2lib::collision, missing curve type" );
             //   break;
         }
-
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     } catch ( std::exception const& e ) {
         G2LIB_DEBUG_MESSAGE( "G2lib::collision error: {}\n", e.what() );
         UTILS_ERROR( "G2lib::collision error: {}\n", e.what() );
@@ -215,14 +215,16 @@ bool collision( BaseCurve const* pC1, BaseCurve const* pC2 )
         G2LIB_DEBUG_MESSAGE( "G2lib::collision unknown error!\n" );
         UTILS_ERROR( "G2lib::collision unknown error\n" );
     }
+#endif
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE( "G2Lib::collision {} vs {} ADDRS: {}, {} ok = {}\n", pC1->type_name(),
         pC2->type_name(), fmt::ptr( pC1 ), fmt::ptr( pC2 ), ok );
 #else
-    G2LIB_DEBUG_MESSAGE( "G2Lib::collision {} vs {} ADDRS: {}, {} ok = {}\n", pC1->type_name(),
-        pC2->type_name(), 0x0, 0x0, ok );
+    G2LIB_DEBUG_MESSAGE( "G2Lib::collision {} vs {} ok = {}\n", pC1->type_name(),
+        pC2->type_name(), ok );
 #endif
+
     return ok;
 }
 
@@ -230,12 +232,17 @@ bool collision( BaseCurve const* pC1, BaseCurve const* pC2 )
 
 bool collision_ISO( BaseCurve const* pC1, real_type offs1, BaseCurve const* pC2, real_type offs2 )
 {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE( "G2Lib::collision_ISO {} vs {} ADDRS: {}, {}\n", pC1->type_name(),
         pC2->type_name(), fmt::ptr( pC1 ), fmt::ptr( pC2 ) );
+#else
+    G2LIB_DEBUG_MESSAGE( "G2Lib::collision_ISO {} vs {}\n", pC1->type_name(), pC2->type_name() );
+#endif
 
     bool ok = false;
-
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
+#endif
         CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
         switch ( CT ) {
         case CurveType::LINE:
@@ -308,7 +315,7 @@ bool collision_ISO( BaseCurve const* pC1, real_type offs1, BaseCurve const* pC2,
             //   UTILS_ERROR0( "G2lib::collision_ISO, missing curve type" );
             //   break;
         }
-
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     } catch ( std::exception const& e ) {
         G2LIB_DEBUG_MESSAGE( "G2lib::collision_ISO error: {}\n", e.what() );
         UTILS_ERROR( "G2lib::collision_ISO error: {}\n", e.what() );
@@ -316,9 +323,15 @@ bool collision_ISO( BaseCurve const* pC1, real_type offs1, BaseCurve const* pC2,
         G2LIB_DEBUG_MESSAGE( "G2lib::collision_ISO unknown error!\n" );
         UTILS_ERROR( "G2lib::collision_ISO unknown error\n" );
     }
+#endif
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE( "G2Lib::collision_ISO {} vs {} ADDRS: {}, {} ok = {}\n", pC1->type_name(),
         pC2->type_name(), fmt::ptr( pC1 ), fmt::ptr( pC2 ), ok );
+#else
+    G2LIB_DEBUG_MESSAGE( "G2Lib::collision_ISO {} vs {} ok = {}\n", pC1->type_name(),
+        pC2->type_name(), ok );
+#endif
 
     return ok;
 }
@@ -327,10 +340,15 @@ bool collision_ISO( BaseCurve const* pC1, real_type offs1, BaseCurve const* pC2,
 
 void intersect( BaseCurve const* pC1, BaseCurve const* pC2, IntersectList& ilist )
 {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE( "G2Lib::intersect {} vs {} ADDRS: {}, {}\n", pC1->type_name(),
         pC2->type_name(), fmt::ptr( pC1 ), fmt::ptr( pC2 ) );
-
+#else
+    G2LIB_DEBUG_MESSAGE( "G2Lib::intersect {} vs {}", pC1->type_name(), pC2->type_name() );
+#endif
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
+#endif
         CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
         switch ( CT ) {
         case CurveType::LINE:
@@ -403,7 +421,7 @@ void intersect( BaseCurve const* pC1, BaseCurve const* pC2, IntersectList& ilist
             //   UTILS_ERROR0( "G2lib::intersect, missing curve type" );
             //   break;
         }
-
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     } catch ( std::exception const& e ) {
         G2LIB_DEBUG_MESSAGE( "G2lib::intersect error: {}\n", e.what() );
         UTILS_ERROR( "G2lib::intersect error: {}\n", e.what() );
@@ -411,9 +429,14 @@ void intersect( BaseCurve const* pC1, BaseCurve const* pC2, IntersectList& ilist
         G2LIB_DEBUG_MESSAGE( "G2lib::intersect unknown error!\n" );
         UTILS_ERROR( "G2lib::intersect unknown error\n" );
     }
+#endif
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE( "G2Lib::intersect {} vs {} ADDRS: {}, {} DONE\n", pC1->type_name(),
         pC2->type_name(), fmt::ptr( pC1 ), fmt::ptr( pC2 ) );
+#else
+        G2LIB_DEBUG_MESSAGE( "G2Lib::intersect {} vs {} DONE\n", pC1->type_name(), pC2->type_name() );
+#endif
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -421,10 +444,15 @@ void intersect( BaseCurve const* pC1, BaseCurve const* pC2, IntersectList& ilist
 void intersect_ISO( BaseCurve const* pC1, real_type offs1, BaseCurve const* pC2, real_type offs2,
     IntersectList& ilist )
 {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE( "G2Lib::intersect_ISO {} vs {} ADDRS: {}, {}\n", pC1->type_name(),
         pC2->type_name(), fmt::ptr( pC1 ), fmt::ptr( pC2 ) );
-
+#else
+    G2LIB_DEBUG_MESSAGE( "G2Lib::intersect_ISO {} vs {}\n", pC1->type_name(), pC2->type_name() );
+#endif
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
+#endif
         CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
         switch ( CT ) {
         case CurveType::LINE:
@@ -497,7 +525,7 @@ void intersect_ISO( BaseCurve const* pC1, real_type offs1, BaseCurve const* pC2,
             //   UTILS_ERROR0( "G2lib::intersect_ISO, missing curve type" );
             //   break;
         }
-
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     } catch ( std::exception const& e ) {
         G2LIB_DEBUG_MESSAGE( "G2lib::intersect_ISO error: {}\n", e.what() );
         UTILS_ERROR( "G2lib::intersect_ISO error: {}\n", e.what() );
@@ -505,9 +533,15 @@ void intersect_ISO( BaseCurve const* pC1, real_type offs1, BaseCurve const* pC2,
         G2LIB_DEBUG_MESSAGE( "G2lib::intersect_ISO unknown error!\n" );
         UTILS_ERROR( "G2lib::intersect_ISO unknown error\n" );
     }
+#endif
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE( "G2Lib::intersect_ISO {} vs {} ADDRS: {}, {} DONE\n", pC1->type_name(),
         pC2->type_name(), fmt::ptr( pC1 ), fmt::ptr( pC2 ) );
+#else
+    G2LIB_DEBUG_MESSAGE(
+        "G2Lib::intersect_ISO {} vs {} DONE\n", pC1->type_name(), pC2->type_name() );
+#endif
 }
 } // namespace G2lib
 

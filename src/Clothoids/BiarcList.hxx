@@ -98,7 +98,7 @@ class BiarcList : public BaseCurve {
         m_biarc_list.clear();
         m_aabb_triangles.clear();
     }
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const& gc ) override;
 #endif
     //!
@@ -588,7 +588,7 @@ class BiarcList : public BaseCurve {
         real_type& s, real_type& t, real_type& dst ) const override;
 
     string info() const;
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const override
     {
         stream << this->info();

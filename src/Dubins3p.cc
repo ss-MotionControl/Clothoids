@@ -22,7 +22,7 @@
 ///
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -140,7 +140,7 @@ bool Dubins3p::build_sample( real_type const xi, real_type const yi, real_type c
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void Dubins3p::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "Dubins[{}]::setup( gc ):", this->name() ) };
@@ -616,7 +616,7 @@ integer Dubins3p::closest_point_ISO( real_type const qx, real_type const qy, rea
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 string Dubins3p::info() const
 {
     return fmt::format( "Dubins3p\n{}\n", *this );
@@ -657,7 +657,7 @@ integer Dubins3p::get_range_angles( real_type const xi, real_type const yi, real
     return npts;
 }
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //!
 //!  Print on strem the `Dubins3p` object

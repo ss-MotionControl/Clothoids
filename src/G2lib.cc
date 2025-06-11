@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 #include "PolynomialRoots.hh"

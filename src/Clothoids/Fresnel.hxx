@@ -402,7 +402,7 @@ class ClothoidData {
     bool build_forward( real_type x0, real_type y0, real_type theta0, real_type kappa0,
         real_type x1, real_type y1, real_type tol, real_type& L );
 
-    #ifdef CLOTHOIDS_USE_IOSTREAM
+    #ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& s ) const;
     #endif
 };

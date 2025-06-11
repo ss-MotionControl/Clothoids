@@ -175,7 +175,7 @@ class BaseCurve {
     BaseCurve( string_view name ) : m_name( name ) {}
 
     virtual ~BaseCurve() = default;
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     virtual void setup( GenericContainer const& gc ) = 0;
 
     void build( GenericContainer const& gc )
@@ -1528,7 +1528,7 @@ class BaseCurve {
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     //!
     //! Pretty print of the curve data.
     //!

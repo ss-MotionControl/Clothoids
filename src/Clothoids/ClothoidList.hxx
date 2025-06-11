@@ -341,7 +341,7 @@ class G2solveCLC {
         return m_S1;
     }
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void save( ostream_type& stream ) const;
 #endif
 
@@ -786,7 +786,7 @@ class G2solve3arc {
         m_SM.reverse();
     }
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     friend ostream_type& operator<<( ostream_type& stream, ClothoidCurve const& c );
 
     //! save clothoid list of a file stream
@@ -907,7 +907,7 @@ class ClothoidList : public BaseCurve {
         m_clothoid_list.clear();
         m_aabb_triangles.clear();
     }
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const& gc ) override;
 #endif
     //!
@@ -1788,7 +1788,7 @@ class ClothoidList : public BaseCurve {
     }
 
     string info() const;
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const override
     {
         stream << this->info();
@@ -1944,7 +1944,7 @@ class ClothoidList : public BaseCurve {
     void intersect_ISO( real_type offs, BaseCurve const* pC, real_type offs_LS,
         IntersectList& ilist ) const override;
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     //!
     //! Save Clothoid list to a stream
     //!
@@ -2147,7 +2147,7 @@ class ClothoidSplineG2 {
 
     string info() const;
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const
     {
         stream << this->info();

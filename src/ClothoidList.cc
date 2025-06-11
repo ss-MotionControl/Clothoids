@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 #include "Utils_AlgoBracket.hh"
@@ -53,7 +53,7 @@ using std::swap;
 using std::vector;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void ClothoidList::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "ClothoidList[{}]::setup( gc ):", this->name() ) };
@@ -718,7 +718,7 @@ bool ClothoidList::build( real_type const x0, real_type const y0, real_type cons
         k = kappa[i - 1];
         L = s[i] - s[i - 1];
         if ( abs( L ) < tol ) {
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
             fmt::print( "ClothoidList::build, skipping segment N.{}\n", i );
 #endif
             continue; // skip too small segment
@@ -759,6 +759,7 @@ bool ClothoidList::build_raw( integer const n, real_type const x[], real_type co
 ClothoidCurve const& ClothoidList::get( integer idx ) const
 {
     UTILS_ASSERT( !m_clothoid_list.empty(), "ClothoidList::get( {} ) empty list\n", idx );
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
         return m_clothoid_list.at( idx );
     } catch ( std::exception& exc ) {
@@ -766,6 +767,9 @@ ClothoidCurve const& ClothoidList::get( integer idx ) const
     } catch ( ... ) {
         UTILS_ERROR( "ClothoidList::get( {} ): unknown error\n", idx );
     }
+#else
+    return m_clothoid_list.at( idx );
+#endif
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2201,7 +2205,7 @@ integer ClothoidList::findST1( integer const ibegin, integer const iend, real_ty
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void ClothoidList::export_table( ostream_type& stream ) const
 {
     stream << "x\ty\ttheta0\tkappa0\tdkappa\tL\n";

@@ -93,7 +93,7 @@ class ClothoidCurve : public BaseCurve {
     //! Build a copy of an existing clothoid curve
     //!
     ClothoidCurve( ClothoidCurve const& s );
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const& gc ) override;
 #endif
     //!
@@ -952,7 +952,7 @@ class ClothoidCurve : public BaseCurve {
         IntersectList& ilist ) const override;
 
     string info() const;
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const override
     {
         stream << this->info();

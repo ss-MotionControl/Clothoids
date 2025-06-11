@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -771,7 +771,7 @@ int G2solve3arc::solve( real_type const sM_guess, real_type const thM_guess )
             converged = FP_INFINITE != fpclassify( X[0] ) && FP_NAN != fpclassify( X[0] ) &&
                 FP_INFINITE != fpclassify( X[1] ) && FP_NAN != fpclassify( X[1] );
     } catch ( ... ) {
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
         std::cerr << "G2solve3arc::solve, something go wrong\n";
 #endif
         // nothing to do
@@ -1546,7 +1546,7 @@ bool ClothoidSplineG2::jacobian( real_type const theta[], real_type vals[] ) con
     return true;
 }
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //!
 //!  Print on strem the `ClothoidSplineG2` object

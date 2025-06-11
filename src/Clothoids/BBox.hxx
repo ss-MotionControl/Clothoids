@@ -26,7 +26,7 @@
 ///
 
 namespace G2lib {
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   using std::setw;
 #endif
   using std::vector;
@@ -203,7 +203,7 @@ namespace G2lib {
     real_type
     max_distance( real_type x, real_type y ) const;
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     //!
     //! Pretty print a bbox
     //!
@@ -211,7 +211,7 @@ namespace G2lib {
 #endif
   };
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!
   //!  Print on strem the `BBox` object

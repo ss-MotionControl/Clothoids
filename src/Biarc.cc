@@ -22,7 +22,7 @@
 ///
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -42,7 +42,7 @@ Biarc::Biarc( real_type const x0, real_type const y0, real_type const theta0, re
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void Biarc::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "Biarc[{}]::setup( gc ):", this->name() ) };
@@ -883,7 +883,7 @@ bool build_guess_theta(
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 string Biarc::info() const
 {
     return fmt::format( "BiArc\n{}\n", *this );

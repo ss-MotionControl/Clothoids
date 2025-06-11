@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -59,7 +59,7 @@ integer ClothoidCurve::m_max_iter = 10;
 real_type ClothoidCurve::m_tolerance = 0.01745329252; // 1 degree
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void ClothoidCurve::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "ClothoidCurve[{}]::setup( gc ):", this->name() ) };
@@ -1112,7 +1112,7 @@ real_type ClothoidCurve::integral_snap2() const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 string ClothoidCurve::info() const
 {
     return fmt::format( "Clothoid\n{}\n", *this );

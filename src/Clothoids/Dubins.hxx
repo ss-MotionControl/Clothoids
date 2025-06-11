@@ -85,7 +85,7 @@ class Dubins : public BaseCurve {
     Dubins() = delete;
 
     explicit Dubins( string_view name ) : BaseCurve( name ) {};
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const& gc ) override;
 #endif
     //!
@@ -651,7 +651,7 @@ class Dubins : public BaseCurve {
         IntersectList& ilist ) const override;
 
     string info() const;
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const override
     {
         stream << this->info();

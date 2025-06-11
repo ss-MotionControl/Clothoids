@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -42,7 +42,7 @@ using std::swap;
 using std::vector;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void BiarcList::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "BiarcList[{}]::setup( gc ):", this->name() ) };
@@ -345,6 +345,7 @@ bool BiarcList::build_G1( integer const n, real_type const x[], real_type const 
 Biarc const& BiarcList::get( integer const idx ) const
 {
     UTILS_ASSERT( !m_biarc_list.empty(), "BiarcList::get( {} ) empty list\n", idx );
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
         return m_biarc_list.at( idx );
     } catch ( std::exception& exc ) {
@@ -352,6 +353,9 @@ Biarc const& BiarcList::get( integer const idx ) const
     } catch ( ... ) {
         UTILS_ERROR( "BiarcList::get( {} ): unknown error\n", idx );
     }
+#else
+    return m_biarc_list.at( idx );
+#endif
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1371,7 +1375,7 @@ integer BiarcList::findST1( integer const ibegin, integer const iend, real_type 
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 string BiarcList::info() const
 {
     return fmt::format( "BiarcList\n{}\n", *this );

@@ -41,7 +41,7 @@
  */
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -248,7 +248,7 @@ real_type Triangle2D::dist_min( real_type x, real_type y ) const
     return d1;
 }
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //!
 //!  Print on strem the `Triangle2D` object

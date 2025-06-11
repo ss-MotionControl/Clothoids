@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -81,7 +81,7 @@ void LineSegment::bb_triangles_ISO( real_type offs, vector<Triangle2D>& tvec, re
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void LineSegment::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "LineSegment[{}]::setup( gc ):", this->name() ) };
@@ -697,7 +697,7 @@ integer LineSegment::closest_point_ISO( real_type const qx, real_type const qy,
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 string LineSegment::info() const
 {
     return fmt::format( "LineSegment\n{}\n", *this );

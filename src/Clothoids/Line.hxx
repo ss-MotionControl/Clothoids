@@ -52,7 +52,7 @@ class LineSegment : public BaseCurve {
     LineSegment() = delete;
 
     explicit LineSegment( string_view name ) : BaseCurve( name ) {};
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const& gc ) override;
 #endif
     LineSegment( LineSegment const& s ) : BaseCurve( s.name() )
@@ -512,7 +512,7 @@ class LineSegment : public BaseCurve {
 
     [[nodiscard]] string info() const;
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const override
     {
         stream << this->info();

@@ -55,7 +55,7 @@ class CircleArc : public BaseCurve {
     CircleArc() = delete;
 
     explicit CircleArc( string_view const name ) : BaseCurve( name ) {};
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const& gc ) override;
 #endif
     //!
@@ -596,7 +596,7 @@ class CircleArc : public BaseCurve {
         real_type& y, real_type& s, real_type& t, real_type& dst ) const override;
 
     [[nodiscard]] string info() const;
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const override
     {
         stream << this->info();

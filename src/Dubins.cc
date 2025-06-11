@@ -22,7 +22,7 @@
 ///
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 #include "PolynomialRoots.hh"
@@ -97,7 +97,7 @@ Dubins::Dubins( real_type x0, real_type y0, real_type theta0, real_type x1, real
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void Dubins::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "Dubins[{}]::setup( gc ):", this->name() ) };
@@ -946,7 +946,7 @@ integer Dubins::closest_point_ISO( real_type const qx, real_type const qy, real_
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 string Dubins::info() const
 {
     return fmt::format( "Dubins\n{}\n", *this );
@@ -1166,7 +1166,7 @@ integer Dubins::get_range_angles_end( real_type const x0, real_type const y0,
     return npts;
 }
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //!
 //!  Print on strem the `Dubins` object

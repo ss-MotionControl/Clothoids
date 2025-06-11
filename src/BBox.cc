@@ -26,7 +26,7 @@
 ///
 
 #include "Clothoids.hh"
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 #endif
 
@@ -143,7 +143,7 @@ real_type BBox::max_distance( real_type const x, real_type const y ) const
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 void BBox::print( ostream_type& stream ) const
 {
     fmt::print( stream, "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n", x_min(), y_min(),
