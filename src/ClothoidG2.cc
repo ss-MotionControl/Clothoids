@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 
 #include <cfloat>
@@ -771,7 +771,9 @@ int G2solve3arc::solve( real_type const sM_guess, real_type const thM_guess )
             converged = FP_INFINITE != fpclassify( X[0] ) && FP_NAN != fpclassify( X[0] ) &&
                 FP_INFINITE != fpclassify( X[1] ) && FP_NAN != fpclassify( X[1] );
     } catch ( ... ) {
+#ifdef CLOTHOIDS_USE_IOSTREAM
         std::cerr << "G2solve3arc::solve, something go wrong\n";
+#endif
         // nothing to do
     }
     if ( converged ) build_solution( X[0], X[1] ); // costruisco comunque soluzione

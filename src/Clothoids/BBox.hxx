@@ -26,8 +26,9 @@
 ///
 
 namespace G2lib {
-
+#ifdef CLOTHOIDS_USE_IOSTREAM
   using std::setw;
+#endif
   using std::vector;
   using std::pair;
 

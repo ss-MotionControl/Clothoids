@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 #include "Utils_AlgoBracket.hh"
 
@@ -53,7 +53,7 @@ using std::swap;
 using std::vector;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
 void ClothoidList::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "ClothoidList[{}]::setup( gc ):", this->name() ) };
@@ -720,8 +720,6 @@ bool ClothoidList::build( real_type const x0, real_type const y0, real_type cons
         if ( abs( L ) < tol ) {
 #ifdef CLOTHOIDS_USE_IOSTREAM
             fmt::print( "ClothoidList::build, skipping segment N.{}\n", i );
-#else
-            UTILS_ERROR0( "ClothoidList::build, skipping segment N.{}\n" );
 #endif
             continue; // skip too small segment
         }

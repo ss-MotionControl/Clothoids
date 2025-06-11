@@ -55,7 +55,7 @@ class CircleArc : public BaseCurve {
     CircleArc() = delete;
 
     explicit CircleArc( string_view const name ) : BaseCurve( name ) {};
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
     void setup( GenericContainer const& gc ) override;
 #endif
     //!

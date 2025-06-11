@@ -52,7 +52,7 @@ class LineSegment : public BaseCurve {
     LineSegment() = delete;
 
     explicit LineSegment( string_view name ) : BaseCurve( name ) {};
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
     void setup( GenericContainer const& gc ) override;
 #endif
     LineSegment( LineSegment const& s ) : BaseCurve( s.name() )

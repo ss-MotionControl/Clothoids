@@ -23,7 +23,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 
 #include "PolynomialRoots.hh"
@@ -140,7 +140,7 @@ bool Dubins3p::build_sample( real_type const xi, real_type const yi, real_type c
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
 void Dubins3p::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "Dubins[{}]::setup( gc ):", this->name() ) };

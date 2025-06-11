@@ -23,7 +23,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 #include "Utils_AlgoBracket.hh"
 

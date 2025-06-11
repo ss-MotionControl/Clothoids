@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 
 // Workaround for Visual Studio
@@ -46,7 +46,7 @@ using std::tan;
 using std::vector;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
 void CircleArc::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "CircleArc[{}]::setup( gc ):", this->name() ) };
@@ -853,7 +853,6 @@ real_type CircleArc::len_tolerance( real_type const tol ) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #ifdef CLOTHOIDS_USE_IOSTREAM
-
 string CircleArc::info() const
 {
     return fmt::format( "CircleArc\n{}\n", *this );

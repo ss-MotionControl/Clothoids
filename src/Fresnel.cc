@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 
 #include "PolynomialRoots.hh"
@@ -1347,7 +1347,7 @@ bool ClothoidData::build_forward( real_type const x0, real_type const y0, real_t
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    #ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_IOSTREAM
 void ClothoidData::info( ostream_type& s ) const
 {
     fmt::print( s,
@@ -1358,7 +1358,7 @@ void ClothoidData::info( ostream_type& s ) const
         "dk     = {}\n",
         m_x0, m_y0, m_theta0, m_kappa0, m_dk );
 }
-    #endif
+#endif
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #endif

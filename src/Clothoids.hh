@@ -30,26 +30,23 @@
 #ifndef CLOTHOIDS_dot_HH
     #define CLOTHOIDS_dot_HH
 
-    // comment to disable threads support
-    #define CLOTHOIDS_USE_THREADS 0
-
     #ifdef NO_SYSTEM_UTILS
-        #include "Utils.hh"
-        #include "Utils_AABB_tree.hh"
+    #include "Utils.hh"
+    #include "Utils_AABB_tree.hh"
     #else
-        #include <Utils.hh>
-        #include <Utils_AABB_tree.hh>
+    #include <Utils.hh>
+    #include <Utils_AABB_tree.hh>
     #endif
     #ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
-        #include "GenericContainer/GenericContainer.hh"ù
+    #include "GenericContainer/GenericContainer.hh"ù
     #endif
 
     #include <string>
     #include <string_view>
     #ifdef CLOTHOIDS_USE_IOSTREAM
-        #include <fstream>
-        #include <iostream>
-        #include <iomanip>
+    #include <fstream>
+    #include <iostream>
+    #include <iomanip>
     #endif
     #include <cmath>
 
@@ -79,18 +76,18 @@ using std::string;
 using std::string_view;
 using std::vector;
 
-    #ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_IOSTREAM
 using istream_type = std::basic_istream<char>; //!< input streaming
 using ostream_type = std::basic_ostream<char>; //!< output streaming
-    #endif
+#endif
 using real_type = double; //!< real type number
 using integer = int; //!< integer type number
 using AABB_TREE = Utils::AABBtree<real_type>; //!< `AABB` tree type
 using AABB_SET = Utils::AABBtree<real_type>::AABB_SET; //!< Set type used in `AABB` tree object
 using AABB_MAP = Utils::AABBtree<real_type>::AABB_MAP; //!< Map type used in `AABB` tree object
-    #ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
 using GenericContainer = GC_namespace::GenericContainer; //!< Generic container object
-    #endif
+#endif
 //!
 //! Enumeration type for curve type
 //!

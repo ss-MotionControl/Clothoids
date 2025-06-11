@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 
 // Workaround for Visual Studio
@@ -37,7 +37,9 @@ namespace G2lib {
 
 using std::abs;
 using std::ceil;
+#ifdef CLOTHOIDS_USE_IOSTREAM
 using std::cout;
+#endif
 using std::max;
 using std::min;
 using std::vector;
@@ -47,7 +49,7 @@ using LS_dist_type = vector<LineSegment>::difference_type;
 #endif
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
 void PolyLine::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "PolyLine[{}]::setup( gc ):", this->name() ) };
@@ -923,7 +925,6 @@ void PolyLine::intersect_ISO(
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #ifdef CLOTHOIDS_USE_IOSTREAM
-
 string PolyLine::info() const
 {
     return fmt::format( "PolyLine\n{}\n", *this );

@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 
 // Microsoft visual studio Workaround
@@ -81,7 +81,7 @@ void LineSegment::bb_triangles_ISO( real_type offs, vector<Triangle2D>& tvec, re
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
 void LineSegment::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "LineSegment[{}]::setup( gc ):", this->name() ) };
@@ -698,7 +698,6 @@ integer LineSegment::closest_point_ISO( real_type const qx, real_type const qy,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #ifdef CLOTHOIDS_USE_IOSTREAM
-
 string LineSegment::info() const
 {
     return fmt::format( "LineSegment\n{}\n", *this );

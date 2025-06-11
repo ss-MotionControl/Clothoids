@@ -98,7 +98,7 @@ class BiarcList : public BaseCurve {
         m_biarc_list.clear();
         m_aabb_triangles.clear();
     }
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
     void setup( GenericContainer const& gc ) override;
 #endif
     //!

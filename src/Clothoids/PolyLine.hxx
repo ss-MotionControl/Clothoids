@@ -85,7 +85,7 @@ class PolyLine : public BaseCurve {
     {
         this->reset_last_interval();
     }
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
     void setup( GenericContainer const& gc ) override;
 #endif
     void init();

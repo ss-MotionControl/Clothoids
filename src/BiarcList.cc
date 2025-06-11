@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #ifdef CLOTHOIDS_USE_IOSTREAM
-    #include "Clothoids_fmt.hh"
+#include "Clothoids_fmt.hh"
 #endif
 
 #include <cfloat>
@@ -42,7 +42,7 @@ using std::swap;
 using std::vector;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef CLOTHOIDS_USE_IOSTREAM
+#ifdef CLOTHOIDS_USE_GENERIC_CONTAINER
 void BiarcList::setup( GenericContainer const& gc )
 {
     string const where{ fmt::format( "BiarcList[{}]::setup( gc ):", this->name() ) };
@@ -1372,7 +1372,6 @@ integer BiarcList::findST1( integer const ibegin, integer const iend, real_type 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #ifdef CLOTHOIDS_USE_IOSTREAM
-
 string BiarcList::info() const
 {
     return fmt::format( "BiarcList\n{}\n", *this );
