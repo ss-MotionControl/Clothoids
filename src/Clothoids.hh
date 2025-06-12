@@ -45,7 +45,7 @@
         #include <Utils_AABB_tree.hh>
     #endif
     #ifndef CLOTHOIDS_MINIMAL_BUILD
-        #include "GenericContainer/GenericContainer.hh"ù
+        #include "GenericContainer/GenericContainer.hh"
     #endif
 
     #include <string>
