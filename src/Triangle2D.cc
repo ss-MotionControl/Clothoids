@@ -42,7 +42,7 @@
 
 #include "Clothoids.hh"
 #ifndef CLOTHOIDS_MINIMAL_BUILD
-#include "Clothoids_fmt.hh"
+    #include "Clothoids_fmt.hh"
 #endif
 
 // workaround for windows that defines max and min as macros!
@@ -53,8 +53,10 @@
     #undef min
 #endif
 
-#include <functional>
-#include <algorithm>
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+    #include <functional>
+    #include <algorithm>
+#endif
 
 namespace G2lib {
 

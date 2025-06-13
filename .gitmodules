@@ -1,6 +1,3 @@
-[submodule "submodules/GenericContainer"]
-	path = submodules/GenericContainer
-	url = https://github.com/ss-MotionControl/GenericContainer.git
 [submodule "submodules/UtilsLite"]
 	path = submodules/UtilsLite
 	url = https://github.com/ss-MotionControl/UtilsLite.git

@@ -19,11 +19,13 @@
 
 #include "Clothoids.hh"
 #ifndef CLOTHOIDS_MINIMAL_BUILD
-#include "Clothoids_fmt.hh"
+    #include "Clothoids_fmt.hh"
 #endif
 #include "PolynomialRoots.hh"
 
-#include <algorithm>
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+    #include <algorithm>
+#endif
 
 #ifdef __clang__
     #pragma clang diagnostic ignored "-Wglobal-constructors"
