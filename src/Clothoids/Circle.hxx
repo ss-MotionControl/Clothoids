@@ -595,8 +595,9 @@ class CircleArc : public BaseCurve {
     integer closest_point_ISO( real_type qx, real_type qy, real_type offs, real_type& x,
         real_type& y, real_type& s, real_type& t, real_type& dst ) const override;
 
-    [[nodiscard]] string info() const;
 #ifndef CLOTHOIDS_MINIMAL_BUILD
+    [[nodiscard]] string info() const;
+
     void info( ostream_type& stream ) const override
     {
         stream << this->info();

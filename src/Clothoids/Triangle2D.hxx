@@ -249,9 +249,9 @@ class Triangle2D {
 
     real_type dist_max( real_type x, real_type y ) const;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
-#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const
     {
         stream << this->info();

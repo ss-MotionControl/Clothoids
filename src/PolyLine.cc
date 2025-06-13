@@ -768,9 +768,14 @@ integer PolyLine::closest_point_ISO( real_type const x, real_type const y, real_
         AABB_SET candidateList;
         real_type const xy[2]{ x, y };
         m_aabb_tree.min_distance_candidates( xy, candidateList );
+#ifndef UTILS_MINIMAL_BUILD
         UTILS_ASSERT( !candidateList.empty(),
             "PolyLine::closest_point_ISO, empty candidate list, #{}\n{}\n", candidateList.size(),
             m_aabb_tree.info() );
+#else
+        UTILS_ASSERT(
+            !candidateList.empty(), "PolyLine::closest_point_ISO, empty candidate list\n" );
+#endif
         for ( auto const i : candidateList ) {
             LineSegment const& LS{ m_polyline_list[i] };
             LS.closest_point_ISO( x, y, X1, Y1, S1, T1, DST1 );

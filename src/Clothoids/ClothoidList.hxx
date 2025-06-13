@@ -1787,8 +1787,9 @@ class ClothoidList : public BaseCurve {
         return res;
     }
 
-    string info() const;
 #ifndef CLOTHOIDS_MINIMAL_BUILD
+    string info() const;
+
     void info( ostream_type& stream ) const override
     {
         stream << this->info();
@@ -2145,9 +2146,9 @@ class ClothoidSplineG2 {
 
     bool jacobian( real_type const theta[], real_type vals[] ) const;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
-#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const
     {
         stream << this->info();

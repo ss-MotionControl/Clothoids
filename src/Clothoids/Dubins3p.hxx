@@ -852,9 +852,9 @@ class Dubins3p : public BaseCurve {
     void intersect_ISO( real_type offs, BaseCurve const* pC, real_type offs_LS,
         IntersectList& ilist ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     [[nodiscard]] string info() const;
 
-#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type& stream ) const override
     {
         stream << this->info();
