@@ -22,7 +22,9 @@
 ///
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 
 namespace G2lib {
 
@@ -49,7 +51,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   Biarc::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("Biarc[{}]::setup( gc ):", this->name() ) };
@@ -62,7 +64,7 @@ namespace G2lib {
     bool const ok = this->build( x0, y0, theta0, x1, y1, theta1 );
     UTILS_ASSERT( ok, "Biarc[{}]::setup( gc ) failed\n", this->name() );
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -986,7 +988,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   string
   Biarc::info() const
   { return fmt::format( "BiArc\n{}\n", *this ); }
@@ -1007,7 +1009,7 @@ namespace G2lib {
       << "\n";
     return stream;
   }
-
+#endif
 }
 
 ///

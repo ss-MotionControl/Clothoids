@@ -64,9 +64,9 @@ namespace G2lib {
     Biarc( string_view const name ) : BaseCurve( name ) {};
 
     ~Biarc() override = default;
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const & gc ) override;
-
+#endif
     //!
     //! Make a copy of an existing biarc
     //!
@@ -626,6 +626,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
     void
@@ -635,7 +636,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, Biarc const & bi );
-
+#endif
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "Biarc_compatibility.hxx"
 #endif

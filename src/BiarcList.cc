@@ -18,10 +18,12 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 
 #include <cfloat>
 #include <limits>
+#endif
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -40,7 +42,7 @@ namespace G2lib {
   using std::abs;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   BiarcList::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("BiarcList[{}]::setup( gc ):", this->name() ) };
@@ -66,7 +68,7 @@ namespace G2lib {
     }
     UTILS_ASSERT( ok, "BiarcList[{}]::setup( gc ) failed\n", this->name() );
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -351,6 +353,7 @@ namespace G2lib {
       !m_biarc_list.empty(),
       "BiarcList::get( {} ) empty list\n", idx
     );
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
       return m_biarc_list.at(idx);
     } catch ( std::exception & exc ) {
@@ -358,6 +361,9 @@ namespace G2lib {
     } catch ( ... ) {
       UTILS_ERROR( "BiarcList::get( {} ): unknown error\n", idx );
     }
+#else
+    return m_biarc_list.at( idx );
+#endif
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1524,7 +1530,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   string
   BiarcList::info() const
   { return fmt::format( "BiarcList\n{}\n", *this ); }
@@ -1543,7 +1549,7 @@ namespace G2lib {
       stream << b << '\n';
     return stream;
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 

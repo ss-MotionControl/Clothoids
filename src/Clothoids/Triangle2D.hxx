@@ -210,6 +210,7 @@ namespace G2lib {
     real_type
     dist_max( real_type x, real_type y ) const;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
     void
@@ -220,6 +221,7 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, Triangle2D const & c );
 
+#endif
   };
 
 }

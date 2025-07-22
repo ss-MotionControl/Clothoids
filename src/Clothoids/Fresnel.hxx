@@ -437,10 +437,10 @@ namespace G2lib {
       real_type   tol,
       real_type & L
     );
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void
     info( ostream_type & s ) const;
-
+#endif
   };
 
   #endif

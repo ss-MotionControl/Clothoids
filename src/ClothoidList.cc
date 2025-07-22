@@ -18,11 +18,15 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 #include "Utils_AlgoBracket.hh"
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <cfloat>
 #include <limits>
+#endif
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -51,7 +55,7 @@ namespace G2lib {
   using std::abs;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   ClothoidList::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("ClothoidList[{}]::setup( gc ):", this->name() ) };
@@ -77,7 +81,7 @@ namespace G2lib {
     }
     UTILS_ASSERT( ok, "ClothoidList[{}]::setup( gc ) failed\n", this->name() );
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -737,7 +741,9 @@ namespace G2lib {
       k  = kappa[i-1];
       L  = s[i]-s[i-1];
       if ( abs(L) < tol ) {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
         fmt::print( "ClothoidList::build, skipping segment N.{}\n", i);
+#endif
         continue; // skip too small segment
       }
       dk = (kappa[i]-k)/L;
@@ -784,6 +790,7 @@ namespace G2lib {
   ClothoidCurve const &
   ClothoidList::get( integer idx ) const {
     UTILS_ASSERT(!m_clothoid_list.empty(), "ClothoidList::get( {} ) empty list\n", idx );
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
       return m_clothoid_list.at(idx);
     } catch ( std::exception & exc ) {
@@ -791,6 +798,9 @@ namespace G2lib {
     } catch ( ... ) {
       UTILS_ERROR( "ClothoidList::get( {} ): unknown error\n", idx );
     }
+#else
+	return m_clothoid_list.at( idx );
+#endif
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2433,7 +2443,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   ClothoidList::export_table( ostream_type & stream ) const {
     stream << "x\ty\ttheta0\tkappa0\tdkappa\tL\n";
@@ -2606,7 +2616,7 @@ namespace G2lib {
   { return fmt::format( "ClothoidSplineG2\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#endif
 }
 
 // EOF: ClothoidList.cc

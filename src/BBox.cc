@@ -26,7 +26,9 @@
 ///
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 
 // Workaround for Visual Studio
 #ifdef min
@@ -37,7 +39,9 @@
   #undef max
 #endif
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <algorithm>
+#endif
 
 namespace G2lib {
 
@@ -119,6 +123,7 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   BBox::print( ostream_type & stream ) const {
     fmt::print( stream,
@@ -126,6 +131,7 @@ namespace G2lib {
       x_min(), y_min(), x_max(), y_max()
     );
   }
+#endif
 }
 
 ///

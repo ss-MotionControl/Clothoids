@@ -58,9 +58,9 @@ namespace G2lib {
 
     explicit
     CircleArc( string_view const name ) : BaseCurve( name ) {};
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const & gc ) override;
-
+#endif
     //!
     //! Build a copy of an existing circle arc.
     //!
@@ -647,6 +647,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     [[nodiscard]] string info() const;
 
     void
@@ -656,7 +657,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, CircleArc const & bi );
-
+#endif
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

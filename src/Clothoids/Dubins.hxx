@@ -91,9 +91,9 @@ namespace G2lib {
 
     explicit
     Dubins( string_view name ) : BaseCurve( name ) {};
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const & gc ) override;
-
+#endif
     //!
     //! Build a copy of an existing Dubins problem.
     //!
@@ -622,6 +622,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
     void
@@ -631,7 +632,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, Dubins const & bi );
-
+#endif
     CurveType type() const override { return CurveType::DUBINS; }
 
     friend class Dubins3p;

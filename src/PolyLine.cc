@@ -18,7 +18,9 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 
 // Workaround for Visual Studio
 #ifdef min
@@ -29,14 +31,18 @@
   #undef max
 #endif
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <algorithm>
+#endif
 
 namespace G2lib {
 
   using std::min;
   using std::max;
   using std::abs;
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   using std::cout;
+#endif
   using std::vector;
   using std::ceil;
 
@@ -45,7 +51,7 @@ namespace G2lib {
   #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   PolyLine::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("PolyLine[{}]::setup( gc ):", this->name() ) };
@@ -59,7 +65,7 @@ namespace G2lib {
     );
     this->build( n, x.data(), y.data() );
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void PolyLine::build( CircleArc     const & ) { UTILS_ERROR("cannot convert from CircleArc to PolyLine\n"); }
@@ -779,12 +785,17 @@ namespace G2lib {
       AABB_SET candidateList;
       real_type const xy[2]{ x, y };
       m_aabb_tree.min_distance_candidates( xy, candidateList );
+#ifndef UTILS_MINIMAL_BUILD
+        UTILS_ASSERT( !candidateList.empty(),
+            "PolyLine::closest_point_ISO, empty candidate list, #{}\n{}\n",
+            candidateList.size(),
+            m_aabb_tree.info() );
+#else
       UTILS_ASSERT(
         !candidateList.empty(),
-        "PolyLine::closest_point_ISO, empty candidate list, #{}\n{}\n",
-        candidateList.size(),
-        m_aabb_tree.info()
+        "PolyLine::closest_point_ISO, empty candidate list\n"
       );
+#endif
       for (auto const i : candidateList ) {
         LineSegment const & LS{ m_polyline_list[i] };
         LS.closest_point_ISO( x, y, X1, Y1, S1, T1, DST1 );
@@ -966,7 +977,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   string
   PolyLine::info() const
   { return fmt::format( "PolyLine\n{}\n", *this ); }
@@ -997,7 +1008,7 @@ namespace G2lib {
     );
     return stream;
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 }

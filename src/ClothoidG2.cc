@@ -18,9 +18,11 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
 
 #include <cfloat>
+#endif
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -850,7 +852,9 @@ namespace G2lib {
                     FP_NAN      != fpclassify(X[1]);
     }
     catch (...) {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
       std::cerr << "G2solve3arc::solve, something go wrong\n";
+#endif
       // nothing to do
     }
     if ( converged ) build_solution(X[0], X[1]); // costruisco comunque soluzione
@@ -1667,6 +1671,7 @@ namespace G2lib {
     return true;
   }
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!
   //!  Print on strem the `ClothoidSplineG2` object
@@ -1684,7 +1689,7 @@ namespace G2lib {
     );
     return stream;
   }
-
+#endif
 }
 
 // EOF: ClothoidG2.cc

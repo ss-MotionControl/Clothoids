@@ -22,7 +22,9 @@
 ///
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 #include "Utils_AlgoBracket.hh"
 
 namespace G2lib {

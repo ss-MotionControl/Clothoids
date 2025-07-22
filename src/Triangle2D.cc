@@ -41,7 +41,9 @@
  */
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 
 // workaround for windows that defines max and min as macros!
 #ifdef max
@@ -51,8 +53,10 @@
   #undef min
 #endif
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <functional>
 #include <algorithm>
+#endif
 
 namespace G2lib {
 
@@ -288,6 +292,7 @@ namespace G2lib {
 
   }
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!
   //!  Print on strem the `Triangle2D` object
@@ -315,7 +320,7 @@ namespace G2lib {
   string
   Triangle2D::info() const
   { return fmt::format( "Triangle2D\n{}\n", *this ); }
-
+#endif
 }
 
 ///

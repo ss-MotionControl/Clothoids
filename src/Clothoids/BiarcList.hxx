@@ -105,9 +105,9 @@ namespace G2lib {
       m_biarc_list.clear();
       m_aabb_triangles.clear();
     }
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const & gc ) override;
-
+#endif
     //!
     //! Build a copy of another biarc spline.
     //!
@@ -693,6 +693,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
     void
@@ -702,7 +703,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, BiarcList const & CL );
-
+#endif
     //!
     //! Return the biarc as a list of nodes angles and curvatures.
     //!

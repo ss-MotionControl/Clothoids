@@ -18,7 +18,9 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 
 // workaround for windows that defines max and min as macros!
 #ifdef max
@@ -28,9 +30,11 @@
   #undef min
 #endif
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <cmath>
 #include <cfloat>
 #include <algorithm>
+#endif
 
 namespace G2lib {
 
@@ -57,7 +61,7 @@ namespace G2lib {
   real_type ClothoidCurve::m_tolerance = 0.01745329252; // 1 degree
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   ClothoidCurve::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("ClothoidCurve[{}]::setup( gc ):", this->name() ) };
@@ -70,7 +74,7 @@ namespace G2lib {
     bool const ok = this->build_G1( x0, y0, theta0, x1, y1, theta1 );
     UTILS_ASSERT( ok, "ClothoidCurve[{}]::setup( gc ) failed\n", this->name() );
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   ClothoidCurve::ClothoidCurve( string_view const name )
@@ -1219,7 +1223,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   string
   ClothoidCurve::info() const
   { return fmt::format( "Clothoid\n{}\n", *this ); }
@@ -1253,7 +1257,7 @@ namespace G2lib {
     );
     return stream;
   }
-
+#endif
 }
 
 // EOF: Clothoid.cc

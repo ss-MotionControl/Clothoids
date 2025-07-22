@@ -55,9 +55,9 @@ namespace G2lib {
 
     explicit
     LineSegment( string_view name ) : BaseCurve( name ) {};
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const & gc ) override;
-
+#endif
     LineSegment( LineSegment const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 
@@ -438,6 +438,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     [[nodiscard]] string info() const;
 
     void
@@ -447,7 +448,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, LineSegment const & c );
-
+#endif
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

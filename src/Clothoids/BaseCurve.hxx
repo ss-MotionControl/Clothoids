@@ -207,11 +207,11 @@ namespace G2lib {
 
     virtual
     ~BaseCurve() = default;
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     virtual void setup( GenericContainer const & gc ) = 0;
 
     void build( GenericContainer const & gc ) { this->setup( gc ); }
-
+#endif
     //!
     //! The name of the curve type
     //!
@@ -1565,14 +1565,14 @@ namespace G2lib {
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     //!
     //! Pretty print of the curve data.
     //!
     virtual
     void
     info( ostream_type & stream ) const = 0;
-
+#endif
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "BaseCurve_compatibility.hxx"
 #endif

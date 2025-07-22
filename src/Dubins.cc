@@ -22,7 +22,9 @@
 ///
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 #include "PolynomialRoots.hh"
 
 namespace G2lib {
@@ -98,7 +100,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   Dubins::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("Dubins[{}]::setup( gc ):", this->name() ) };
@@ -112,7 +114,7 @@ namespace G2lib {
     bool const ok{ this->build( x0, y0, theta0, x1, y1, theta1, kmax ) };
     UTILS_ASSERT( ok, "Dubins[{}]::setup( gc ) failed\n", this->name() );
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::build( LineSegment   const & ) { UTILS_ERROR("cannot convert from LineSegment to Dubins\n"); }
@@ -921,11 +923,11 @@ return m_C2.FUN(s)
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   string
   Dubins::info() const
   { return fmt::format( "Dubins\n{}\n", *this ); }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string_view
@@ -1155,6 +1157,7 @@ return m_C2.FUN(s)
     return npts;
   }
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!
   //!  Print on strem the `Dubins` object
@@ -1172,7 +1175,7 @@ return m_C2.FUN(s)
       << "\n";
     return stream;
   }
-
+#endif
 }
 
 ///

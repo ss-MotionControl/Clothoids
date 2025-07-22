@@ -136,9 +136,9 @@ namespace G2lib {
     //! Build a copy of an existing clothoid curve
     //!
     ClothoidCurve( ClothoidCurve const & s );
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const & gc ) override;
-
+#endif
     //!
     //! Construct a clothoid with the standard parameters.
     //!
@@ -1076,6 +1076,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
     void
@@ -1085,7 +1086,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
-
+#endif
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "Clothoid_compatibility.hxx"
 #endif

@@ -18,7 +18,9 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 
 // Microsoft visual studio Workaround
 #ifdef max
@@ -29,7 +31,9 @@
   #undef min
 #endif
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <algorithm>
+#endif
 
 namespace G2lib {
 
@@ -93,7 +97,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   void
   LineSegment::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("LineSegment[{}]::setup( gc ):", this->name() ) };
@@ -103,6 +107,7 @@ namespace G2lib {
     real_type const y1 { gc.get_map_number("y1", where ) };
     this->build_2P( x0, y0, x1, y1 );
   }
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void LineSegment::build( CircleArc     const & ) { UTILS_ERROR("cannot convert from CircleArc to LineSegment\n"); }
@@ -753,7 +758,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   string
   LineSegment::info() const
   { return fmt::format( "LineSegment\n{}\n", *this ); }
@@ -777,7 +782,7 @@ namespace G2lib {
     );
     return stream;
   }
-
+#endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 }

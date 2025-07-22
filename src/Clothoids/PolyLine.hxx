@@ -84,8 +84,9 @@ namespace G2lib {
     PolyLine( string_view const name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const & gc ) override;
-
+#endif
     void init();
 
     void copy( PolyLine const & l );
@@ -514,6 +515,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
     void
@@ -523,7 +525,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, PolyLine const & P );
-
+#endif
     void
     build_AABBtree() const;
 

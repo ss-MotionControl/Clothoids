@@ -364,7 +364,9 @@ namespace G2lib {
     //!
     ClothoidCurve const & S1() const { return m_S1; }
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void save( ostream_type & stream ) const;
+#endif
 
     #ifdef CLOTHOIDS_BACK_COMPATIBILITY
     void setTolerance( real_type tol ) { set_tolerance( tol ); }
@@ -821,14 +823,14 @@ namespace G2lib {
       m_S1.reverse();
       m_SM.reverse();
     }
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     friend
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
 
     //! save clothoid list of a file stream
     void save( ostream_type & stream ) const;
-
+#endif
     // BACK COMPATIBILITY
     #ifdef CLOTHOIDS_BACK_COMPATIBILITY
     void setTolerance( real_type tol ) { set_tolerance( tol ); }
@@ -925,9 +927,9 @@ namespace G2lib {
       m_clothoid_list.clear();
       m_aabb_triangles.clear();
     }
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void setup( GenericContainer const & gc ) override;
-
+#endif
     //!
     //! Build a copy of an existing clothoid list
     //!
@@ -1992,6 +1994,7 @@ namespace G2lib {
       return res;
     }
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
     void
@@ -2001,7 +2004,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, ClothoidList const & CL );
-
+#endif
     //!
     //! Return the clothoid list as a list of nodes and curvatures
     //!
@@ -2207,6 +2210,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     //!
     //! Save Clothoid list to a stream
     //!
@@ -2246,7 +2250,7 @@ namespace G2lib {
     //!       xn yn thetan kappan
     //!
     void load( istream_type & stream, real_type epsi = 1e-8 );
-
+#endif
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "ClothoidList_compatibility.hxx"
 #endif
@@ -2385,6 +2389,7 @@ namespace G2lib {
     bool
     jacobian( real_type const theta[], real_type vals[] ) const;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     string info() const;
 
     void
@@ -2394,7 +2399,7 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, ClothoidSplineG2 const & c );
-
+#endif
   };
 
 }

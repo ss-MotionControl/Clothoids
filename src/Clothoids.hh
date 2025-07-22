@@ -32,6 +32,9 @@
 
 // comment to disable threads support
 #define CLOTHOIDS_USE_THREADS 1
+#ifdef CLOTHOIDS_MINIMAL_BUILD
+  #undef CLOTHOIDS_USE_THREADS
+#endif
 
 #ifdef NO_SYSTEM_UTILS
   #include "Utils.hh"
@@ -40,20 +43,25 @@
   #include <Utils.hh>
   #include <Utils_AABB_tree.hh>
 #endif
-
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "GenericContainer/GenericContainer.hh"
+#endif
 
 #include <string>
 #include <string_view>
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#endif
 #include <cmath>
 
 #include <vector>
 #include <map>
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <utility>
 #include <algorithm>
+#endif
 #include <iterator>
 
 #include <memory>  // shared_ptr
@@ -76,15 +84,18 @@ namespace G2lib {
   using std::map;
   using std::set;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   using istream_type     = std::basic_istream<char>;             //!< input streaming
   using ostream_type     = std::basic_ostream<char>;             //!< output streaming
+#endif
   using real_type        = double;                               //!< real type number
   using integer          = int;                                  //!< integer type number
   using AABB_TREE        = Utils::AABBtree<real_type>;           //!< `AABB` tree type
   using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET; //!< Set type used in `AABB` tree object
   using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP; //!< Map type used in `AABB` tree object
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   using GenericContainer = GC_namespace::GenericContainer;       //!< Generic container object
-
+#endif
   //!
   //! Enumeration type for curve type
   //!
