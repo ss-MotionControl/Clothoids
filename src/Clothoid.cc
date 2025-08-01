@@ -464,6 +464,66 @@ namespace G2lib {
     }
   }
 
+  bool
+  ClothoidCurve::bb_triangles_internal_ISO(
+    real_type    offs,
+    real_type    s_begin,
+    real_type    s_end,
+    real_type    max_angle,
+    real_type    max_size,
+    integer      icurve,
+    Triangle2D & t,
+    real_type  & s_last
+  ) const {
+    static real_type const one_degree = Utils::m_pi/180;
+
+    real_type thh = m_CD.theta( s_begin );
+    real_type const MX = min( m_L, max_size );
+
+    // estimate angle variation and compute step accodingly
+    real_type k = m_CD.kappa( s_begin );
+    real_type dss = MX / ( 1 + k * offs ); // scale length with offset
+    s_last = s_begin + dss;
+    if ( s_last > s_end ) {
+        s_last = s_end;
+        dss = s_end - s_begin;
+    }
+    if ( abs( k * dss ) > max_angle ) {
+        dss = abs( max_angle / k );
+        s_last = s_begin + dss;
+    }
+    // check and recompute if necessary
+    real_type thhh = theta( s_last );
+    if ( abs( thh - thhh ) > max_angle ) {
+        k = m_CD.kappa( s_last );
+        dss = abs( max_angle / k );
+        s_last = s_begin + dss;
+        thhh = theta( s_last );
+    }
+
+    real_type x0, y0, x1, y1;
+    m_CD.eval_ISO( s_begin, offs, x0, y0 );
+    m_CD.eval_ISO( s_last, offs, x1, y1 );
+
+    real_type const tx0 = cos( thh );
+    real_type const ty0 = sin( thh );
+    real_type alpha = s_last - s_begin; // se angolo troppo piccolo uso approx piu rozza
+    if ( abs( thh - thhh ) > one_degree ) {
+        real_type const tx1 = cos( thhh );
+        real_type const ty1 = sin( thhh );
+        real_type const det = tx1 * ty0 - tx0 * ty1;
+        real_type const dx = x1 - x0;
+        real_type const dy = y1 - y0;
+        alpha = ( dy * tx1 - dx * ty1 ) / det;
+    }
+
+    real_type const x2 = x0 + alpha * tx0;
+    real_type const y2 = y0 + alpha * ty0;
+    t.build( x0, y0, x2, y2, x1, y1, s_begin, s_last, icurve );
+
+    return s_last >= s_end;
+  }
+
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
@@ -519,6 +579,58 @@ namespace G2lib {
       else if ( T.y2() > ymax ) ymax = T.y2();
       if      ( T.y3() < ymin ) ymin = T.y3();
       else if ( T.y3() > ymax ) ymax = T.y3();
+    }
+  }
+
+  bool
+  ClothoidCurve::bbox_ISO_noalloc(
+    real_type   offs,
+    integer     max_iterations,
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
+    xmin = ymin = Utils::Inf<real_type>();
+    xmax = ymax = -xmin;
+
+    auto update_bbox = [&]( const Triangle2D & T ) {
+      if      ( T.x1() < xmin ) xmin = T.x1();
+      else if ( T.x1() > xmax ) xmax = T.x1();
+      if      ( T.x2() < xmin ) xmin = T.x2();
+      else if ( T.x2() > xmax ) xmax = T.x2();
+      if      ( T.x3() < xmin ) xmin = T.x3();
+      else if ( T.x3() > xmax ) xmax = T.x3();
+      // - - - - - - - - - - - - - - - - - - - -
+      if      ( T.y1() < ymin ) ymin = T.y1();
+      else if ( T.y1() > ymax ) ymax = T.y1();
+      if      ( T.y2() < ymin ) ymin = T.y2();
+      else if ( T.y2() > ymax ) ymax = T.y2();
+      if      ( T.y3() < ymin ) ymin = T.y3();
+      else if ( T.y3() > ymax ) ymax = T.y3();
+    };
+
+    auto bb_triangles_ISO_noalloc = [&]( real_type s_begin, real_type s_end ) -> bool {
+      Triangle2D T;
+      for ( integer i = 0; i < max_iterations; ++i ) {
+        double s_next;
+        bool b = bb_triangles_internal_ISO( offs, s_begin, s_end, Utils::m_pi/18, 1e100, 0, T, s_next );
+        s_begin = s_next;
+        update_bbox( T );
+        if ( b )
+          return true;
+      }
+      return false;
+    };
+
+    if ( m_CD.m_kappa0 * m_CD.m_dk >= 0 || m_CD.kappa( m_L ) * m_CD.m_dk <= 0 )
+      return bb_triangles_ISO_noalloc( 0.0, m_L );
+    else {
+      // flex inside, split clothoid
+      real_type const sflex = -m_CD.m_kappa0 / m_CD.m_dk;
+      if ( !bb_triangles_ISO_noalloc( 0.0, sflex ) )
+        return false;
+      return bb_triangles_ISO_noalloc( sflex, m_L );
     }
   }
 

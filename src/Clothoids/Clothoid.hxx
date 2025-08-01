@@ -73,6 +73,18 @@ namespace G2lib {
       integer              icurve
     ) const;
 
+    bool
+    bb_triangles_internal_ISO(
+      real_type    offs,
+      real_type    s_begin,
+      real_type    s_end,
+      real_type    max_angle,
+      real_type    max_size,
+      integer      icurve,
+      Triangle2D & t,
+      real_type  & s_last
+    ) const;
+
     void
     closest_point_internal(
       real_type   s_begin,
@@ -634,6 +646,16 @@ namespace G2lib {
       real_type & xmax,
       real_type & ymax
     ) const override;
+
+    bool
+    bbox_ISO_noalloc(
+      real_type   offs,
+      integer     max_iterations,
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
