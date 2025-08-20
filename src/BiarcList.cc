@@ -130,23 +130,23 @@ namespace G2lib {
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "LineSegment -> Biarc\n" );
-      this->push_back( *dynamic_cast<LineSegment const *>(pC) );
+      this->push_back( *static_cast<LineSegment const *>(pC) );
       break;
     case CurveType::CIRCLE:
       G2LIB_DEBUG_MESSAGE( "CircleArc -> Biarc\n" );
-      this->push_back( *dynamic_cast<CircleArc const *>(pC) );
+      this->push_back( *static_cast<CircleArc const *>(pC) );
       break;
     case CurveType::BIARC:
       G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
-      this->push_back( *dynamic_cast<Biarc const *>(pC) );
+      this->push_back( *static_cast<Biarc const *>(pC) );
       break;
     case CurveType::POLYLINE:
       G2LIB_DEBUG_MESSAGE( "to -> PolyLine\n" );
-      this->push_back( *dynamic_cast<PolyLine const *>(pC) );
+      this->push_back( *static_cast<PolyLine const *>(pC) );
       break;
     case CurveType::BIARC_LIST:
       G2LIB_DEBUG_MESSAGE( "to -> BiarcList\n" );
-      this->copy( *dynamic_cast<BiarcList const *>(pC) );
+      this->copy( *static_cast<BiarcList const *>(pC) );
       break;
     default:
       UTILS_ERROR(
@@ -1108,7 +1108,7 @@ namespace G2lib {
   bool
   BiarcList::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::BIARC_LIST ) {
-      BiarcList const & C = *dynamic_cast<BiarcList const *>(pC);
+      BiarcList const & C = *static_cast<BiarcList const *>(pC);
       return this->collision( C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -1128,7 +1128,7 @@ namespace G2lib {
     real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::BIARC_LIST ) {
-      BiarcList const & C{ *dynamic_cast<BiarcList const *>(pC) };
+      BiarcList const & C{ *static_cast<BiarcList const *>(pC) };
       return this->collision_ISO( offs, C, offs_C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -1257,7 +1257,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::BIARC_LIST ) {
-      BiarcList const & C = *dynamic_cast<BiarcList const *>(pC);
+      BiarcList const & C = *static_cast<BiarcList const *>(pC);
       this->intersect( C, ilist );
     } else {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -1278,7 +1278,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::BIARC_LIST ) {
-      BiarcList const & C{ *dynamic_cast<BiarcList const *>(pC) };
+      BiarcList const & C{ *static_cast<BiarcList const *>(pC) };
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };

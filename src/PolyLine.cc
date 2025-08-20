@@ -95,11 +95,11 @@ namespace G2lib {
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "to -> LineSegment\n" );
-      this->build( *dynamic_cast<LineSegment const *>(pC) );
+      this->build( *static_cast<LineSegment const *>(pC) );
       break;
     case CurveType::POLYLINE:
       G2LIB_DEBUG_MESSAGE( "to -> PolyLine\n" );
-      this->copy( *dynamic_cast<PolyLine const *>(pC) );
+      this->copy( *static_cast<PolyLine const *>(pC) );
       break;
     default:
       UTILS_ERROR( "PolyLine constructor cannot convert from: {}\n", pC->type_name() );
@@ -692,7 +692,7 @@ namespace G2lib {
   bool
   PolyLine::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::POLYLINE ) {
-      PolyLine const & C{ *dynamic_cast<PolyLine const *>(pC) };
+      PolyLine const & C{ *static_cast<PolyLine const *>(pC) };
       return this->collision( C );
     }
     if ( CurveType const CT{ curve_promote( this->type(), pC->type() ) }; CT == CurveType::POLYLINE ) {
@@ -711,7 +711,7 @@ namespace G2lib {
     real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::POLYLINE ) {
-      PolyLine const & C{ *dynamic_cast<PolyLine const *>(pC) };
+      PolyLine const & C{ *static_cast<PolyLine const *>(pC) };
       return this->collision_ISO( offs, C, offs_C );
     }
     if (CurveType const CT{ curve_promote( this->type(), pC->type() ) }; CT == CurveType::POLYLINE ) {
@@ -727,7 +727,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::POLYLINE ) {
-      PolyLine const & C{ *dynamic_cast<PolyLine const *>(pC) };
+      PolyLine const & C{ *static_cast<PolyLine const *>(pC) };
       this->intersect( C, ilist );
     } else {
       if (CurveType const CT{ curve_promote( this->type(), pC->type() ) }; CT == CurveType::POLYLINE ) {
@@ -747,7 +747,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::POLYLINE ) {
-      PolyLine const & C = *dynamic_cast<PolyLine const *>(pC);
+      PolyLine const & C = *static_cast<PolyLine const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
       if (CurveType const CT{ curve_promote( this->type(), pC->type() ) }; CT == CurveType::POLYLINE ) {

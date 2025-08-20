@@ -100,11 +100,11 @@ namespace G2lib {
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "LineSegment -> CircleArc\n" );
-      this->build( *dynamic_cast<LineSegment const *>(pC) );
+      this->build( *static_cast<LineSegment const *>(pC) );
       break;
     case CurveType::CIRCLE:
       G2LIB_DEBUG_MESSAGE( "to -> CircleArc\n" );
-      *this = *dynamic_cast<CircleArc const *>(pC);
+      *this = *static_cast<CircleArc const *>(pC);
       break;
     default:
       UTILS_ERROR( "CircleArc constructor cannot convert from: {}\n", pC->type_name() );
@@ -626,7 +626,7 @@ namespace G2lib {
   bool
   CircleArc::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::CIRCLE ) {
-      CircleArc const & C{ *dynamic_cast<CircleArc const *>(pC) };
+      CircleArc const & C{ *static_cast<CircleArc const *>(pC) };
       return this->collision( C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -680,7 +680,7 @@ namespace G2lib {
     real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::CIRCLE ) {
-      CircleArc const & C{ *dynamic_cast<CircleArc const *>(pC) };
+      CircleArc const & C{ *static_cast<CircleArc const *>(pC) };
       return this->collision_ISO( offs, C, offs_C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -756,7 +756,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::CIRCLE ) {
-      CircleArc const & C = *dynamic_cast<CircleArc const *>(pC);
+      CircleArc const & C = *static_cast<CircleArc const *>(pC);
       this->intersect( C, ilist );
     } else {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -777,7 +777,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::CIRCLE ) {
-      CircleArc const & C = *dynamic_cast<CircleArc const *>(pC);
+      CircleArc const & C = *static_cast<CircleArc const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };

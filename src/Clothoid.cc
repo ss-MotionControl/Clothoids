@@ -288,15 +288,15 @@ namespace G2lib {
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "LineSegment -> ClothoidCurve\n" );
-      this->build( *dynamic_cast<LineSegment const *>(pC) );
+      this->build( *static_cast<LineSegment const *>(pC) );
       break;
     case CurveType::CIRCLE:
       G2LIB_DEBUG_MESSAGE( "CircleArc -> ClothoidCurve\n" );
-      this->build( *dynamic_cast<CircleArc const *>(pC) );
+      this->build( *static_cast<CircleArc const *>(pC) );
       break;
     case CurveType::CLOTHOID:
       G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidCurve\n" );
-      this->copy( *dynamic_cast<ClothoidCurve const *>(pC) );
+      this->copy( *static_cast<ClothoidCurve const *>(pC) );
       break;
     default:
       UTILS_ERROR( "ClothoidList constructor cannot convert from: {}\n", pC->type_name() );
@@ -811,7 +811,7 @@ namespace G2lib {
   bool
   ClothoidCurve::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::CLOTHOID ) {
-      ClothoidCurve const & C = *dynamic_cast<ClothoidCurve const *>(pC);
+      ClothoidCurve const & C = *static_cast<ClothoidCurve const *>(pC);
       return this->collision( C );
     }
     ClothoidCurve const C(pC);
@@ -827,7 +827,7 @@ namespace G2lib {
     real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::CLOTHOID ) {
-      ClothoidCurve const & C = *dynamic_cast<ClothoidCurve const *>(pC);
+      ClothoidCurve const & C = *static_cast<ClothoidCurve const *>(pC);
       return this->collision_ISO( offs, C, offs_C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -999,7 +999,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::CLOTHOID ) {
-      ClothoidCurve const & C = *dynamic_cast<ClothoidCurve const *>(pC);
+      ClothoidCurve const & C = *static_cast<ClothoidCurve const *>(pC);
       this->intersect( C, ilist );
     } else {
       ClothoidCurve const C(pC);
@@ -1015,7 +1015,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::CLOTHOID ) {
-      ClothoidCurve const & C = *dynamic_cast<ClothoidCurve const *>(pC);
+      ClothoidCurve const & C = *static_cast<ClothoidCurve const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
       ClothoidCurve const C(pC);

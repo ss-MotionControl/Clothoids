@@ -213,36 +213,36 @@ namespace G2lib {
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "LineSegment -> ClothoidList\n" );
-      this->push_back( *dynamic_cast<LineSegment const *>(pC) );
+      this->push_back( *static_cast<LineSegment const *>(pC) );
       break;
     case CurveType::CIRCLE:
       G2LIB_DEBUG_MESSAGE( "CircleArc -> ClothoidList\n" );
-      this->push_back( *dynamic_cast<CircleArc const *>(pC) );
+      this->push_back( *static_cast<CircleArc const *>(pC) );
       break;
     case CurveType::BIARC:
       G2LIB_DEBUG_MESSAGE( "Biarc -> ClothoidList\n" );
-      this->push_back( *dynamic_cast<Biarc const *>(pC) );
+      this->push_back( *static_cast<Biarc const *>(pC) );
       break;
     case CurveType::CLOTHOID:
       G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidList\n" );
-      this->push_back( *dynamic_cast<ClothoidCurve const *>(pC) );
+      this->push_back( *static_cast<ClothoidCurve const *>(pC) );
       break;
     case CurveType::POLYLINE:
       G2LIB_DEBUG_MESSAGE( "PolyLine -> ClothoidList\n" );
-      this->push_back( *dynamic_cast<PolyLine const *>(pC) );
+      this->push_back( *static_cast<PolyLine const *>(pC) );
       break;
     case CurveType::BIARC_LIST:
       G2LIB_DEBUG_MESSAGE( "BiarcList -> ClothoidList\n" );
-      this->push_back( *dynamic_cast<BiarcList const *>(pC) );
+      this->push_back( *static_cast<BiarcList const *>(pC) );
       break;
     case CurveType::CLOTHOID_LIST:
-      this->copy( *dynamic_cast<ClothoidList const *>(pC) );
+      this->copy( *static_cast<ClothoidList const *>(pC) );
       break;
     case CurveType::DUBINS:
-      this->push_back( *dynamic_cast<Dubins const *>(pC) );
+      this->push_back( *static_cast<Dubins const *>(pC) );
       break;
     case CurveType::DUBINS3P:
-      this->push_back( *dynamic_cast<Dubins3p const *>(pC) );
+      this->push_back( *static_cast<Dubins3p const *>(pC) );
       break;
     //default:
     //  UTILS_ERROR(
@@ -1600,7 +1600,7 @@ namespace G2lib {
   bool
   ClothoidList::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::CLOTHOID_LIST ) {
-      ClothoidList const & C{ *dynamic_cast<ClothoidList const *>(pC) };
+      ClothoidList const & C{ *static_cast<ClothoidList const *>(pC) };
       return this->collision( C );
     }
     ClothoidList const C(pC);
@@ -1616,7 +1616,7 @@ namespace G2lib {
     real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::CLOTHOID_LIST ) {
-      ClothoidList const & C{ *dynamic_cast<ClothoidList const *>(pC) };
+      ClothoidList const & C{ *static_cast<ClothoidList const *>(pC) };
       return this->collision_ISO( offs, C, offs_C );
     }
     ClothoidList const C(pC);
@@ -1806,7 +1806,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::CLOTHOID_LIST ) {
-      ClothoidList const & C{ *dynamic_cast<ClothoidList const *>(pC) };
+      ClothoidList const & C{ *static_cast<ClothoidList const *>(pC) };
       this->intersect( C, ilist );
     } else {
       ClothoidList const C(pC);
@@ -1822,7 +1822,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::CLOTHOID_LIST ) {
-      ClothoidList const & C{ *dynamic_cast<ClothoidList const *>(pC) };
+      ClothoidList const & C{ *static_cast<ClothoidList const *>(pC) };
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
       ClothoidList const C(pC);

@@ -687,7 +687,7 @@ return m_C2.FUN(s)
   bool
   Dubins::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::DUBINS ) {
-      Dubins const & C = *dynamic_cast<Dubins const *>(pC);
+      Dubins const & C = *static_cast<Dubins const *>(pC);
       return this->collision( C );
     }
     return G2lib::collision( this, pC );
@@ -702,7 +702,7 @@ return m_C2.FUN(s)
     real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::DUBINS ) {
-      Dubins const & C = *dynamic_cast<Dubins const *>(pC);
+      Dubins const & C = *static_cast<Dubins const *>(pC);
       return this->collision_ISO( offs, C, offs_C );
     }
     return G2lib::collision_ISO( this, offs, pC, offs_C );
@@ -864,7 +864,7 @@ return m_C2.FUN(s)
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::DUBINS ) {
-      Dubins const & C = *dynamic_cast<Dubins const *>(pC);
+      Dubins const & C = *static_cast<Dubins const *>(pC);
       this->intersect( C, ilist );
     } else {
       G2lib::intersect( this, pC, ilist );
@@ -879,7 +879,7 @@ return m_C2.FUN(s)
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::DUBINS ) {
-      Dubins const & C = *dynamic_cast<Dubins const *>(pC);
+      Dubins const & C = *static_cast<Dubins const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
       G2lib::intersect_ISO( this, offs, pC, offs_C, ilist );

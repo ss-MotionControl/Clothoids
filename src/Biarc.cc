@@ -117,15 +117,15 @@ namespace G2lib {
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
-      this->build( *dynamic_cast<LineSegment const *>(pC) );
+      this->build( *static_cast<LineSegment const *>(pC) );
       break;
     case CurveType::CIRCLE:
       G2LIB_DEBUG_MESSAGE( "to -> CircleArc\n" );
-      this->build( *dynamic_cast<CircleArc const *>(pC) );
+      this->build( *static_cast<CircleArc const *>(pC) );
       break;
     case CurveType::BIARC:
       G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
-      *this = *dynamic_cast<Biarc const *>(pC);
+      *this = *static_cast<Biarc const *>(pC);
       break;
     default:
       UTILS_ERROR( "Biarc constructor cannot convert from: {}\n", pC->type_name() );
@@ -770,7 +770,7 @@ namespace G2lib {
   bool
   Biarc::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
+      Biarc const & C{ *static_cast<Biarc const *>(pC) };
       return this->collision( C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -790,7 +790,7 @@ namespace G2lib {
     real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
+      Biarc const & C{ *static_cast<Biarc const *>(pC) };
       return this->collision_ISO( offs, C, offs_C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -895,7 +895,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
+      Biarc const & C{ *static_cast<Biarc const *>(pC) };
       this->intersect( C, ilist );
     } else {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -916,7 +916,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
+      Biarc const & C{ *static_cast<Biarc const *>(pC) };
       this->intersect_ISO( offs, C, offs_LS, ilist );
     } else {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };
