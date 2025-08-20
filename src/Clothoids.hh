@@ -48,7 +48,9 @@
 #endif
 
 #include <string>
+#ifndef CLOTHOIDS_NO_STRING_VIEW
 #include <string_view>
+#endif
 #ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <fstream>
 #include <iostream>
@@ -79,7 +81,11 @@
 namespace G2lib {
 
   using std::string;
+#ifdef CLOTHOIDS_NO_STRING_VIEW
+  using string_view = std::string;
+#else
   using std::string_view;
+#endif
   using std::vector;
   using std::map;
   using std::set;
