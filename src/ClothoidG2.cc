@@ -522,7 +522,9 @@ namespace G2lib {
     real_type       Dmax,
     real_type       dmax
   ) {
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
+#endif
       // save data
       m_x0     = x0;
       m_y0     = y0;
@@ -610,10 +612,12 @@ namespace G2lib {
       m_c13 = 0.5*m_s0*m_s1;
       m_c14 = 0.75*(m_s0 + m_s1);
       return solve( L, thM );
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     } catch (...) {
       return -1;
       // nothing to do
     }
+#endif
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -631,7 +635,9 @@ namespace G2lib {
     real_type const theta1,
     real_type const kappa1
   ) {
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
+#endif
       // save data
       m_x0     = x0;
       m_y0     = y0;
@@ -695,12 +701,13 @@ namespace G2lib {
       m_c14 = 0.75*(m_s0 + m_s1);
 
       return solve( L, thM );
-
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     } catch (...) {
 
       return -1;
       // nothing to do
     }
+#endif
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -807,7 +814,9 @@ namespace G2lib {
 
     integer iter{0};
     bool converged{false};
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try {
+#endif
       Solve2x2 solver;
       do {
         real_type J[2][2];
@@ -850,6 +859,7 @@ namespace G2lib {
                     FP_NAN      != fpclassify(X[0]) &&
                     FP_INFINITE != fpclassify(X[1]) &&
                     FP_NAN      != fpclassify(X[1]);
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     }
     catch (...) {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
@@ -857,6 +867,7 @@ namespace G2lib {
 #endif
       // nothing to do
     }
+#endif
     if ( converged ) build_solution(X[0], X[1]); // costruisco comunque soluzione
     return converged ? iter : -1;
   }
