@@ -191,7 +191,7 @@ namespace G2lib {
   //!
   class BaseCurve {
 
-    string const m_name;
+    string_view const m_name;
 
   public:
 
