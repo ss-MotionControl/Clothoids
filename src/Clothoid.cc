@@ -418,7 +418,7 @@ namespace G2lib {
 
       // estimate angle variation and compute step accodingly
       real_type k   = m_CD.kappa( ss );
-      real_type dss = MX/(1+k*offs); // scale length with offset
+      real_type dss = MX/(1+abs(k*offs)); // scale length with offset
       real_type sss = ss + dss;
       if ( sss > s_end ) {
         sss = s_end;
@@ -482,7 +482,7 @@ namespace G2lib {
 
     // estimate angle variation and compute step accodingly
     real_type k = m_CD.kappa( s_begin );
-    real_type dss = MX / ( 1 + k * offs ); // scale length with offset
+    real_type dss = MX / ( 1 + abs( k * offs ) ); // scale length with offset
     s_last = s_begin + dss;
     if ( s_last > s_end ) {
         s_last = s_end;
@@ -566,19 +566,19 @@ namespace G2lib {
     xmax = ymax = -xmin;
     for ( auto const & T : tvec ) {
       // - - - - - - - - - - - - - - - - - - - -
-      if      ( T.x1() < xmin ) xmin = T.x1();
-      else if ( T.x1() > xmax ) xmax = T.x1();
-      if      ( T.x2() < xmin ) xmin = T.x2();
-      else if ( T.x2() > xmax ) xmax = T.x2();
-      if      ( T.x3() < xmin ) xmin = T.x3();
-      else if ( T.x3() > xmax ) xmax = T.x3();
+      if ( T.x1() < xmin ) xmin = T.x1();
+      if ( T.x1() > xmax ) xmax = T.x1();
+      if ( T.x2() < xmin ) xmin = T.x2();
+      if ( T.x2() > xmax ) xmax = T.x2();
+      if ( T.x3() < xmin ) xmin = T.x3();
+      if ( T.x3() > xmax ) xmax = T.x3();
       // - - - - - - - - - - - - - - - - - - - -
-      if      ( T.y1() < ymin ) ymin = T.y1();
-      else if ( T.y1() > ymax ) ymax = T.y1();
-      if      ( T.y2() < ymin ) ymin = T.y2();
-      else if ( T.y2() > ymax ) ymax = T.y2();
-      if      ( T.y3() < ymin ) ymin = T.y3();
-      else if ( T.y3() > ymax ) ymax = T.y3();
+      if ( T.y1() < ymin ) ymin = T.y1();
+      if ( T.y1() > ymax ) ymax = T.y1();
+      if ( T.y2() < ymin ) ymin = T.y2();
+      if ( T.y2() > ymax ) ymax = T.y2();
+      if ( T.y3() < ymin ) ymin = T.y3();
+      if ( T.y3() > ymax ) ymax = T.y3();
     }
   }
 
@@ -596,18 +596,18 @@ namespace G2lib {
 
     auto update_bbox = [&]( const Triangle2D & T ) {
       if      ( T.x1() < xmin ) xmin = T.x1();
-      else if ( T.x1() > xmax ) xmax = T.x1();
+      if ( T.x1() > xmax ) xmax = T.x1();
       if      ( T.x2() < xmin ) xmin = T.x2();
-      else if ( T.x2() > xmax ) xmax = T.x2();
+      if ( T.x2() > xmax ) xmax = T.x2();
       if      ( T.x3() < xmin ) xmin = T.x3();
-      else if ( T.x3() > xmax ) xmax = T.x3();
+      if ( T.x3() > xmax ) xmax = T.x3();
       // - - - - - - - - - - - - - - - - - - - -
       if      ( T.y1() < ymin ) ymin = T.y1();
-      else if ( T.y1() > ymax ) ymax = T.y1();
+      if ( T.y1() > ymax ) ymax = T.y1();
       if      ( T.y2() < ymin ) ymin = T.y2();
-      else if ( T.y2() > ymax ) ymax = T.y2();
+      if ( T.y2() > ymax ) ymax = T.y2();
       if      ( T.y3() < ymin ) ymin = T.y3();
-      else if ( T.y3() > ymax ) ymax = T.y3();
+      if ( T.y3() > ymax ) ymax = T.y3();
     };
 
     auto bb_triangles_ISO_noalloc = [&]( real_type s_begin, real_type s_end ) -> bool {
