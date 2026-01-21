@@ -26,7 +26,7 @@
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define A_THRESOLD   0.01
-#define A_SERIE_SIZE 3
+#define A_SERIE_SIZE 10
 #endif
 
 #ifdef __GNUC__
@@ -54,11 +54,12 @@
 #include <algorithm>
 #endif
 
-namespace G2lib {
+namespace G2lib
+{
 
   using std::abs;
-  using std::min;
   using std::max;
+  using std::min;
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -80,22 +81,12 @@ namespace G2lib {
   // email: sivakanth.telasula@gmail.com
   // date: August 11, 2005
   */
-  static constexpr real_type fn[] = {
-    0.49999988085884732562,
-    1.3511177791210715095,
-    1.3175407836168659241,
-    1.1861149300293854992,
-    0.7709627298888346769,
-    0.4173874338787963957,
-    0.19044202705272903923,
-    0.06655998896627697537,
-    0.022789258616785717418,
-    0.0040116689358507943804,
-    0.0012192036851249883877
-  };
+  static constexpr real_type fn[] = { 0.49999988085884732562,   1.3511177791210715095,   1.3175407836168659241,
+                                      1.1861149300293854992,    0.7709627298888346769,   0.4173874338787963957,
+                                      0.19044202705272903923,   0.06655998896627697537,  0.022789258616785717418,
+                                      0.0040116689358507943804, 0.0012192036851249883877 };
 
-  static constexpr real_type fd[] = {
-    1.0,
+  static constexpr real_type fd[] = { 1.0,
     2.7022305772400260215,
     4.2059268151438492767,
     4.5221882840107715516,
@@ -106,25 +97,14 @@ namespace G2lib {
     0.20907680750378849485,
     0.07159621634657901433,
     0.012602969513793714191,
-    0.0038302423512931250065
-  };
+                                      0.0038302423512931250065 };
 
-  static constexpr real_type gn[] = {
-    0.50000014392706344801,
-    0.032346434925349128728,
-    0.17619325157863254363,
-    0.038606273170706486252,
-    0.023693692309257725361,
-    0.007092018516845033662,
-    0.0012492123212412087428,
-    0.00044023040894778468486,
-    -8.80266827476172521e-6,
-    -1.4033554916580018648e-8,
-    2.3509221782155474353e-10
-  };
+  static constexpr real_type gn[] = { 0.50000014392706344801,    0.032346434925349128728,   0.17619325157863254363,
+                                      0.038606273170706486252,   0.023693692309257725361,   0.007092018516845033662,
+                                      0.0012492123212412087428,  0.00044023040894778468486, -8.80266827476172521e-6,
+                                      -1.4033554916580018648e-8, 2.3509221782155474353e-10 };
 
-  static constexpr real_type gd[] = {
-    1.0,
+  static constexpr real_type gd[] = { 1.0,
     2.0646987497019598937,
     2.9109311766948031235,
     2.6561936751333032911,
@@ -135,8 +115,7 @@ namespace G2lib {
     0.07634808341431248904,
     0.011573247407207865977,
     0.0044099273693067311209,
-    -0.00009070958410429993314
-  };
+                                      -0.00009070958410429993314 };
 
   #endif
 
@@ -187,13 +166,13 @@ namespace G2lib {
   //! \param[out] C \f$C(x)\f$
   //! \param[out] S \f$S(x)\f$
   //!
-  void
-  FresnelCS( real_type y, real_type & C, real_type & S ) {
-
+  void FresnelCS( real_type y, real_type & C, real_type & S )
+  {
     constexpr real_type eps { 1E-15 };
     real_type const x{ y > 0 ? y : -y };
 
-    if ( x < 1.0 ) {
+    if ( x < 1.0 )
+    {
       real_type term;
 
       real_type const s { Utils::m_pi_2*(x*x) };
@@ -205,7 +184,8 @@ namespace G2lib {
       real_type denterm { 1.0 };
       real_type numterm { 1.0 };
       real_type sum     { 1.0 };
-      do {
+      do
+      {
         twofn   += 2.0;
         fact    *= twofn*(twofn-1.0);
         denterm += 4.0;
@@ -222,7 +202,8 @@ namespace G2lib {
       denterm = 3.0;
       numterm = 1.0;
       sum     = 1.0/3.0;
-      do {
+      do
+      {
         twofn   += 2.0;
         fact    *= twofn*(twofn-1.0);
         denterm += 4.0;
@@ -232,13 +213,14 @@ namespace G2lib {
       } while ( abs(term) > eps*abs(sum) );
 
       S = Utils::m_pi_2*sum*(x*x*x);
-
-    } else if ( x < 6.0 ) {
-
+    }
+    else if ( x < 6.0 )
+    {
       // Rational approximation for f
       real_type sumn{ 0.0 };
       real_type sumd{ fd[11] };
-      for ( integer k=10; k >= 0; --k ) {
+      for ( integer k = 10; k >= 0; --k )
+      {
         sumn = fn[k] + x*sumn;
         sumd = fd[k] + x*sumd;
       }
@@ -247,7 +229,8 @@ namespace G2lib {
       // Rational approximation for g
       sumn = 0.0;
       sumd = gd[11];
-      for ( integer k=10; k >= 0; --k ) {
+      for ( integer k = 10; k >= 0; --k )
+      {
         sumn = gn[k] + x*sumn;
         sumd = gd[k] + x*sumd;
       }
@@ -257,9 +240,9 @@ namespace G2lib {
       real_type const CosU { cos(U) };
       C = 0.5 + f*SinU - g*CosU;
       S = 0.5 - f*CosU - g*SinU;
-
-    } else {
-
+    }
+    else
+    {
       real_type absterm;
 
       // x >= 6; asymptotic expansions for  f  and  g
@@ -274,7 +257,8 @@ namespace G2lib {
       real_type       oldterm { 1.0 };
       real_type const eps10   { 0.1 * eps };
 
-      do {
+      do
+      {
         numterm += 4.0;
         term    *= numterm*(numterm-2.0)*t;
         sum     += term;
@@ -282,8 +266,9 @@ namespace G2lib {
         UTILS_ASSERT(
           oldterm >= absterm,
           "In FresnelCS f not converged to eps, x = {} oldterm = {} absterm = {}\n",
-          x, oldterm, absterm
-        );
+          x,
+          oldterm,
+          absterm );
         oldterm  = absterm;
       } while ( absterm > eps10 * abs(sum) );
 
@@ -295,7 +280,8 @@ namespace G2lib {
       sum     =  1.0;
       oldterm =  1.0;
 
-      do {
+      do
+      {
         numterm += 4.0;
         term    *= numterm*(numterm+2.0)*t;
         sum     += term;
@@ -303,58 +289,62 @@ namespace G2lib {
         UTILS_ASSERT(
           oldterm >= absterm,
           "In FresnelCS g not converged to eps, x = {} oldterm = {} absterm = {}\n",
-          x, oldterm, absterm
-        );
+          x,
+          oldterm,
+          absterm );
         oldterm  = absterm;
       } while ( absterm > eps10 * abs(sum) );
 
-      real_type       g    { Utils::m_pi*x }; g = sum/(g*g*x);
+      real_type g{ Utils::m_pi * x };
+      g = sum / ( g * g * x );
       real_type const U    { Utils::m_pi_2*(x*x) };
       real_type const SinU { sin(U) };
       real_type const CosU { cos(U) };
       C = 0.5 + f*SinU - g*CosU;
       S = 0.5 - f*CosU - g*SinU;
-
     }
-    if ( y < 0 ) { C = -C; S = -S; }
+    if ( y < 0 )
+    {
+      C = -C;
+      S = -S;
+  }
   }
 
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
-  void
-  FresnelCS(
-    integer   const nk,
-    real_type const t,
-    real_type       C[],
-    real_type       S[]
-  ) {
+  void FresnelCS( integer const nk, real_type const t, real_type C[], real_type S[] )
+  {
+    // livello base: C[0], S[0]
     FresnelCS(t,C[0],S[0]);
-    if ( nk > 1 ) {
+    if ( nk == 1 ) return;
+
+    // precompute fattori trigonometrici e potenze di t
       real_type const tt { Utils::m_pi_2*(t*t) };
       real_type const ss { sin(tt) };
       real_type const cc { cos(tt) };
+
+    // livello 1
       C[1] = ss*Utils::m_1_pi;
       S[1] = (1-cc)*Utils::m_1_pi;
-      if ( nk > 2 ) {
-        C[2] = (t*ss-S[0])*Utils::m_1_pi;
-        S[2] = (C[0]-t*cc)*Utils::m_1_pi;
+    if ( nk == 2 ) return;
+
+    // livelli successivi (ricorrenza generale)
+    real_type tk1{ 1 };
+    for ( integer k = 2; k < nk; ++k )
+    {
+      tk1 *= t;
+      C[k] = Utils::m_1_pi * ( ( tk1 * ss ) - ( k - 1 ) * S[k - 2] );
+      S[k] = Utils::m_1_pi * ( ( k - 1 ) * C[k - 2] - ( tk1 * cc ) );
       }
     }
-  }
 
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  void
-  evalXYaLarge(
-    real_type const a,
-    real_type const b,
-    real_type &     X,
-    real_type &     Y
-  ) {
+  static void evalXYaLarge( real_type const a, real_type const b, real_type & X, real_type & Y )
+  {
     real_type const s    = a > 0 ? +1 : -1;
     real_type const absa = abs(a);
     real_type const z    = m_1_sqrt_pi*sqrt(absa);
@@ -375,21 +365,11 @@ namespace G2lib {
   }
 
   // -------------------------------------------------------------------------
-  // nk max 3
-  static
-  void
-  evalXYaLarge(
-    integer   const nk,
-    real_type const a,
-    real_type const b,
-    real_type       X[],
-    real_type       Y[]
-  ) {
+  // nk max 5
 
-    UTILS_ASSERT(
-      nk < 4 && nk > 0,
-      "In evalXYaLarge first argument nk must be in 1..3, nk {}\n", nk
-    );
+  static void evalXYaLarge( integer const nk, real_type const a, real_type const b, real_type X[], real_type Y[] )
+  {
+    UTILS_ASSERT( nk <= 5 && nk > 0, "In evalXYaLarge first argument nk must be in 1..5, nk {}\n", nk );
 
     real_type const s    { static_cast<real_type>(a > 0 ? +1 : -1) };
     real_type const absa { abs(a) };
@@ -399,7 +379,7 @@ namespace G2lib {
     real_type       cg   { cos(g)/z };
     real_type       sg   { sin(g)/z };
 
-    real_type Cl[3], Sl[3], Cz[3], Sz[3];
+    real_type Cl[5], Sl[5], Cz[5], Sz[5];
 
     FresnelCS( nk, ell,   Cl, Sl );
     FresnelCS( nk, ell+z, Cz, Sz );
@@ -408,7 +388,8 @@ namespace G2lib {
     real_type const dS0 { Sz[0] - Sl[0] };
     X[0] = cg * dC0 - s * sg * dS0;
     Y[0] = sg * dC0 + s * cg * dS0;
-    if ( nk > 1 ) {
+
+    if ( nk <= 1 ) return;
       cg /= z;
       sg /= z;
       real_type const dC1 { Cz[1] - Cl[1] };
@@ -417,28 +398,49 @@ namespace G2lib {
       real_type       DS  { dS1-ell*dS0   };
       X[1] = cg * DC - s * sg * DS;
       Y[1] = sg * DC + s * cg * DS;
-      if ( nk > 2 ) {
+
+    if ( nk <= 2 ) return;
         real_type const dC2{ Cz[2] - Cl[2] };
         real_type const dS2{ Sz[2] - Sl[2] };
         DC   = dC2+ell*(ell*dC0-2*dC1);
         DS   = dS2+ell*(ell*dS0-2*dS1);
-        cg   = cg/z;
-        sg   = sg/z;
+    cg /= z;
+    sg /= z;
         X[2] = cg * DC - s * sg * DS;
         Y[2] = sg * DC + s * cg * DS;
+
+    if ( nk <= 3 ) return;
+    real_type const dC3{ Cz[3] - Cl[3] };
+    real_type const dS3{ Sz[3] - Sl[3] };
+    DC = dC3 + ell * ( -3 * dC2 + ell * ( 3 * dC1 - ell * dC0 ) );
+    DS = dS3 + ell * ( -3 * dS2 + ell * ( 3 * dS1 - ell * dS0 ) );
+
+    cg /= z;
+    sg /= z;
+    X[3] = cg * DC - s * sg * DS;
+    Y[3] = sg * DC + s * cg * DS;
+
+    if ( nk <= 4 ) return;
+    real_type const dC4{ Cz[4] - Cl[4] };
+    real_type const dS4{ Sz[4] - Sl[4] };
+    DC = dC4 + ell * ( -4 * dC3 + ell * ( 6 * dC2 + ell * ( -4 * dC1 + ell * dC0 ) ) );
+    DS = dS4 + ell * ( -4 * dS3 + ell * ( 6 * dS2 + ell * ( -4 * dS1 + ell * dS0 ) ) );
+
+    cg /= z;
+    sg /= z;
+    X[4] = cg * DC - s * sg * DS;
+    Y[4] = sg * DC + s * cg * DS;
       }
-    }
-  }
 
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
-  static
-  real_type
-  LommelReduced( real_type const mu, real_type const nu, real_type const b ) {
+  static real_type LommelReduced( real_type const mu, real_type const nu, real_type const b )
+  {
     real_type tmp{ 1/((mu+nu+1)*(mu-nu+1)) };
     real_type res{ tmp };
-    for ( integer n = 1; n <= 100; ++n ) {
+    for ( integer n = 1; n <= 100; ++n )
+    {
       tmp *= (-b/(2*n+mu-nu+1)) * (b/(2*n+mu+nu+1));
       res += tmp;
       if ( abs(tmp) < abs(res) * 1e-50 ) break;
@@ -449,21 +451,18 @@ namespace G2lib {
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
-  static
-  void
-  evalXYazero(
-    integer   const nk,
-    real_type const b,
-    real_type       X[],
-    real_type       Y[]
-  ) {
+  static void evalXYazero( integer const nk, real_type const b, real_type X[], real_type Y[] )
+  {
     real_type const sb{ sin(b) };
     real_type const cb{ cos(b) };
     real_type const b2{ b*b };
-    if ( abs(b) < 1e-3 ) {
+    if ( abs( b ) < 1e-3 )
+    {
       X[0] = 1-(b2/6)*(1-(b2/20)*(1-(b2/42)));
       Y[0] = (b/2)*(1-(b2/12)*(1-(b2/30)));
-    } else {
+    }
+    else
+    {
       X[0] = sb/b;
       Y[0] = (1-cb)/b;
     }
@@ -471,19 +470,22 @@ namespace G2lib {
     integer m{ static_cast<integer>(floor(2 * b)) };
     if ( m >= nk ) m = nk-1;
     if ( m < 1   ) m = 1;
-    for ( integer k{1}; k < m; ++k ) {
+    for ( integer k{ 1 }; k < m; ++k )
+    {
       X[k] = (sb-k*Y[k-1])/b;
       Y[k] = (k*X[k-1]-cb)/b;
     }
     //  use Lommel for the unstable part
-    if ( m < nk ) {
+    if ( m < nk )
+    {
       real_type const A   { b*sb    };
       real_type const D   { sb-b*cb };
       real_type const B   { b*D     };
       real_type const C   { -b2*sb  };
       real_type       rLa { LommelReduced(m+0.5,1.5,b) };
       real_type       rLd { LommelReduced(m+0.5,0.5,b) };
-      for ( integer k{m}; k < nk; ++k ) {
+      for ( integer k{ m }; k < nk; ++k )
+      {
         real_type const rLb { LommelReduced(k+1.5,0.5,b) };
         real_type const rLc { LommelReduced(k+1.5,1.5,b) };
         X[k] = ( k*A*rLa + B*rLb + cb ) / (1+k);
@@ -497,19 +499,9 @@ namespace G2lib {
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
-  static
-  void
-  evalXYaSmall(
-    real_type const a,
-    real_type const b,
-    integer   const p,
-    real_type &     X,
-    real_type &     Y
-  ) {
-
-    UTILS_ASSERT(
-      p < 11 && p > 0, "In evalXYaSmall p = {} must be in 1..10\n", p
-    );
+  static void evalXYaSmall( real_type const a, real_type const b, integer const p, real_type & X, real_type & Y )
+  {
+    UTILS_ASSERT( p < 11 && p > 0, "In evalXYaSmall p = {} must be in 1..10\n", p );
 
     real_type X0[43], Y0[43];
 
@@ -521,7 +513,8 @@ namespace G2lib {
 
     real_type       t  { 1 };
     real_type const aa { -a*a/4 }; // controllare!
-    for ( integer n{1}; n <= p; ++n ) {
+    for ( integer n{ 1 }; n <= p; ++n )
+    {
       t *= aa/(2*n*(2*n-1));
       real_type const bf{ a/(4*n+2) };
       integer   const jj{ 4*n };
@@ -532,40 +525,41 @@ namespace G2lib {
 
   // -------------------------------------------------------------------------
 
-  static
-  void
-  evalXYaSmall(
+  static void evalXYaSmall(
     integer   const nk,
     real_type const a,
     real_type const b,
     integer   const p,
     real_type       X[],
-    real_type       Y[]
-  ) {
-
+    real_type       Y[] )
+  {
     integer   nkk{nk + 4*p + 2}; // max 45
-    real_type X0[45], Y0[45];
+    real_type X0[48], Y0[48];
 
     UTILS_ASSERT(
-      nkk < 46,
+      nkk <= 47,
       "In evalXYaSmall (nk,p) = ({},{})\n"
-      "nk + 4*p + 2 = {} must be less than 46\n",
-      nk, p, nkk
-    );
+      "nk + 4*p + 2 = {} must be less than 47\n",
+      nk,
+      p,
+      nkk );
 
     evalXYazero( nkk, b, X0, Y0 );
 
-    for ( integer j=0; j < nk; ++j ) {
+    for ( integer j = 0; j < nk; ++j )
+    {
       X[j] = X0[j]-(a/2)*Y0[j+2];
       Y[j] = Y0[j]+(a/2)*X0[j+2];
     }
 
     real_type       t  { 1 };
     real_type const aa { -a*a/4 }; // controllare!
-    for ( integer n{1}; n <= p; ++n ) {
+    for ( integer n{ 1 }; n <= p; ++n )
+    {
       t *= aa/(2*n*(2*n-1));
       real_type const bf{ a/(4*n+2) };
-      for ( integer j{0}; j < nk; ++j ) {
+      for ( integer j{ 0 }; j < nk; ++j )
+      {
         integer const jj{ 4*n+j };
         X[j] += t*(X0[jj]-bf*Y0[jj+2]);
         Y[j] += t*(Y0[jj]+bf*X0[jj+2]);
@@ -577,17 +571,18 @@ namespace G2lib {
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
-  void
-  GeneralizedFresnelCS(
+  void GeneralizedFresnelCS(
     real_type const a,
     real_type const b,
     real_type const c,
     real_type &     intC,
-    real_type &     intS
-  ) {
+    real_type &     intS )
+  {
     real_type xx, yy;
-    if ( abs(a) < A_THRESOLD ) evalXYaSmall( a, b, A_SERIE_SIZE, xx, yy );
-    else                       evalXYaLarge( a, b, xx, yy );
+    if ( abs( a ) < A_THRESOLD )
+      evalXYaSmall( a, b, A_SERIE_SIZE, xx, yy );
+    else
+      evalXYaLarge( a, b, xx, yy );
 
     real_type const cosc{ cos(c) };
     real_type const sinc{ sin(c) };
@@ -599,24 +594,26 @@ namespace G2lib {
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
-  void
-  GeneralizedFresnelCS(
+  void GeneralizedFresnelCS(
     integer   const nk,
     real_type const a,
     real_type const b,
     real_type const c,
     real_type       intC[],
-    real_type       intS[]
-  ) {
-    UTILS_ASSERT( nk > 0 && nk < 4, "nk = {} must be in 1..3\n", nk );
+    real_type       intS[] )
+  {
+    UTILS_ASSERT( nk > 0 && nk <= 5, "nk = {} must be in 1..5\n", nk );
 
-    if ( abs(a) < A_THRESOLD ) evalXYaSmall( nk, a, b, A_SERIE_SIZE, intC, intS );
-    else                       evalXYaLarge( nk, a, b, intC, intS );
+    if ( abs( a ) < A_THRESOLD )
+      evalXYaSmall( nk, a, b, A_SERIE_SIZE, intC, intS );
+    else
+      evalXYaLarge( nk, a, b, intC, intS );
 
     real_type const cosc{ cos(c) };
     real_type const sinc{ sin(c) };
 
-    for ( integer k{0}; k < nk; ++k ) {
+    for ( integer k{ 0 }; k < nk; ++k )
+    {
       real_type const xx{ intC[k] };
       real_type const yy{ intS[k] };
       intC[k] = xx * cosc - yy * sinc;
@@ -628,102 +625,78 @@ namespace G2lib {
 
   // -------------------------------------------------------------------------
 
-  void
-  ClothoidData::nor_ISO(
-    real_type const s,
-    real_type &     nx,
-    real_type &     ny
-  ) const {
-    this->tg( s, ny, nx ); nx = -nx;
+  void ClothoidData::nor_ISO( real_type const s, real_type & nx, real_type & ny ) const
+  {
+    this->tg( s, ny, nx );
+    nx = -nx;
   }
 
-  void
-  ClothoidData::nor_SAE(
-    real_type const s,
-    real_type &     nx,
-    real_type &     ny
-  ) const {
-    this->tg( s, ny, nx ); ny = -ny;
+  void ClothoidData::nor_SAE( real_type const s, real_type & nx, real_type & ny ) const
+  {
+    this->tg( s, ny, nx );
+    ny = -ny;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::nor_ISO_D(
-    real_type const s,
-    real_type &     nx_D,
-    real_type &     ny_D
-  ) const {
-    this->tg_D( s, ny_D, nx_D ); nx_D = -nx_D;
+  void ClothoidData::nor_ISO_D( real_type const s, real_type & nx_D, real_type & ny_D ) const
+  {
+    this->tg_D( s, ny_D, nx_D );
+    nx_D = -nx_D;
   }
 
-  void
-  ClothoidData::nor_SAE_D(
-    real_type const s,
-    real_type &     nx_D,
-    real_type &     ny_D
-  ) const {
-    this->tg_D( s, ny_D, nx_D ); ny_D = -ny_D;
+  void ClothoidData::nor_SAE_D( real_type const s, real_type & nx_D, real_type & ny_D ) const
+  {
+    this->tg_D( s, ny_D, nx_D );
+    ny_D = -ny_D;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::nor_ISO_DD(
-    real_type const s,
-    real_type &     nx_DD,
-    real_type &     ny_DD
-  ) const {
-    this->tg_DD( s, ny_DD, nx_DD ); nx_DD = -nx_DD;
+  void ClothoidData::nor_ISO_DD( real_type const s, real_type & nx_DD, real_type & ny_DD ) const
+  {
+    this->tg_DD( s, ny_DD, nx_DD );
+    nx_DD = -nx_DD;
   }
 
-  void
-  ClothoidData::nor_SAE_DD(
-    real_type const s,
-    real_type &     nx_DD,
-    real_type &     ny_DD
-  ) const {
-    this->tg_DD( s, ny_DD, nx_DD ); ny_DD = -ny_DD;
+  void ClothoidData::nor_SAE_DD( real_type const s, real_type & nx_DD, real_type & ny_DD ) const
+  {
+    this->tg_DD( s, ny_DD, nx_DD );
+    ny_DD = -ny_DD;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::nor_ISO_DDD(
-    real_type const s,
-    real_type &     nx_DDD,
-    real_type &     ny_DDD
-  ) const {
-    this->tg_DDD( s, ny_DDD, nx_DDD ); nx_DDD = -nx_DDD;
+  void ClothoidData::nor_ISO_DDD( real_type const s, real_type & nx_DDD, real_type & ny_DDD ) const
+  {
+    this->tg_DDD( s, ny_DDD, nx_DDD );
+    nx_DDD = -nx_DDD;
   }
 
-  void
-  ClothoidData::nor_SAE_DDD(
-    real_type const s,
-    real_type &     nx_DDD,
-    real_type &     ny_DDD
-  ) const {
-    this->tg_DDD( s, ny_DDD, nx_DDD ); ny_DDD = -ny_DDD;
+  void ClothoidData::nor_SAE_DDD( real_type const s, real_type & nx_DDD, real_type & ny_DDD ) const
+  {
+    this->tg_DDD( s, ny_DDD, nx_DDD );
+    ny_DDD = -ny_DDD;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::tg_x_D( real_type const s ) const {
+  real_type ClothoidData::tg_x_D( real_type const s ) const
+  {
     return -sin(theta(s)) * theta_D(s);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::tg_y_D( real_type const s ) const {
+  real_type ClothoidData::tg_y_D( real_type const s ) const
+  {
     return cos(theta(s)) * theta_D(s);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::tg_x_DD( real_type const s ) const {
+  real_type ClothoidData::tg_x_DD( real_type const s ) const
+  {
     real_type const th    = theta(s);
     real_type const th_D  = theta_D(s);
     real_type const th_DD = theta_DD(s);
@@ -734,8 +707,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::tg_y_DD( real_type const s ) const {
+  real_type ClothoidData::tg_y_DD( real_type const s ) const
+  {
     real_type const th    = theta(s);
     real_type const th_D  = theta_D(s);
     real_type const th_DD = theta_DD(s);
@@ -746,8 +719,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::tg_x_DDD( real_type const s ) const {
+  real_type ClothoidData::tg_x_DDD( real_type const s ) const
+  {
     real_type const th    = theta(s);
     real_type const th_D  = theta_D(s);
     real_type const th_DD = theta_DD(s);
@@ -759,8 +732,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::tg_y_DDD( real_type const s ) const {
+  real_type ClothoidData::tg_y_DDD( real_type const s ) const
+  {
     real_type const th    = theta(s);
     real_type const th_D  = theta_D(s);
     real_type const th_DD = theta_DD(s);
@@ -772,12 +745,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::tg(
-    real_type const s,
-    real_type &     tx,
-    real_type &     ty
-  ) const {
+  void ClothoidData::tg( real_type const s, real_type & tx, real_type & ty ) const
+  {
     real_type const th = theta(s);
     tx = cos(th);
     ty = sin(th);
@@ -785,12 +754,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::tg_D(
-    real_type const s,
-    real_type &     tx_D,
-    real_type &     ty_D
-  ) const {
+  void ClothoidData::tg_D( real_type const s, real_type & tx_D, real_type & ty_D ) const
+  {
     real_type const th   = theta(s);
     real_type const th_D = theta_D(s);
     tx_D =  sin(th)*th_D;
@@ -799,12 +764,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::tg_DD(
-    real_type const s,
-    real_type &     tx_DD,
-    real_type &     ty_DD
-  ) const {
+  void ClothoidData::tg_DD( real_type const s, real_type & tx_DD, real_type & ty_DD ) const
+  {
     real_type const th    = theta(s);
     real_type const th_D  = theta_D(s);
     real_type const th_DD = theta_DD(s);
@@ -816,12 +777,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::tg_DDD(
-    real_type const s,
-    real_type &     tx_DDD,
-    real_type &     ty_DDD
-  ) const {
+  void ClothoidData::tg_DDD( real_type const s, real_type & tx_DDD, real_type & ty_DDD ) const
+  {
     real_type const th    = theta(s);
     real_type const th_D  = theta_D(s);
     real_type const th_DD = theta_DD(s);
@@ -834,8 +791,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::X( real_type const s ) const {
+  real_type ClothoidData::X( real_type const s ) const
+  {
     real_type C, S;
     GeneralizedFresnelCS( m_dk*s*s, m_kappa0*s, m_theta0, C, S );
     return m_x0 + s*C;
@@ -843,8 +800,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::Y( real_type const s ) const {
+  real_type ClothoidData::Y( real_type const s ) const
+  {
     real_type C, S;
     GeneralizedFresnelCS( m_dk*s*s, m_kappa0*s, m_theta0, C, S );
     return m_y0 + s*S;
@@ -852,20 +809,22 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::X_D( real_type const s ) const
-  { return cos( theta(s) ); }
+  real_type ClothoidData::X_D( real_type const s ) const
+  {
+    return cos( theta( s ) );
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::Y_D( real_type const s ) const
-  { return sin( theta(s) ); }
+  real_type ClothoidData::Y_D( real_type const s ) const
+  {
+    return sin( theta( s ) );
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::X_DD( real_type const s ) const {
+  real_type ClothoidData::X_DD( real_type const s ) const
+  {
     real_type const sdk     { s*m_dk };
     real_type const theta   { m_theta0 + s*(m_kappa0+0.5*sdk) };
     real_type const theta_D { m_kappa0 + sdk };
@@ -874,8 +833,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::Y_DD( real_type const s ) const {
+  real_type ClothoidData::Y_DD( real_type const s ) const
+  {
     real_type const sdk     = s*m_dk;
     real_type const theta   = m_theta0 + s*(m_kappa0+0.5*sdk);
     real_type const theta_D = m_kappa0 + sdk;
@@ -884,8 +843,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::X_DDD( real_type const s ) const {
+  real_type ClothoidData::X_DDD( real_type const s ) const
+  {
     real_type const sdk     = s*m_dk;
     real_type const theta   = m_theta0 + s*(m_kappa0+0.5*sdk);
     real_type const theta_D = m_kappa0 + sdk;
@@ -894,8 +853,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::Y_DDD( real_type const s ) const {
+  real_type ClothoidData::Y_DDD( real_type const s ) const
+  {
     real_type const sdk     = s*m_dk;
     real_type const theta   = m_theta0 + s*(m_kappa0+0.5*sdk);
     real_type const theta_D = m_kappa0 + sdk;
@@ -904,82 +863,93 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::X_ISO( real_type const s, real_type const offs ) const
-  { return X(s) + offs * nor_x_ISO(s); }
+  real_type ClothoidData::X_ISO( real_type const s, real_type const offs ) const
+  {
+    return X( s ) + offs * nor_x_ISO( s );
+  }
 
-  real_type
-  ClothoidData::Y_ISO( real_type const s, real_type const offs ) const
-  { return Y(s) + offs * nor_y_ISO(s); }
+  real_type ClothoidData::Y_ISO( real_type const s, real_type const offs ) const
+  {
+    return Y( s ) + offs * nor_y_ISO( s );
+  }
 
-  real_type
-  ClothoidData::X_ISO_D( real_type const s, real_type const offs ) const
-  { return X_D(s) + offs * nor_x_ISO_D(s); }
+  real_type ClothoidData::X_ISO_D( real_type const s, real_type const offs ) const
+  {
+    return X_D( s ) + offs * nor_x_ISO_D( s );
+  }
 
-  real_type
-  ClothoidData::Y_ISO_D( real_type const s, real_type const offs ) const
-  { return Y_D(s) + offs * nor_y_ISO_D(s); }
+  real_type ClothoidData::Y_ISO_D( real_type const s, real_type const offs ) const
+  {
+    return Y_D( s ) + offs * nor_y_ISO_D( s );
+  }
 
-  real_type
-  ClothoidData::X_ISO_DD( real_type const s, real_type const offs ) const
-  { return X_DD(s) + offs * nor_x_ISO_DD(s); }
+  real_type ClothoidData::X_ISO_DD( real_type const s, real_type const offs ) const
+  {
+    return X_DD( s ) + offs * nor_x_ISO_DD( s );
+  }
 
-  real_type
-  ClothoidData::Y_ISO_DD( real_type const s, real_type const offs ) const
-  { return Y_DD(s) + offs * nor_y_ISO_DD(s); }
+  real_type ClothoidData::Y_ISO_DD( real_type const s, real_type const offs ) const
+  {
+    return Y_DD( s ) + offs * nor_y_ISO_DD( s );
+  }
 
-  real_type
-  ClothoidData::X_ISO_DDD( real_type const s, real_type const offs ) const
-  { return X_DDD(s) + offs * nor_x_ISO_DDD(s); }
+  real_type ClothoidData::X_ISO_DDD( real_type const s, real_type const offs ) const
+  {
+    return X_DDD( s ) + offs * nor_x_ISO_DDD( s );
+  }
 
-  real_type
-  ClothoidData::Y_ISO_DDD( real_type const s, real_type const offs ) const
-  { return Y_DDD(s) + offs * nor_y_ISO_DDD(s); }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::X_SAE( real_type const s, real_type const offs ) const
-  { return X(s) + offs * nor_x_SAE(s); }
-
-  real_type
-  ClothoidData::Y_SAE( real_type const s, real_type const offs ) const
-  { return Y(s) + offs * nor_y_SAE(s); }
-
-  real_type
-  ClothoidData::X_SAE_D( real_type const s, real_type const offs ) const
-  { return X_D(s) + offs * nor_x_SAE_D(s); }
-
-  real_type
-  ClothoidData::Y_SAE_D( real_type const s, real_type const offs ) const
-  { return Y_D(s) + offs * nor_y_SAE_D(s); }
-
-  real_type
-  ClothoidData::X_SAE_DD( real_type const s, real_type const offs ) const
-  { return X_DD(s) + offs * nor_x_SAE_DD(s); }
-
-  real_type
-  ClothoidData::Y_SAE_DD( real_type const s, real_type const offs ) const
-  { return Y_DD(s) + offs * nor_y_SAE_DD(s); }
-
-  real_type
-  ClothoidData::X_SAE_DDD( real_type const s, real_type const offs ) const
-  { return X_DDD(s) + offs * nor_x_SAE_DDD(s); }
-
-  real_type
-  ClothoidData::Y_SAE_DDD( real_type const s, real_type const offs ) const
-  { return Y_DDD(s) + offs * nor_y_SAE_DDD(s); }
+  real_type ClothoidData::Y_ISO_DDD( real_type const s, real_type const offs ) const
+  {
+    return Y_DDD( s ) + offs * nor_y_ISO_DDD( s );
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::evaluate(
-    real_type const s,
-    real_type &     theta,
-    real_type &     kappa,
-    real_type &     x,
-    real_type &     y
-  ) const {
+  real_type ClothoidData::X_SAE( real_type const s, real_type const offs ) const
+  {
+    return X( s ) + offs * nor_x_SAE( s );
+  }
+
+  real_type ClothoidData::Y_SAE( real_type const s, real_type const offs ) const
+  {
+    return Y( s ) + offs * nor_y_SAE( s );
+  }
+
+  real_type ClothoidData::X_SAE_D( real_type const s, real_type const offs ) const
+  {
+    return X_D( s ) + offs * nor_x_SAE_D( s );
+  }
+
+  real_type ClothoidData::Y_SAE_D( real_type const s, real_type const offs ) const
+  {
+    return Y_D( s ) + offs * nor_y_SAE_D( s );
+  }
+
+  real_type ClothoidData::X_SAE_DD( real_type const s, real_type const offs ) const
+  {
+    return X_DD( s ) + offs * nor_x_SAE_DD( s );
+  }
+
+  real_type ClothoidData::Y_SAE_DD( real_type const s, real_type const offs ) const
+  {
+    return Y_DD( s ) + offs * nor_y_SAE_DD( s );
+  }
+
+  real_type ClothoidData::X_SAE_DDD( real_type const s, real_type const offs ) const
+  {
+    return X_DDD( s ) + offs * nor_x_SAE_DDD( s );
+  }
+
+  real_type ClothoidData::Y_SAE_DDD( real_type const s, real_type const offs ) const
+  {
+    return Y_DDD( s ) + offs * nor_y_SAE_DDD( s );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void ClothoidData::evaluate( real_type const s, real_type & theta, real_type & kappa, real_type & x, real_type & y )
+    const
+  {
     real_type C, S;
     real_type const sdk = s*m_dk;
     GeneralizedFresnelCS( sdk*s, m_kappa0*s, m_theta0, C, S );
@@ -991,12 +961,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval(
-    real_type const s,
-    real_type &     x,
-    real_type &     y
-  ) const {
+  void ClothoidData::eval( real_type const s, real_type & x, real_type & y ) const
+  {
     real_type C, S;
     real_type const sdk = s*m_dk;
     GeneralizedFresnelCS( sdk*s, m_kappa0*s, m_theta0, C, S );
@@ -1006,12 +972,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval_D(
-    real_type const s,
-    real_type &     x_D,
-    real_type &     y_D
-  ) const {
+  void ClothoidData::eval_D( real_type const s, real_type & x_D, real_type & y_D ) const
+  {
     real_type const sdk  = s*m_dk;
     real_type const theta = m_theta0 + s*(m_kappa0+0.5*sdk);
     x_D = cos(theta);
@@ -1020,12 +982,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval_DD(
-    real_type const s,
-    real_type &     x_DD,
-    real_type &     y_DD
-  ) const {
+  void ClothoidData::eval_DD( real_type const s, real_type & x_DD, real_type & y_DD ) const
+  {
     real_type const sdk     = s*m_dk;
     real_type const theta   = m_theta0 + s*(m_kappa0+0.5*sdk);
     real_type const theta_D = m_kappa0 + sdk;
@@ -1035,12 +993,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval_DDD(
-    real_type const s,
-    real_type &     x_DDD,
-    real_type &     y_DDD
-  ) const {
+  void ClothoidData::eval_DDD( real_type const s, real_type & x_DDD, real_type & y_DDD ) const
+  {
     real_type const sdk     = s*m_dk;
     real_type const theta   = m_theta0 + s*(m_kappa0+0.5*sdk);
     real_type const theta_D = m_kappa0 + sdk;
@@ -1053,13 +1007,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval_ISO(
-    real_type const s,
-    real_type const offs,
-    real_type &     x,
-    real_type &     y
-  ) const {
+  void ClothoidData::eval_ISO( real_type const s, real_type const offs, real_type & x, real_type & y ) const
+  {
     real_type C, S;
     real_type const sdk = s*m_dk;
     GeneralizedFresnelCS( sdk*s, m_kappa0*s, m_theta0, C, S );
@@ -1074,13 +1023,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval_ISO_D(
-    real_type const s,
-    real_type const offs,
-    real_type &     x_D,
-    real_type &     y_D
-  ) const {
+  void ClothoidData::eval_ISO_D( real_type const s, real_type const offs, real_type & x_D, real_type & y_D ) const
+  {
     real_type const sdk     = s*m_dk;
     real_type const theta   = m_theta0 + s*(m_kappa0+0.5*sdk);
     real_type const theta_D = m_kappa0 + sdk;
@@ -1091,13 +1035,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval_ISO_DD(
-    real_type const s,
-    real_type const offs,
-    real_type &     x_DD,
-    real_type &     y_DD
-  ) const {
+  void ClothoidData::eval_ISO_DD( real_type const s, real_type const offs, real_type & x_DD, real_type & y_DD ) const
+  {
     real_type const sdk     = s*m_dk;
     real_type const theta   = m_theta0 + s*(m_kappa0+0.5*sdk);
     real_type const theta_D = m_kappa0 + sdk;
@@ -1111,13 +1050,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval_ISO_DDD(
-    real_type const s,
-    real_type const offs,
-    real_type &     x_DDD,
-    real_type &     y_DDD
-  ) const {
+  void ClothoidData::eval_ISO_DDD( real_type const s, real_type const offs, real_type & x_DDD, real_type & y_DDD ) const
+  {
     real_type const sdk     = s*m_dk;
     real_type const theta   = m_theta0 + s*(m_kappa0+0.5*sdk);
     real_type const theta_D = m_kappa0 + sdk;
@@ -1132,18 +1066,21 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::Pinfinity( real_type & x, real_type & y, bool const plus ) const {
+  void ClothoidData::Pinfinity( real_type & x, real_type & y, bool const plus ) const
+  {
     real_type theta, tmp;
     this->evaluate( -m_kappa0/m_dk, theta, tmp, x, y );
     real_type const Ct = cos(theta);
     real_type const St = sin(theta);
     tmp = 0.5*sqrt( Utils::m_pi/abs(m_dk) );
     if ( !plus ) tmp = -tmp;
-    if ( m_dk > 0 ) {
+    if ( m_dk > 0 )
+    {
       x += tmp*(Ct-St);
       y += tmp*(St+Ct);
-    } else {
+    }
+    else
+    {
       x += tmp*(Ct+St);
       y += tmp*(St-Ct);
     }
@@ -1151,16 +1088,16 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::eval( real_type const s, ClothoidData & C ) const {
+  void ClothoidData::eval( real_type const s, ClothoidData & C ) const
+  {
     this->evaluate( s, C.m_theta0, C.m_kappa0, C.m_x0, C.m_y0 );
     C.m_dk = m_dk;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::reverse( real_type const L ) {
+  void ClothoidData::reverse( real_type const L )
+  {
     real_type C, S;
     GeneralizedFresnelCS( m_dk*L*L, m_kappa0*L, m_theta0, C, S );
     m_x0     += L*C;
@@ -1175,8 +1112,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::reverse( real_type const L, ClothoidData & out ) const {
+  void ClothoidData::reverse( real_type const L, ClothoidData & out ) const
+  {
     this->evaluate( L, out.m_theta0, out.m_kappa0, out.m_x0, out.m_y0 );
     out.m_theta0 += Utils::m_pi;
     out.m_kappa0 = -(out.m_kappa0);
@@ -1187,8 +1124,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidData::rotate( real_type const angle, real_type const cx, real_type const cy ) {
+  void ClothoidData::rotate( real_type const angle, real_type const cx, real_type const cy )
+  {
     real_type const dx  = m_x0 - cx;
     real_type const dy  = m_y0 - cy;
     real_type const C   = cos(angle);
@@ -1200,16 +1137,11 @@ namespace G2lib {
     m_theta0 += angle;
   }
 
-  void
-  ClothoidData::origin_at( real_type const s_origin ) {
+  void ClothoidData::origin_at( real_type const s_origin )
+  {
     real_type C, S;
     real_type const sdk = s_origin*m_dk;
-    GeneralizedFresnelCS(
-      sdk*s_origin,
-      m_kappa0*s_origin,
-      m_theta0,
-      C, S
-    );
+    GeneralizedFresnelCS( sdk * s_origin, m_kappa0 * s_origin, m_theta0, C, S );
     m_x0     += s_origin*C;
     m_y0     += s_origin*S;
     m_theta0 += s_origin*(m_kappa0+0.5*sdk);
@@ -1218,8 +1150,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::split_at_flex( ClothoidData & C0, ClothoidData & C1 ) const {
+  real_type ClothoidData::split_at_flex( ClothoidData & C0, ClothoidData & C1 ) const
+  {
     // flex inside, split clothoid
     real_type const sflex = -m_kappa0/m_dk;
     C0.m_theta0 = m_theta0 + 0.5*m_kappa0*sflex;
@@ -1234,11 +1166,15 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidData::aplus( real_type const dtheta ) const {
+  real_type ClothoidData::aplus( real_type const dtheta ) const
+  {
     real_type tmp = 2*dtheta*m_dk;
     real_type k0  = m_kappa0;
-    if ( k0 < 0 ) { tmp = -tmp; k0 = -k0; }
+    if ( k0 < 0 )
+    {
+      tmp = -tmp;
+      k0  = -k0;
+    }
     return 2*dtheta/(k0+sqrt(tmp+k0*k0));
   }
 
@@ -1246,30 +1182,33 @@ namespace G2lib {
 
   static real_type const one_degree = Utils::m_pi/180;
 
-  bool
-  ClothoidData::bbTriangle(
+  bool ClothoidData::bbTriangle(
     real_type const L,
     real_type &     xx0,
     real_type &     yy0,
     real_type &     xx1,
     real_type &     yy1,
     real_type &     xx2,
-    real_type &     yy2
-  ) const {
+    real_type &     yy2 ) const
+  {
     real_type const theta_max = theta( L );
     real_type const theta_min = m_theta0;
     real_type const dtheta    = abs( theta_max-theta_min );
-    if ( dtheta < Utils::m_pi_2 ) {
+    if ( dtheta < Utils::m_pi_2 )
+    {
       real_type alpha, tx0, ty0;
       eval( 0, xx0, yy0 );
       eval_D( 0, tx0, ty0 );
-      if ( dtheta > one_degree ) {
+      if ( dtheta > one_degree )
+      {
         real_type tx1, ty1;
         eval( L, xx1, yy1 );
         eval_D( L, tx1, ty1 );
         real_type const det{ tx1*ty0-tx0*ty1 };
         alpha = ((yy1-yy0)*tx1 - (xx1-xx0)*ty1)/det;
-      } else {
+      }
+      else
+      {
         // se angolo troppo piccolo uso approx piu rozza
         alpha = L;
       }
@@ -1282,8 +1221,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  ClothoidData::bbTriangle_ISO(
+  bool ClothoidData::bbTriangle_ISO(
     real_type const L,
     real_type const offs,
     real_type &     xx0,
@@ -1291,22 +1229,26 @@ namespace G2lib {
     real_type &     xx1,
     real_type &     yy1,
     real_type &     xx2,
-    real_type &     yy2
-  ) const {
+    real_type &     yy2 ) const
+  {
     real_type const theta_max = theta( L );
     real_type const theta_min = m_theta0;
     real_type const dtheta    = abs( theta_max-theta_min );
-    if ( dtheta < Utils::m_pi_2 ) {
+    if ( dtheta < Utils::m_pi_2 )
+    {
       real_type alpha, tx0, ty0;
       eval_ISO( 0, offs, xx0, yy0 );
       eval_D( 0, tx0, ty0 ); // no offset solo scalato
-      if ( dtheta > one_degree ) {
+      if ( dtheta > one_degree )
+      {
         real_type tx1, ty1;
         eval_ISO( L, offs, xx1, yy1 );
         eval_D( L, tx1, ty1 ); // no offset solo scalato
         real_type const det{ tx1*ty0-tx0*ty1 };
         alpha = ((yy1-yy0)*tx1 - (xx1-xx0)*ty1)/det;
-      } else {
+      }
+      else
+      {
         // se angolo troppo piccolo uso approx piu rozza
         alpha = L;
       }
@@ -1319,46 +1261,44 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int
-  ClothoidData::build_G1(
-    real_type const _x0,
-    real_type const _y0,
-    real_type const _theta0,
+  int ClothoidData::build_G1(
+    real_type const x0,
+    real_type const y0,
+    real_type const theta0,
     real_type const x1,
     real_type const y1,
     real_type const theta1,
-    real_type const tol,
-    real_type &     L,
-    bool      const compute_deriv,
-    real_type       L_D[2],
-    real_type       k_D[2],
-    real_type       dk_D[2]
-  ) {
-    static constexpr real_type CF[]{
-      2.989696028701907,   0.716228953608281,
-      -0.458969738821509, -0.502821153340377,
-      0.261062141752652,  -0.045854475238709
-    };
+    G2derivative &  G,
+    real_type const tol )
+  {
+    auto & L{ G.L };
 
-    m_x0     = _x0;
-    m_y0     = _y0;
-    m_theta0 = _theta0;
+    static constexpr real_type CF[]{ 2.989696028701907,  0.716228953608281, -0.458969738821509,
+                                     -0.502821153340377, 0.261062141752652, -0.045854475238709 };
+
+    m_x0     = x0;
+    m_y0     = y0;
+    m_theta0 = theta0;
 
     // traslazione in (0,0)
-    real_type const dx   = x1 - m_x0;
-    real_type const dy   = y1 - m_y0;
+    real_type const dx   = x1 - x0;
+    real_type const dy   = y1 - y0;
     real_type const r    = hypot( dx, dy );
     real_type const phi  = atan2( dy, dx );
-    real_type       phi0 = m_theta0 - phi;
+    real_type       phi0 = theta0 - phi;
     real_type       phi1 = theta1 - phi;
 
     phi0 -= Utils::m_2pi*round(phi0/Utils::m_2pi);
     phi1 -= Utils::m_2pi*round(phi1/Utils::m_2pi);
 
-    if      ( phi0 >  Utils::m_pi ) phi0 -= Utils::m_2pi;
-    else if ( phi0 < -Utils::m_pi ) phi0 += Utils::m_2pi;
-    if      ( phi1 >  Utils::m_pi ) phi1 -= Utils::m_2pi;
-    else if ( phi1 < -Utils::m_pi ) phi1 += Utils::m_2pi;
+    if ( phi0 > Utils::m_pi )
+      phi0 -= Utils::m_2pi;
+    else if ( phi0 < -Utils::m_pi )
+      phi0 += Utils::m_2pi;
+    if ( phi1 > Utils::m_pi )
+      phi1 -= Utils::m_2pi;
+    else if ( phi1 < -Utils::m_pi )
+      phi1 += Utils::m_2pi;
 
     real_type delta = phi1 - phi0;
 
@@ -1366,24 +1306,22 @@ namespace G2lib {
     real_type       X  { phi0*Utils::m_1_pi };
     real_type       Y  { phi1*Utils::m_1_pi };
     real_type const xy { X*Y };
-    Y *= Y; X *= X;
-    real_type A{ (phi0+phi1) * ( CF[0] + xy*(CF[1] + xy*CF[2]) +
-                               ( CF[3]+xy*CF[4])*(X+Y) + CF[5]*(X*X+Y*Y) ) };
+    Y *= Y;
+    X *= X;
+    real_type A{ ( phi0 + phi1 ) * ( CF[0] + xy * ( CF[1] + xy * CF[2] ) + ( CF[3] + xy * CF[4] ) * ( X + Y ) +
+                                     CF[5] * ( X * X + Y * Y ) ) };
     // newton
     real_type g{0}, intC[3], intS[3];
     integer   niter{0};
-    do {
+    do
+    {
       GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS );
       g   = intS[0];
       real_type const dg{ intC[2] - intC[1] };
       A  -= g / dg;
     } while ( ++niter <= 10 && abs(g) > tol );
 
-    UTILS_ASSERT(
-      abs(g) <= tol,
-      "Newton do not converge, g = {} niter = {}\n",
-      g, niter
-    );
+    UTILS_ASSERT( abs( g ) <= tol, "Newton do not converge, g = {} niter = {}\n", g, niter );
     GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] );
     L = r/intC[0];
 
@@ -1391,29 +1329,294 @@ namespace G2lib {
     m_kappa0 = (delta-A)/L;
     m_dk     = 2*A/L/L;
 
-    if ( compute_deriv ) {
+    G.k0 = m_kappa0;
+    G.dk = m_dk;
+    G.k1 = m_kappa0 + L * m_dk;
+    G.A  = m_dk * L * L;
+    G.B  = m_kappa0 * L;
 
-      real_type const alpha { intC[0]*intC[1] + intS[0]*intS[1] };
-      real_type const beta  { intC[0]*intC[2] + intS[0]*intS[2] };
-      real_type const gamma { intC[0]*intC[0] + intS[0]*intS[0] };
-      real_type const tx    { intC[1]-intC[2] };
-      real_type const ty    { intS[1]-intS[2] };
-      real_type const txy   { L*(intC[1]*intS[2]-intC[2]*intS[1]) };
-      real_type const omega { L*(intS[0]*tx-intC[0]*ty) - txy };
+    return niter;
+  }
 
-      delta = intC[0]*tx + intS[0]*ty;
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-      L_D[0] = omega/delta;
-      L_D[1] = txy/delta;
+  int ClothoidData::build_G1_D(
+    real_type const x0,
+    real_type const y0,
+    real_type const theta0,
+    real_type const x1,
+    real_type const y1,
+    real_type const theta1,
+    G2derivative &  G,
+    real_type const tol )
+  {
+    real_type intC[3], intS[3];
 
-      delta *= L;
-      k_D[0] = (beta-gamma-m_kappa0*omega)/delta;
-      k_D[1] = -(beta+m_kappa0*txy)/delta;
+    int niter{ build_G1( x0, y0, theta0, x1, y1, theta1, G, tol ) };
 
-      delta  *= L/2;
-      dk_D[0] = (gamma-alpha-m_dk*omega*L)/delta;
-      dk_D[1] = (alpha-m_dk*txy*L)/delta;
+    auto const & L{ G.L };
+    auto const & A{ G.A };
+    auto const & B{ G.B };
+
+    GeneralizedFresnelCS( 3, A, B, m_theta0, intC, intS );
+
+    Eigen::Matrix<real_type, 3, 3> mat;
+    Eigen::Matrix<real_type, 3, 2> rhs;
+    Eigen::Matrix<real_type, 3, 2> sol;
+
+    // Alias per chiarezza
+    real_type const & X__0{ intC[0] };
+    real_type const & X__1{ intC[1] };
+    real_type const & X__2{ intC[2] };
+    real_type const & Y__0{ intS[0] };
+    real_type const & Y__1{ intS[1] };
+    real_type const & Y__2{ intS[2] };
+
+    real_type const & kappa{ m_kappa0 };
+    real_type const & dk{ m_dk };
+
+    // Costruzione matrice
+    mat << X__0, -G.L * Y__1, -0.5 * G.L * Y__2, Y__0, G.L * X__1, 0.5 * G.L * X__2, 0, 1, 0.5;
+
+    // Costruzione RHS come matrice 3x2 (due colonne → due sistemi)
+    rhs << G.L * Y__0, 0, -G.L * X__0, 0, -1, 1;
+
+    // Fattorizzazione una sola volta (molto più efficiente)
+    Eigen::ColPivHouseholderQR<Eigen::Matrix<real_type, 3, 3>> solver( mat );
+    sol = solver.solve( rhs );
+
+    // Estrazione risultati
+    auto const L__L{ sol( 0, 0 ) };
+    auto const B__L{ sol( 1, 0 ) };
+    auto const A__L{ sol( 2, 0 ) };
+
+    auto const L__R{ sol( 0, 1 ) };
+    auto const B__R{ sol( 1, 1 ) };
+    auto const A__R{ sol( 2, 1 ) };
+
+    G.L__L  = L__L;
+    G.A__L  = A__L;
+    G.B__L  = B__L;
+    G.k__L  = ( B__L - kappa * L__L ) / L;
+    G.dk__L = ( A__L / L - 2 * dk * L__L ) / L;
+
+    G.L__R  = L__R;
+    G.A__R  = A__R;
+    G.B__R  = B__R;
+    G.k__R  = ( B__R - kappa * L__R ) / L;
+    G.dk__R = ( A__R / L - 2 * dk * L__R ) / L;
+
+    return niter;
     }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int ClothoidData::build_G1_DD(
+    real_type const x0,
+    real_type const y0,
+    real_type const theta0,
+    real_type const x1,
+    real_type const y1,
+    real_type const theta1,
+    G2derivative &  G,
+    real_type const tol )
+  {
+#if 0
+  
+    real_type eps{ 1e-5 };
+    G2derivative GL, GR;
+    build_G1_D( x0, y0, theta0-eps, x1, y1, theta1, GL, tol );
+    build_G1_D( x0, y0, theta0+eps, x1, y1, theta1, GR, tol );
+    
+    fmt::print( "L__L  = {}\n",  (GR.L-GL.L)/(2*eps) );
+    fmt::print( "L__LL = {}\n",  (GR.L__L-GL.L__L)/(2*eps) );
+    fmt::print( "L__LR = {}\n",  (GR.L__R-GL.L__R)/(2*eps) );
+
+    fmt::print( "A__L  = {}\n",  (GR.A-GL.A)/(2*eps) );
+    fmt::print( "A__LL = {}\n",  (GR.A__L-GL.A__L)/(2*eps) );
+    fmt::print( "A__LR = {}\n",  (GR.A__R-GL.A__R)/(2*eps) );
+
+    fmt::print( "B__L  = {}\n",  (GR.B-GL.B)/(2*eps) );
+    fmt::print( "B__LL = {}\n",  (GR.B__L-GL.B__L)/(2*eps) );
+    fmt::print( "B__LR = {}\n",  (GR.B__R-GL.B__R)/(2*eps) );
+
+    fmt::print( "k__L  = {}\n",  (GR.k0-GL.k0)/(2*eps) );
+    fmt::print( "k__LL = {}\n",  (GR.k__L-GL.k__L)/(2*eps) );
+    fmt::print( "k__LR = {}\n",  (GR.k__R-GL.k__R)/(2*eps) );
+
+    fmt::print( "dk__L  = {}\n", (GR.dk-GL.dk)/(2*eps) );
+    fmt::print( "dk__LL = {}\n", (GR.dk__L-GL.dk__L)/(2*eps) );
+    fmt::print( "dk__LR = {}\n", (GR.dk__R-GL.dk__R)/(2*eps) );
+    
+    build_G1_D( x0, y0, theta0, x1, y1, theta1-eps, GL, tol );
+    build_G1_D( x0, y0, theta0, x1, y1, theta1+eps, GR, tol );
+
+    fmt::print( "L__R  = {}\n",  (GR.L-GL.L)/(2*eps) );
+    fmt::print( "L__RL = {}\n",  (GR.L__L-GL.L__L)/(2*eps) );
+    fmt::print( "L__RR = {}\n",  (GR.L__R-GL.L__R)/(2*eps) );
+
+    fmt::print( "A__R  = {}\n",  (GR.A-GL.A)/(2*eps) );
+    fmt::print( "A__RL = {}\n",  (GR.A__L-GL.A__L)/(2*eps) );
+    fmt::print( "A__RR = {}\n",  (GR.A__R-GL.A__R)/(2*eps) );
+
+    fmt::print( "B__R  = {}\n",  (GR.B-GL.B)/(2*eps) );
+    fmt::print( "B__RL = {}\n",  (GR.B__L-GL.B__L)/(2*eps) );
+    fmt::print( "B__RR = {}\n",  (GR.B__R-GL.B__R)/(2*eps) );
+
+    fmt::print( "k__R  = {}\n",  (GR.k0-GL.k0)/(2*eps) );
+    fmt::print( "k__RL = {}\n",  (GR.k__L-GL.k__L)/(2*eps) );
+    fmt::print( "k__RR = {}\n",  (GR.k__R-GL.k__R)/(2*eps) );
+
+    fmt::print( "dk__R  = {}\n", (GR.dk-GL.dk)/(2*eps) );
+    fmt::print( "dk__RL = {}\n", (GR.dk__L-GL.dk__L)/(2*eps) );
+    fmt::print( "dk__RR = {}\n", (GR.dk__R-GL.dk__R)/(2*eps) );
+
+#endif
+
+    real_type intC[5], intS[5];
+
+    int niter{ build_G1( x0, y0, theta0, x1, y1, theta1, G, tol ) };
+
+    auto const & L{ G.L };
+    auto const & A{ G.A };
+    auto const & B{ G.B };
+
+    GeneralizedFresnelCS( 5, A, B, m_theta0, intC, intS );
+
+    Eigen::Matrix<real_type, 3, 3> mat;
+    Eigen::Matrix<real_type, 3, 2> rhs;
+    Eigen::Matrix<real_type, 3, 2> sol;
+
+    // Alias per chiarezza
+    auto const & X__0{ intC[0] };
+    auto const & X__1{ intC[1] };
+    auto const & X__2{ intC[2] };
+    auto const & X__3{ intC[3] };
+    auto const & X__4{ intC[4] };
+
+    auto const & Y__0{ intS[0] };
+    auto const & Y__1{ intS[1] };
+    auto const & Y__2{ intS[2] };
+    auto const & Y__3{ intS[3] };
+    auto const & Y__4{ intS[4] };
+
+    auto const & kappa{ m_kappa0 };
+    auto const & dk{ m_dk };
+
+    // Costruzione matrice
+    mat << X__0, -L * Y__1, -0.5 * L * Y__2, Y__0, L * X__1, 0.5 * L * X__2, 0, 1, 0.5;
+
+    // Costruzione RHS come matrice 3x2 (due colonne → due sistemi)
+    rhs << L * Y__0, 0, -L * X__0, 0, -1, 1;
+
+    // Fattorizzazione una sola volta (molto più efficiente)
+    Eigen::ColPivHouseholderQR<Eigen::Matrix<real_type, 3, 3>> solver( mat );
+    sol = solver.solve( rhs );
+
+    // Estrazione risultati
+    auto const L__L{ sol( 0, 0 ) };
+    auto const B__L{ sol( 1, 0 ) };
+    auto const A__L{ sol( 2, 0 ) };
+
+    auto const L__R{ sol( 0, 1 ) };
+    auto const B__R{ sol( 1, 1 ) };
+    auto const A__R{ sol( 2, 1 ) };
+
+    G.L__L  = L__L;
+    G.A__L  = A__L;
+    G.B__L  = B__L;
+    G.k__L  = ( B__L - kappa * L__L ) / L;
+    G.dk__L = ( A__L / L - 2 * dk * L__L ) / L;
+
+    G.L__R  = L__R;
+    G.A__R  = A__R;
+    G.B__R  = B__R;
+    G.k__R  = ( B__R - kappa * L__R ) / L;
+    G.dk__R = ( A__R / L - 2 * dk * L__R ) / L;
+
+    auto const & kappa__L{ G.k__L };
+    auto const & dk__L{ G.dk__L };
+
+    auto const & kappa__R{ G.k__R };
+    auto const & dk__R{ G.dk__R };
+
+    Eigen::Matrix<real_type, 3, 3> rhs2;
+    Eigen::Matrix<real_type, 3, 3> sol2;
+
+    {
+      auto t1  = A__L * A__L;
+      auto t3  = X__3 * B__L;
+      auto t6  = B__L * B__L;
+      auto t9  = X__1 * B__L;
+      auto t15 = Y__1 * B__L;
+      auto t18 = t15 + Y__2 * A__L / 2.0 + Y__0;
+      auto t44 = A__R * A__R;
+      auto t46 = B__R * A__R;
+      auto t49 = B__R * B__R;
+      auto t62 = Y__3 * B__L;
+      auto t75 = X__2 * A__L + 2.0 * X__0 + 2.0 * t9;
+      auto t92 = A__R * X__2;
+      auto t95 = B__R * X__1;
+
+      rhs2( 0, 0 ) = L * ( t1 * X__4 + 4.0 * A__L * ( t3 + X__2 ) + 4.0 * t6 * X__2 + 8.0 * t9 + 4.0 * X__0 ) / 4.0 +
+                     2.0 * L__L * t18;
+      rhs2( 0, 1 ) = L *
+                       ( A__R * ( X__4 * A__L + 2.0 * X__2 + 2.0 * t3 ) +
+                         2.0 * B__R * ( X__3 * A__L + 2.0 * X__2 * B__L + 2.0 * X__1 ) ) /
+                       4.0 +
+                     Y__2 * L__L * A__R / 2.0 + Y__1 * L__L * B__R + t18 * L__R;
+      rhs2( 0, 2 ) = L * ( 4.0 * X__2 * t49 + 4.0 * X__3 * t46 + X__4 * t44 ) / 4.0 +
+                     L__R * ( A__R * Y__2 + 2.0 * B__R * Y__1 );
+
+      rhs2( 1, 0 ) = L * ( t1 * Y__4 + 4.0 * A__L * ( t62 + Y__2 ) + 4.0 * t6 * Y__2 + 8.0 * t15 + 4.0 * Y__0 ) / 4.0 -
+                     t75 * L__L;
+      rhs2( 1, 1 ) = L *
+                       ( A__R * ( Y__4 * A__L + 2.0 * Y__2 + 2.0 * t62 ) +
+                         4.0 * B__R * ( Y__2 * B__L + Y__3 * A__L / 2.0 + Y__1 ) ) /
+                       4.0 -
+                     L__L * t92 / 2.0 - L__L * t95 - t75 * L__R / 2.0;
+      rhs2( 1, 2 ) = L * ( 4.0 * Y__2 * t49 + 4.0 * Y__3 * t46 + Y__4 * t44 ) / 4.0 - ( t92 + 2.0 * t95 ) * L__R;
+
+      rhs2( 2, 0 ) = 0.0;
+      rhs2( 2, 1 ) = 0.0;
+      rhs2( 2, 2 ) = 0.0;
+    }
+
+    sol2 = solver.solve( rhs2 );
+
+    // Estrazione risultati
+    auto const L__LL{ sol2( 0, 0 ) };
+    auto const B__LL{ sol2( 1, 0 ) };
+    auto const A__LL{ sol2( 2, 0 ) };
+
+    auto const L__LR{ sol2( 0, 1 ) };
+    auto const B__LR{ sol2( 1, 1 ) };
+    auto const A__LR{ sol2( 2, 1 ) };
+
+    auto const L__RR{ sol2( 0, 2 ) };
+    auto const B__RR{ sol2( 1, 2 ) };
+    auto const A__RR{ sol2( 2, 2 ) };
+
+    // LL
+    G.L__LL  = L__LL;
+    G.A__LL  = A__LL;
+    G.B__LL  = B__LL;
+    G.k__LL  = ( B__LL - 2 * kappa__L * L__L - kappa * L__LL ) / L;
+    G.dk__LL = ( ( A__LL - 2 * dk * L__L * L__L ) / L - 4 * L__L * dk__L - 2 * L__LL * dk ) / L;
+
+    // RR
+    G.L__RR  = L__RR;
+    G.A__RR  = A__RR;
+    G.B__RR  = B__RR;
+    G.k__RR  = ( B__RR - 2 * kappa__R * L__R - kappa * L__RR ) / L;
+    G.dk__RR = ( ( A__RR - 2 * dk * L__R * L__R ) / L - 4 * L__R * dk__R - 2 * L__RR * dk ) / L;
+
+    // LR
+    G.L__LR  = L__LR;
+    G.A__LR  = A__LR;
+    G.B__LR  = B__LR;
+    G.k__LR  = ( B__LR - kappa__R * L__L - kappa__L * L__R - kappa * L__LR ) / L;
+    G.dk__LR = ( ( A__LR - 2 * dk * L__R * L__L ) / L - 2 * ( L__L * dk__R + L__R * dk__L + L__LR * dk ) ) / L;
 
     return niter;
   }
@@ -1423,9 +1626,8 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  real_type
-  kappa_fun( real_type const theta0, real_type const theta ) {
+  static real_type kappa_fun( real_type const theta0, real_type const theta )
+  {
     real_type const x = theta0*theta0;
     real_type const a = -3.714 + x * 0.178;
     real_type const b = -1.913 - x * 0.0753;
@@ -1440,9 +1642,8 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  real_type
-  theta_guess( real_type const theta0, real_type const k0, bool & ok ) {
+  static real_type theta_guess( real_type const theta0, real_type const k0, bool & ok )
+  {
     real_type const x   = theta0*theta0;
     real_type const a   = -3.714 + x * 0.178;
     real_type const b   = -1.913 - x * 0.0753;
@@ -1464,23 +1665,22 @@ namespace G2lib {
 
     // cerco radice reale piu vicina
     real_type theta;
-    switch ( nr ) {
+    switch ( nr )
+    {
     case 0:
-    default:
-      ok = false;
-      return 0;
-    case 1:
+      default: ok = false; return 0;
+      case 1: theta = r[0]; break;
+      case 2:
+        if ( abs( r[0] - theta0 ) < abs( r[1] - theta0 ) )
       theta = r[0];
-      break;
-    case 2:
-      if ( abs(r[0]-theta0) < abs(r[1]-theta0) ) theta = r[0];
-      else                                       theta = r[1];
+        else
+          theta = r[1];
       break;
     case 3:
       theta = r[0];
-      for ( integer i{1}; i < 3; ++i ) {
-        if ( abs(theta-theta0) > abs(r[i]-theta0) )
-          theta = r[i];
+        for ( integer i{ 1 }; i < 3; ++i )
+        {
+          if ( abs( theta - theta0 ) > abs( r[i] - theta0 ) ) theta = r[i];
       }
       break;
     }
@@ -1492,8 +1692,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  bool
-  ClothoidData::build_forward(
+  bool ClothoidData::build_forward(
     real_type const x0,
     real_type const y0,
     real_type const theta0,
@@ -1501,8 +1700,8 @@ namespace G2lib {
     real_type const x1,
     real_type const y1,
     real_type const tol,
-    real_type &     L
-  ) {
+    real_type &     L )
+  {
     // Compute guess angles
     real_type const dx   = x1 - x0;
     real_type const dy   = y1 - y0;
@@ -1522,22 +1721,22 @@ namespace G2lib {
     real_type const Kmax  = kappa_fun( th0, thmin );
     bool ok;
     real_type th{ theta_guess( th0, max(min(k0,Kmax),Kmin), ok ) };
-    if ( ok ) {
-      for ( integer iter = 0; iter < 20; ++iter ) {
-        real_type LL, L_D[2], k_D[2], dk_D[2];
-        build_G1(
-          0, 0, th0,
-          1, 0, th,
-          tol, LL,
-          true, L_D, k_D, dk_D
-        );
-        real_type const f   { m_kappa0 - k0 }; // use kappa0 of the class
-        real_type const df  { k_D[1] };
+    if ( ok )
+    {
+      for ( integer iter = 0; iter < 20; ++iter )
+      {
+        G2derivative G;
+        build_G1_D( 0, 0, th0, 1, 0, th, G, tol );
+        real_type const f{ m_kappa0 - G.k0 };  // use kappa0 of the class
+        real_type const df{ G.k__R };
         real_type const dth { f/df };
         th -= dth;
-        if ( abs(dth) < tol && abs(f) < tol ) {
+        if ( abs( dth ) < tol && abs( f ) < tol )
+        {
           // transform solution
-          build_G1( x0, y0, theta0, x1, y1, arot + th, tol, L );
+          G2derivative G;
+          build_G1( x0, y0, theta0, x1, y1, arot + th, G, tol );
+          L = G.L;
           return true;
         }
       }
@@ -1547,21 +1746,25 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #ifndef CLOTHOIDS_MINIMAL_BUILD
-  void
-  ClothoidData::info( ostream_type & s ) const {
-    fmt::print( s,
+  void ClothoidData::info( ostream_type & s ) const
+  {
+    fmt::print(
+      s,
       "x0     = {}\n"
       "y0     = {}\n"
       "theta0 = {}\n"
       "kappa0 = {}\n"
       "dk     = {}\n",
-      m_x0, m_y0, m_theta0, m_kappa0, m_dk
-    );
+      m_x0,
+      m_y0,
+      m_theta0,
+      m_kappa0,
+      m_dk );
   }
 #endif
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   #endif
-}
+}  // namespace G2lib
 
 // EOF: Fresnel.cc

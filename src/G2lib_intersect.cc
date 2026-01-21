@@ -27,14 +27,15 @@
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-namespace G2lib {
+namespace G2lib
+{
 
   using std::map;
   using std::pair;
 
+  using std::abs;
   using std::fpclassify;
   using std::lower_bound;
-  using std::abs;
   using std::sqrt;
 
   /*\
@@ -115,7 +116,8 @@ namespace G2lib {
     {Ppair( CurveType::DUBINS, CurveType::DUBINS ),        CurveType::DUBINS}
   };
 
-  CurveType curve_promote( CurveType A, CurveType B ) {
+  CurveType curve_promote( CurveType A, CurveType B )
+  {
     return promote_map.at(Ppair(A,B));
   }
 
@@ -123,23 +125,27 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  collision( BaseCurve const * pC1, BaseCurve const * pC2 ) {
+  bool collision( BaseCurve const * pC1, BaseCurve const * pC2 )
+  {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE(
       "G2Lib::collision {} vs {} ADDRS: {}, {}\n",
-      pC1->type_name(), pC2->type_name(), fmt::ptr(pC1), fmt::ptr(pC2)
-    );
+      pC1->type_name(),
+      pC2->type_name(),
+      fmt::ptr( pC1 ),
+      fmt::ptr( pC2 ) );
 #else
     G2LIB_DEBUG_MESSAGE( "G2Lib::collision {} vs {}\n",
      pC1->type_name(), pC2->type_name() );
 #endif
     bool ok = false;
 #ifndef CLOTHOIDS_NO_EXCEPTIONS
-    try {
+    try
+    {
 #endif
       CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
-      switch ( CT ) {
+      switch ( CT )
+      {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
@@ -215,10 +221,14 @@ namespace G2lib {
       //  break;
       }
 #ifndef CLOTHOIDS_NO_EXCEPTIONS
-    } catch ( std::exception const & e ) {
+    }
+    catch ( std::exception const & e )
+    {
       G2LIB_DEBUG_MESSAGE( "G2lib::collision error: {}\n", e.what() );
       UTILS_ERROR( "G2lib::collision error: {}\n", e.what() );
-    } catch (...) {
+    }
+    catch ( ... )
+    {
       G2LIB_DEBUG_MESSAGE( "G2lib::collision unknown error!\n" );
       UTILS_ERROR( "G2lib::collision unknown error\n" );
     }
@@ -227,8 +237,11 @@ namespace G2lib {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE(
       "G2Lib::collision {} vs {} ADDRS: {}, {} ok = {}\n",
-      pC1->type_name(), pC2->type_name(), fmt::ptr(pC1), fmt::ptr(pC2), ok
-    );
+      pC1->type_name(),
+      pC2->type_name(),
+      fmt::ptr( pC1 ),
+      fmt::ptr( pC2 ),
+      ok );
 #else
 	G2LIB_DEBUG_MESSAGE(
       "G2Lib::collision {} vs {} ok = {}\n",
@@ -241,25 +254,23 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  collision_ISO(
-    BaseCurve const * pC1,
-    real_type         offs1,
-    BaseCurve const * pC2,
-    real_type         offs2
-  ) {
-
+  bool collision_ISO( BaseCurve const * pC1, real_type offs1, BaseCurve const * pC2, real_type offs2 )
+  {
     G2LIB_DEBUG_MESSAGE(
       "G2Lib::collision_ISO {} vs {} ADDRS: {}, {}\n",
-      pC1->type_name(), pC2->type_name(), fmt::ptr(pC1), fmt::ptr(pC2)
-    );
+      pC1->type_name(),
+      pC2->type_name(),
+      fmt::ptr( pC1 ),
+      fmt::ptr( pC2 ) );
 
     bool ok = false;
 #ifndef CLOTHOIDS_NO_EXCEPTIONS
-    try {
+    try
+    {
 #endif
       CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
-      switch ( CT ) {
+      switch ( CT )
+      {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
@@ -335,10 +346,14 @@ namespace G2lib {
       //  break;
       }
 #ifndef CLOTHOIDS_NO_EXCEPTIONS
-    } catch ( std::exception const & e ) {
+    }
+    catch ( std::exception const & e )
+    {
       G2LIB_DEBUG_MESSAGE( "G2lib::collision_ISO error: {}\n", e.what() );
       UTILS_ERROR( "G2lib::collision_ISO error: {}\n", e.what() );
-    } catch (...) {
+    }
+    catch ( ... )
+    {
       G2LIB_DEBUG_MESSAGE( "G2lib::collision_ISO unknown error!\n" );
       UTILS_ERROR( "G2lib::collision_ISO unknown error\n" );
     }
@@ -347,8 +362,11 @@ namespace G2lib {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE(
       "G2Lib::collision_ISO {} vs {} ADDRS: {}, {} ok = {}\n",
-      pC1->type_name(), pC2->type_name(), fmt::ptr(pC1), fmt::ptr(pC2), ok
-    );
+      pC1->type_name(),
+      pC2->type_name(),
+      fmt::ptr( pC1 ),
+      fmt::ptr( pC2 ),
+      ok );
 #else
 	G2LIB_DEBUG_MESSAGE(
       "G2Lib::collision_ISO {} vs {} ok = {}\n",
@@ -361,17 +379,15 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  intersect(
-    BaseCurve const * pC1,
-    BaseCurve const * pC2,
-    IntersectList   & ilist
-  ) {
+  void intersect( BaseCurve const * pC1, BaseCurve const * pC2, IntersectList & ilist )
+  {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE(
       "G2Lib::intersect {} vs {} ADDRS: {}, {}\n",
-      pC1->type_name(), pC2->type_name(), fmt::ptr(pC1), fmt::ptr(pC2)
-    );
+      pC1->type_name(),
+      pC2->type_name(),
+      fmt::ptr( pC1 ),
+      fmt::ptr( pC2 ) );
 #else
 	G2LIB_DEBUG_MESSAGE(
       "G2Lib::intersect {} vs {}\n",
@@ -379,10 +395,12 @@ namespace G2lib {
     );
 #endif
 #ifndef CLOTHOIDS_NO_EXCEPTIONS
-    try {
+    try
+    {
 #endif
       CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
-      switch ( CT ) {
+      switch ( CT )
+      {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
@@ -458,10 +476,14 @@ namespace G2lib {
       //  break;
       }
 #ifndef CLOTHOIDS_NO_EXCEPTIONS
-    } catch ( std::exception const & e ) {
+    }
+    catch ( std::exception const & e )
+    {
       G2LIB_DEBUG_MESSAGE( "G2lib::intersect error: {}\n", e.what() );
       UTILS_ERROR( "G2lib::intersect error: {}\n", e.what() );
-    } catch (...) {
+    }
+    catch ( ... )
+    {
       G2LIB_DEBUG_MESSAGE( "G2lib::intersect unknown error!\n" );
       UTILS_ERROR( "G2lib::intersect unknown error\n" );
     }
@@ -470,8 +492,10 @@ namespace G2lib {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE(
       "G2Lib::intersect {} vs {} ADDRS: {}, {} DONE\n",
-      pC1->type_name(), pC2->type_name(), fmt::ptr(pC1), fmt::ptr(pC2)
-    );
+      pC1->type_name(),
+      pC2->type_name(),
+      fmt::ptr(pC1),
+      fmt::ptr(pC2) );
 #else
 	G2LIB_DEBUG_MESSAGE(
       "G2Lib::intersect {} vs {} DONE\n",
@@ -482,17 +506,20 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  intersect_ISO(
-    BaseCurve const * pC1, real_type offs1,
-    BaseCurve const * pC2, real_type offs2,
-    IntersectList   & ilist
-  ) {
+  void intersect_ISO(
+    BaseCurve const * pC1,
+    real_type         offs1,
+    BaseCurve const * pC2,
+    real_type         offs2,
+    IntersectList &   ilist )
+  {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE(
       "G2Lib::intersect_ISO {} vs {} ADDRS: {}, {}\n",
-      pC1->type_name(), pC2->type_name(), fmt::ptr(pC1), fmt::ptr(pC2)
-    );
+      pC1->type_name(),
+      pC2->type_name(),
+      fmt::ptr( pC1 ),
+      fmt::ptr( pC2 ) );
 #else
 	G2LIB_DEBUG_MESSAGE(
       "G2Lib::intersect_ISO {} vs {}\n",
@@ -500,10 +527,12 @@ namespace G2lib {
     );
 #endif
 #ifndef CLOTHOIDS_NO_EXCEPTIONS
-    try {
+    try
+    {
 #endif
       CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
-      switch ( CT ) {
+      switch ( CT )
+      {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
@@ -579,10 +608,14 @@ namespace G2lib {
       //  break;
       }
 #ifndef CLOTHOIDS_NO_EXCEPTIONS
-    } catch ( std::exception const & e ) {
+    }
+    catch ( std::exception const & e )
+    {
       G2LIB_DEBUG_MESSAGE( "G2lib::intersect_ISO error: {}\n", e.what() );
       UTILS_ERROR( "G2lib::intersect_ISO error: {}\n", e.what() );
-    } catch (...) {
+    }
+    catch ( ... )
+    {
       G2LIB_DEBUG_MESSAGE( "G2lib::intersect_ISO unknown error!\n" );
       UTILS_ERROR( "G2lib::intersect_ISO unknown error\n" );
     }
@@ -591,8 +624,10 @@ namespace G2lib {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
     G2LIB_DEBUG_MESSAGE(
       "G2Lib::intersect_ISO {} vs {} ADDRS: {}, {} DONE\n",
-      pC1->type_name(), pC2->type_name(), fmt::ptr(pC1), fmt::ptr(pC2)
-    );
+      pC1->type_name(),
+      pC2->type_name(),
+      fmt::ptr(pC1),
+      fmt::ptr(pC2) );
 #else
 	G2LIB_DEBUG_MESSAGE(
       "G2Lib::intersect_ISO {} vs {} DONE\n",
@@ -600,6 +635,6 @@ namespace G2lib {
     );
 #endif
   }
-}
+}  // namespace G2lib
 
 // EOF: G2lib_intersect.cc

@@ -36,18 +36,31 @@
   #undef CLOTHOIDS_USE_THREADS
 #endif
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wsign-compare"
+#endif
+
 #ifdef NO_SYSTEM_UTILS
 #include "Utils.hh"
+#include "Utils_TicToc.hh"
+#include "Utils_autodiff.hh"
 #include "Utils_AABB_tree.hh"
+#include "Utils_eigen.hh"
 #include "Utils_search_intervals.hh"
 #else
 #include <Utils.hh>
+#include <Utils_TicToc.hh>
+#include <Utils_autodiff.hh>
 #include <Utils_AABB_tree.hh>
+#include <Utils_eigen.hh>
 #include <Utils_search_intervals.hh>
 #endif
 #ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "GenericContainer/GenericContainer.hh"
 #endif
+
+#define PIPAL_EIGEN_EXTERNAL
+#include "Pipal.hh"
 
 #include <string>
 #ifndef CLOTHOIDS_NO_STRING_VIEW
@@ -80,8 +93,11 @@
   #define GLIB2_TOL_ANGLE 1e-8
 #endif
 
-namespace G2lib {
+namespace G2lib
+{
 
+  using std::map;
+  using std::set;
   using std::string;
 #ifdef CLOTHOIDS_NO_STRING_VIEW
   using string_view = std::string;
@@ -89,8 +105,6 @@ namespace G2lib {
   using std::string_view;
 #endif
   using std::vector;
-  using std::map;
-  using std::set;
 
 #ifndef CLOTHOIDS_MINIMAL_BUILD
   using istream_type     = std::basic_istream<char>;             //!< input streaming
@@ -104,6 +118,27 @@ namespace G2lib {
 #ifndef CLOTHOIDS_MINIMAL_BUILD
   using GenericContainer = GC_namespace::GenericContainer;       //!< Generic container object
 #endif
+  /*
+  //               _            _ _  __  __
+  //    __ _ _   _| |_ ___   __| (_)/ _|/ _|
+  //   / _` | | | | __/ _ \ / _` | | |_| |_
+  //  | (_| | |_| | || (_) | (_| | |  _|  _|
+  //   \__,_|\__,_|\__\___/ \__,_|_|_| |_|
+  */
+
+  using autodiff::dual0th;
+  using autodiff::dual1st;
+  using autodiff::dual2nd;
+  using autodiff::detail::DualOrder;
+
+  template <size_t N> using DualN      = autodiff::detail::HigherOrderDual<N, real_type>;
+  template <typename... T> using DualT = DualN<DualOrder<T...>::value>;
+
+  template <size_t N> constexpr void static_check_N()
+  {
+    static_assert( N <= 2, "DualOrder exceeded allowed limit" );
+  }
+
   //!
   //! Enumeration type for curve type
   //!
@@ -122,10 +157,10 @@ namespace G2lib {
   //!
   //! Convert curve type to a string
   //!
-  inline
-  string_view
-  to_string( CurveType n ) {
-    switch ( n ) {
+  inline string_view to_string( CurveType n )
+  {
+    switch ( n )
+    {
     case CurveType::LINE:          return "LINE";
     case CurveType::POLYLINE:      return "POLYLINE";
     case CurveType::CIRCLE:        return "CIRCLE";
@@ -157,7 +192,7 @@ namespace G2lib {
   class ClothoidList;
   class Dubins;
   class Dubins3p;
-}
+}  // namespace G2lib
 
 #include "Clothoids/G2lib.hxx"
 #include "Clothoids/Triangle2D.hxx"

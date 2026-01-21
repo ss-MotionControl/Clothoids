@@ -25,12 +25,13 @@
 /// file: BBox.hxx
 ///
 
-namespace G2lib {
+namespace G2lib
+{
 #ifndef CLOTHOIDS_MINIMAL_BUILD
+  using std::pair;
   using std::setw;
 #endif
   using std::vector;
-  using std::pair;
 
   using std::make_shared;
   using std::shared_ptr; // promemoria shared_ptr<Foo>(&foo, [](void*){});
@@ -45,7 +46,8 @@ namespace G2lib {
   //!
   //! Class to manipulate bounding box
   //!
-  class BBox {
+  class BBox
+  {
   public:
     using PtrBBox        = shared_ptr<BBox const>;
     using PairPtrBBox    = pair<PtrBBox,PtrBBox>;
@@ -63,7 +65,6 @@ namespace G2lib {
     BBox( BBox && ) = default;
 
   public:
-
     //!
     //! Construct a bounding box with additional information
     //!
@@ -75,13 +76,13 @@ namespace G2lib {
     //! \param[in] ipos ranking position of the box
     //!
     BBox(
-      real_type xmin,
-      real_type ymin,
-      real_type xmax,
-      real_type ymax,
-      integer   id,
-      integer   ipos
-    ) {
+      real_type const xmin,
+      real_type const ymin,
+      real_type const xmax,
+      real_type const ymax,
+      integer const   id,
+      integer const   ipos )
+    {
       m_bbox[0] = xmin;
       m_bbox[1] = ymin;
       m_bbox[2] = xmax;
@@ -97,11 +98,8 @@ namespace G2lib {
     //! \param[in] id   identifier of the box
     //! \param[in] ipos ranking position of the box
     //!
-    BBox(
-      real_type const bbox[4],
-      integer         id,
-      integer         ipos
-    ) {
+    BBox( real_type const bbox[4], integer const id, integer const ipos )
+    {
       std::copy_n( bbox, 4, m_bbox );
       m_id   = id;
       m_ipos = ipos;
@@ -115,12 +113,8 @@ namespace G2lib {
     //! \param[in] id       identifier of the box
     //! \param[in] ipos     ranking position of the box
     //!
-    BBox(
-      real_type const bbox_min[2],
-      real_type const bbox_max[2],
-      integer         id,
-      integer         ipos
-    ) {
+    BBox( real_type const bbox_min[2], real_type const bbox_max[2], integer const id, integer const ipos )
+    {
       std::copy_n( bbox_min, 2, m_bbox   );
       std::copy_n( bbox_max, 2, m_bbox+2 );
       m_id   = id;
@@ -134,11 +128,8 @@ namespace G2lib {
     //! \param[in] id     identifier of the box
     //! \param[in] ipos   ranking position of the box
     //!
-    BBox(
-      vector<PtrBBox> const & bboxes,
-      integer                 id,
-      integer                 ipos
-    ) {
+    BBox( vector<PtrBBox> const & bboxes, integer const id, integer const ipos )
+    {
       m_id   = id;
       m_ipos = ipos;
       this -> join( bboxes );
@@ -166,8 +157,8 @@ namespace G2lib {
     //!
     //! copy a bbox
     //!
-    BBox const &
-    operator = ( BBox const & rhs ) {
+    BBox const & operator=( BBox const & rhs )
+    {
       std::copy_n( rhs.m_bbox, 4, m_bbox );
       m_id   = rhs.m_id;
       m_ipos = rhs.m_ipos;
@@ -177,31 +168,27 @@ namespace G2lib {
     //!
     //! detect if two bbox collide
     //!
-    bool
-    collision( BBox const & box ) const {
-      return !( (box.x_min() > this->x_max() ) ||
-                (box.x_max() < this->x_min() ) ||
-                (box.y_min() > this->y_max() ) ||
+    bool collision( BBox const & box ) const
+    {
+      return !(
+        ( box.x_min() > this->x_max() ) || ( box.x_max() < this->x_min() ) || ( box.y_min() > this->y_max() ) ||
                 (box.y_max() < this->y_min() ) );
     }
 
     //!
     //! Build bbox for a list of bbox
     //!
-    void
-    join( vector<PtrBBox> const & bboxes );
+    void join( vector<PtrBBox> const & bboxes );
 
     //!
     //! distance of the point `(x,y)` to the bbox
     //!
-    real_type
-    distance( real_type x, real_type y ) const;
+    real_type distance( real_type const x, real_type const y ) const;
 
     //!
     //! Maximum distance of the point `(x,y)` to the point of bbox
     //!
-    real_type
-    max_distance( real_type x, real_type y ) const;
+    real_type max_distance( real_type const x, real_type const y ) const;
 
 #ifndef CLOTHOIDS_MINIMAL_BUILD
     //!
@@ -220,14 +207,13 @@ namespace G2lib {
   //!  \param bb     an instance of `BBox` object
   //!  \return the output stream
   //!
-  inline
-  ostream_type &
-  operator << ( ostream_type & stream, BBox const & bb ) {
+  inline ostream_type & operator<<( ostream_type & stream, BBox const & bb )
+  {
     bb.print(stream);
     return stream;
   }
 #endif
-}
+}  // namespace G2lib
 
 ///
 /// eof: BBox.hxx

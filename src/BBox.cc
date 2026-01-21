@@ -43,11 +43,12 @@
 #include <algorithm>
 #endif
 
-namespace G2lib {
+namespace G2lib
+{
 
   using std::abs;
-  using std::min;
   using std::max;
+  using std::min;
 
   /*\
    |   ____  ____
@@ -57,17 +58,18 @@ namespace G2lib {
    |  |____/|____/ \___/_/\_\
   \*/
 
-  void
-  BBox::join( vector<PtrBBox> const & bboxes ) {
-    if ( bboxes.empty() ) {
-      std::fill_n( m_bbox, 4, 0 );
-    } else {
+  void BBox::join( vector<PtrBBox> const & bboxes )
+  {
+    if ( bboxes.empty() ) { std::fill_n( m_bbox, 4, 0 ); }
+    else
+    {
       this->x_min() = Utils::Inf<real_type>();
       this->y_min() = Utils::Inf<real_type>();
       this->x_max() = -Utils::Inf<real_type>();
       this->y_max() = -Utils::Inf<real_type>();
 
-      for ( auto const & it : bboxes ) {
+      for ( auto const & it : bboxes )
+      {
         if ( it->x_min() < this->x_min() ) this->x_min() = it->x_min();
         if ( it->y_min() < this->y_min() ) this->y_min() = it->y_min();
         if ( it->x_max() > this->x_max() ) this->x_max() = it->x_max();
@@ -78,8 +80,8 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  real_type
-  BBox::distance( real_type const x, real_type const y ) const {
+  real_type BBox::distance( real_type const x, real_type const y ) const
+  {
     /*\
      |
      |   6          7          8
@@ -92,12 +94,17 @@ namespace G2lib {
      |
     \*/
     integer icase = 4;
-    if      ( x < x_min() ) icase = 3;
-    else if ( x > x_max() ) icase = 5;
-    if      ( y < y_min() ) icase -= 3;
-    else if ( y > y_max() ) icase += 3;
+    if ( x < x_min() )
+      icase = 3;
+    else if ( x > x_max() )
+      icase = 5;
+    if ( y < y_min() )
+      icase -= 3;
+    else if ( y > y_max() )
+      icase += 3;
     real_type dst{0};
-    switch ( icase ) {
+    switch ( icase )
+    {
       case 0: dst = hypot( x-x_min(), y-y_min() ); break;
       case 1: dst = y_min()-y;                     break;
       case 2: dst = hypot( x-x_max(), y-y_min() ); break;
@@ -114,8 +121,8 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  real_type
-  BBox::max_distance( real_type const x, real_type const y ) const {
+  real_type BBox::max_distance( real_type const x, real_type const y ) const
+  {
     real_type const dx = max( abs(x-x_min()), abs(x-x_max()) );
     real_type const dy = max( abs(y-y_min()), abs(y-y_max()) );
     return hypot(dx,dy);
@@ -124,15 +131,12 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 #ifndef CLOTHOIDS_MINIMAL_BUILD
-  void
-  BBox::print( ostream_type & stream ) const {
-    fmt::print( stream,
-      "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n",
-      x_min(), y_min(), x_max(), y_max()
-    );
+  void BBox::print( ostream_type & stream ) const
+  {
+    fmt::print( stream, "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n", x_min(), y_min(), x_max(), y_max() );
   }
 #endif
-}
+}  // namespace G2lib
 
 ///
 /// eof: BBox.cc
