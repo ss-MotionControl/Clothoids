@@ -27,8 +27,8 @@
 
 namespace G2lib
 {
-#ifndef CLOTHOIDS_MINIMAL_BUILD
   using std::pair;
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   using std::setw;
 #endif
   using std::vector;

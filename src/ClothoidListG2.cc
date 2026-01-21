@@ -18,7 +18,9 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -842,6 +844,7 @@ namespace G2lib
   //!  \param c     an instance of `ClothoidSplineG2` object
   //!  \return the output stream
   //!
+#ifndef CLOTHOIDS_MINIMAL_BUILD
   ostream_type & operator<<( ostream_type & stream, ClothoidSplineG2 const & c )
   {
     fmt::print(
@@ -852,6 +855,7 @@ namespace G2lib
       to_string( c.m_tt ) );
     return stream;
   }
+#endif
 
 }  // namespace G2lib
 

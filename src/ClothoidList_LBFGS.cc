@@ -18,7 +18,9 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Clothoids_fmt.hh"
+#endif
 #include "Utils_minimize_LBFGS.hh"
 #include "Utils_minimize_BOBYQA.hh"
 #include "Utils_minimize_MADS.hh"

@@ -169,7 +169,9 @@ namespace G2lib
     //!
     ClothoidCurve const & S1() const { return m_S1; }
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void save( ostream_type & stream ) const;
+#endif
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
     void setTolerance( real_type const tol ) { set_tolerance( tol ); }

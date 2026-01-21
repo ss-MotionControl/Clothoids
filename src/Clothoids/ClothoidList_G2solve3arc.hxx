@@ -426,10 +426,12 @@ namespace G2lib
       m_SM.reverse();
     }
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     friend ostream_type & operator<<( ostream_type & stream, ClothoidCurve const & c );
 
     //! save clothoid list of a file stream
     void save( ostream_type & stream ) const;
+#endif
 
 // BACK COMPATIBILITY
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY

@@ -43,7 +43,9 @@ namespace Pipal
     Input<Real>      m_input;      /*!< Input structure for the solver. */
     Direction<Real>  m_direction;  /*!< Current search direction of the solver. */
     Iterate<Real>    m_iterate;    /*!< Current iterate of the solver. */
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     Output<Real>     m_output;     /*!< Output class for managing solver output. */
+#endif
     Parameter<Real>  m_parameter;  /*!< Internal parameters for the solver algorithm. */
     ProblemPtr       m_problem;    /*!< Problem object pointer. */
 
@@ -452,26 +454,43 @@ namespace Pipal
       // Print header and break line
       if ( this->m_verbose )
       {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
         this->m_output.printHeader( i, z );
         this->m_output.printBreak( c );
+#endif
       }
 
       // Iterations loop
       while ( !this->checkTermination() )
       {
         // Print iterate
-        if ( this->m_verbose ) { this->m_output.printIterate( c, z ); }
+        if ( this->m_verbose )
+        {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+          this->m_output.printIterate( c, z );
+#endif
+        }
 
         // Evaluate the step
         this->evalStep();
 
         // Print direction
-        if ( this->m_verbose ) { this->m_output.printDirection( z, d ); }
+        if ( this->m_verbose )
+        {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+          this->m_output.printDirection( z, d );
+#endif
+        }
 
         this->lineSearch();
 
         // Print accepted
-        if ( this->m_verbose ) { this->m_output.printAcceptance( a ); }
+        if ( this->m_verbose )
+        {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+          this->m_output.printAcceptance( a );
+#endif
+        }
 
         this->updateIterate();
 
@@ -479,10 +498,20 @@ namespace Pipal
         this->incrementIterationCount();
 
         // Print break
-        if ( this->m_verbose ) { this->m_output.printBreak( c ); }
+        if ( this->m_verbose )
+        {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+          this->m_output.printBreak( c );
+#endif
+        }
       }
       // Print footer and terminate
-      if ( this->m_verbose ) { this->m_output.printFooter( c, z, this->checkTermination() ); }
+      if ( this->m_verbose )
+      {
+#ifndef CLOTHOIDS_MINIMAL_BUILD
+        this->m_output.printFooter( c, z, this->checkTermination() );
+#endif
+      }
 
       // Get solution in original variables
       this->evalXOriginal( x_sol );

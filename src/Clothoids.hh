@@ -42,14 +42,18 @@
 
 #ifdef NO_SYSTEM_UTILS
 #include "Utils.hh"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Utils_TicToc.hh"
+#endif
 #include "Utils_autodiff.hh"
 #include "Utils_AABB_tree.hh"
 #include "Utils_eigen.hh"
 #include "Utils_search_intervals.hh"
 #else
 #include <Utils.hh>
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <Utils_TicToc.hh>
+#endif
 #include <Utils_autodiff.hh>
 #include <Utils_AABB_tree.hh>
 #include <Utils_eigen.hh>

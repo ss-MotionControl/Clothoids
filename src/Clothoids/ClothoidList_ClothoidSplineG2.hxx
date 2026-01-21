@@ -121,9 +121,11 @@ namespace G2lib
 
     string info() const;
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type & stream ) const { stream << this->info(); }
 
     friend ostream_type & operator<<( ostream_type & stream, ClothoidSplineG2 const & c );
+#endif
   };
 
 }  // namespace G2lib

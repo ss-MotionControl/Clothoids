@@ -138,12 +138,15 @@ namespace Pipal
 
     // Try AMPL functions evaluation
     Vector<Real> c_orig;
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try
+#endif
     {
       // Evaluate AMPL functions
       this->m_problem->objective( x_orig, z.f );
       this->m_problem->constraints( x_orig, c_orig );
     }
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     catch ( ... )
     {
       // Set evaluation flag, default values, and return
@@ -156,6 +159,7 @@ namespace Pipal
       z.cIu.setConstant( i.nI, std::numeric_limits<Real>::quiet_NaN() );
       return;
     }
+#endif
 
     // Set equality constraint values
     if ( i.nE > 0 ) { z.cE = c_orig( i.I6 ) - i.b6; }
@@ -218,18 +222,22 @@ namespace Pipal
     // Try AMPL gradients evaluation
     Vector<Real>       g_orig;
     SparseMatrix<Real> J_orig;
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try
+#endif
     {
       // Evaluate AMPL gradients
       this->m_problem->objective_gradient( x_orig, g_orig );
       this->m_problem->constraints_jacobian( x_orig, J_orig );
     }
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     catch ( ... )
     {
       // Set evaluation flag, default values, and return
       z.err = 1;
       return;
     }
+#endif
 
     // Set objective gradient
     z.g << g_orig( i.I1 ), g_orig( i.I3 ), g_orig( i.I4 ), g_orig( i.I5 );
@@ -362,17 +370,21 @@ namespace Pipal
 
     // Try AMPL Hessian evaluation
     SparseMatrix<Real> H_orig;
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     try
+#endif
     {
       // Evaluate H_orig
       this->m_problem->lagrangian_hessian( x_orig, l_orig, H_orig );
     }
+#ifndef CLOTHOIDS_NO_EXCEPTIONS
     catch ( ... )
     {
       // Set evaluation flag, default values, and return
       z.err = 1;
       return;
     }
+#endif
 
     // Set Hessian of the Lagrangian
     Integer row_offset{ 0 }, col_offset{ 0 };

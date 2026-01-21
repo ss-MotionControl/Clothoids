@@ -15,9 +15,11 @@
 
 // Standard libraries
 #include <string>
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <iostream>
 #include <iomanip>
 #include <ostream>
+#endif
 
 // STL
 #include <cmath>
@@ -33,6 +35,23 @@
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
 #include <Eigen/SparseCholesky>
+#endif
+
+#ifdef CLOTHOIDS_MINIMAL_BUILD
+#ifdef CLOTHOIDS_NO_EXCEPTIONS
+#define PIPAL_ERROR( MSG )                \
+  {                                       \
+    MSG;                                  \
+    std::terminate();                     \
+  }
+#else
+#define PIPAL_ERROR( MSG )                \
+  {                                       \
+    throw std::runtime_error( MSG );      \
+  }
+#endif
+
+#define PIPAL_WARNING( MSG )              MSG;
 #endif
 
 // Print Pipal errors
@@ -124,7 +143,7 @@ namespace Pipal
    * \param[in] mask The boolean mask.
    * \return The selected elements from the input vector.
    */
-  static Indices find( Mask const & mask )
+  inline Indices find( Mask const & mask )
   {
     Indices out( mask.count() );
     for ( Integer i{ 0 }, j{ 0 }; i < mask.size(); ++i )

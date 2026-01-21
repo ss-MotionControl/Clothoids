@@ -23,10 +23,8 @@
 #endif
 #include "Utils_AlgoBracket.hh"
 
-#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include <cfloat>
 #include <limits>
-#endif
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push

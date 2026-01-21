@@ -832,7 +832,7 @@ namespace G2lib
       AABB_SET candidateList;
       real_type const xy[2]{ x, y };
       m_aabb_tree.min_distance_candidates( xy, candidateList );
-#ifndef UTILS_MINIMAL_BUILD
+#ifndef CLOTHOIDS_MINIMAL_BUILD
         UTILS_ASSERT( !candidateList.empty(),
             "PolyLine::closest_point_ISO, empty candidate list, #{}\n{}\n",
             candidateList.size(),
@@ -840,9 +840,8 @@ namespace G2lib
 #else
       UTILS_ASSERT(
         !candidateList.empty(),
-        "PolyLine::closest_point_ISO, empty candidate list, #{}\n{}\n",
-        candidateList.size(),
-        m_aabb_tree.info() );
+        "PolyLine::closest_point_ISO, empty candidate list\n" );
+#endif
       for ( auto const i : candidateList )
       {
         LineSegment const & LS{ m_polyline_list[i] };

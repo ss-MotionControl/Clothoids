@@ -15,7 +15,9 @@
 
 // Pipal includes
 #include "Pipal/Types.hxx"
+#ifndef CLOTHOIDS_MINIMAL_BUILD
 #include "Pipal/Output.hxx"
+#endif
 #include "Pipal/Problem.hxx"
 #include "Pipal/Solver.hxx"
 #include "Pipal/Acceptance.hxx"

@@ -356,7 +356,7 @@ namespace G2lib
       real_type const theta1,
       G2derivative &  G,
       real_type const tol = 1e-12 );
-#ifndef CLOTHOIDS_MINIMAL_BUILD
+
     int build_G1_DD(
       real_type const x0,
       real_type const y0,
@@ -366,7 +366,7 @@ namespace G2lib
       real_type const theta1,
       G2derivative &  G,
       real_type const tol = 1e-12 );
-#endif
+
     bool build_forward(
       real_type const x0,
       real_type const y0,
@@ -377,7 +377,9 @@ namespace G2lib
       real_type const tol,
       real_type &     L );
 
+#ifndef CLOTHOIDS_MINIMAL_BUILD
     void info( ostream_type & s ) const;
+#endif
   };
 
   #endif
